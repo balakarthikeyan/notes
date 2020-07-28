@@ -9,12 +9,12 @@
   npm install -g less
   ```
 
-## Using REPL
+### Using REPL
   ``` 
   lessc theme.less > theme.css
   ```
 
-## Using package.json
+### Using package.json
   ```
   "scripts": {
     "less:compile": "lessc theme.less > theme.css"
@@ -24,7 +24,7 @@
 
 ## 1.  Cleaner Structure With Nesting
 
-  # LESS Usage
+  > Normal Usage
   ```
   #header {}
   #header #nav {}
@@ -44,7 +44,8 @@
     }
   }
   ```
-## 1.1.  Bubbling:
+### 1.1.  Bubbling:
+
   ```
   .component {
     width: 300px;
@@ -65,7 +66,6 @@
   ```
   #header, #footer, h3 { color: red; }
   ```
-
   > LESS Usage
   ```
   @brand-color: #4455EE;
@@ -82,7 +82,7 @@
   @images: "../img";
   ```
 
-  >Usage
+  > Usage
   ```
   .@{my-selector} {
     font-weight: bold;
@@ -90,7 +90,7 @@
   }
   ```
 
-## 2.2.  Scoping:
+### 2.2.  Scoping:
 
   ```
   @great-color: #4455EE;
@@ -100,7 +100,7 @@
   }
   ```
 
-  # Output
+  > Output
   ```
   #header { color: #EE3322; }
   ```
@@ -119,7 +119,7 @@
   }
 ```
 
-## 3.1. With mixin with arguments:
+### 3.1. With mixin with arguments:
 ```
   .rounded-corners(@radius: 5px) {
     -webkit-border-radius: @radius;
@@ -131,7 +131,7 @@
     .rounded-corners(10px);
   }
 ```
-## 3.2 If you don't want the mixin to appear as a rule in the CSS
+### 3.2 If you don't want the mixin to appear as a rule in the CSS
 ```
   #circle(){
     background-color: #4CAF50;
@@ -145,29 +145,29 @@
   }
 ```
 ## 4.  Operations
-
+```
   @base-margin: 25px;
   @color: #03A9F4;
 
   #header { margin-top: @base-margin + 10px; }
   div { background-color: @color - 100; }
-
+```
 ## 5.  Namespaces And Accessors
-
+```
   #defaults {
     @heading-color: #EE3322;
     .bordered { border: solid 1px #EEE; }
   }
-
-  # Calling
-
+```
+  > Usage
+```
   h1 {
     color: #defaults[@heading-color];
     #defaults > .bordered;
   }
-
-## 5.1. Maps:
-
+```
+### 5.1. Maps:
+```
   .sidebar_heading { color: h1['color']; }
 
   #colors() {
@@ -179,9 +179,9 @@
     color: #colors[primary];
     border: 1px solid #colors[secondary];
   }
-
+```
 ## 6.  Functions
-
+```
   @var1: #004590;
   @var2: 50vh/2;
   div{
@@ -193,9 +193,9 @@
       background-color: fadeout(@var1, 50%)
     }
   }
-
-## 6.1. More functions:
-
+```
+### 6.1. More functions:
+```
   @base: #f04615;
   @width: 0.5;
 
@@ -222,29 +222,25 @@
       @{key}-@{index}: @value;
     });
   }
-
+```
 ## 7. Escaping
-
-@min768: ~"(min-width: 768px)";
-
-(or)
-
-@min768: (min-width: 768px);
-
+`@min768: ~"(min-width: 768px)";` or `@min768: (min-width: 768px);`
+```
 .element {
   @media @min768 {
     font-size: 1.2rem;
   }
 }
-
+```
 ## 8. Importing
-
+```
 @import 'typography';
 @import 'layout';
-
+```
 ## 9. Themes using Guard Mixins
 
-# Example 1
+> Example 1
+```
 @color_info: #00a8e6;
 @color_success: #8cc14c;
 @color_warning: #faa732;
@@ -276,8 +272,9 @@
   color: #fff;
   text-shadow: 0.5px 0.5px #000;
 }
-
-# Example 2
+```
+> Example 2
+```
   @orange-color: #f26524;
   @grey-color: #333333;
   @white-color: #ffffff;
@@ -296,3 +293,4 @@
         .checkwhite("@{value}");
     }
   });
+```
