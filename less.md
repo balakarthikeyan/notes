@@ -1,29 +1,39 @@
-# To Call directly less in HTML
+## To Call directly less in HTML
+```
 <link rel="stylesheet/less" href="/stylesheets/main.less" type="text/css" />
 <script src="http://lesscss.googlecode.com/files/less-1.0.30.min.js"></script>
+```
 
-# Node Installation
+## Node Installation
+```
 npm install -g less
+```
 
-# Using REPL 
+## Using REPL
+``` 
 lessc theme.less > theme.css
+```
 
-# Using package.json
+## Using package.json
+```
 "scripts": {
   "less:compile": "lessc theme.less > theme.css"
 }
 npm run less:compile
+```
 
 ## 1.  Cleaner Structure With Nesting
 
   # LESS Usage
+  ```
   #header {}
   #header #nav {}
   #header #nav ul {}
   #header #nav ul li {}
   #header #nav ul li a {}
-
-  # LESS Usage
+  ```
+  > LESS Usage
+  ```
   #header {
     #nav {
       ul {
@@ -33,7 +43,7 @@ npm run less:compile
       }
     }
   }
-
+  ```
 ## 1.1.  Bubbling:
 
   .component {
