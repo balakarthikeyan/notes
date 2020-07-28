@@ -1,26 +1,26 @@
 ## To Call directly less in HTML
-```
-<link rel="stylesheet/less" href="/stylesheets/main.less" type="text/css" />
-<script src="http://lesscss.googlecode.com/files/less-1.0.30.min.js"></script>
-```
+  ```
+  <link rel="stylesheet/less" href="/stylesheets/main.less" type="text/css" />
+  <script src="http://lesscss.googlecode.com/files/less-1.0.30.min.js"></script>
+  ```
 
 ## Node Installation
-```
-npm install -g less
-```
+  ```
+  npm install -g less
+  ```
 
 ## Using REPL
-``` 
-lessc theme.less > theme.css
-```
+  ``` 
+  lessc theme.less > theme.css
+  ```
 
 ## Using package.json
-```
-"scripts": {
-  "less:compile": "lessc theme.less > theme.css"
-}
-npm run less:compile
-```
+  ```
+  "scripts": {
+    "less:compile": "lessc theme.less > theme.css"
+  }
+  npm run less:compile
+  ```
 
 ## 1.  Cleaner Structure With Nesting
 
@@ -45,7 +45,7 @@ npm run less:compile
   }
   ```
 ## 1.1.  Bubbling:
-
+  ```
   .component {
     width: 300px;
     @media (min-width: 768px) {
@@ -58,44 +58,56 @@ npm run less:compile
       width: 800px;
     }
   }
-
+  ```
 ## 2.  Variables For Faster Maintenance
 
-  # Normal CSS
+  > Normal CSS
+  ```
   #header, #footer, h3 { color: red; }
+  ```
 
-  # LESS Usage
+  > LESS Usage
+  ```
   @brand-color: #4455EE;
   #header { background-color: @brand-color; }
   #footer { color: @brand-color; }
   h3 { color: @brand-color; }
+  ```
 
-## 2.1.  Variable Interpolation:
+### 2.1.  Variable Interpolation:
 
-# Variables
-@my-selector: banner;
-@images: "../img";
+  > Variables
+  ```
+  @my-selector: banner;
+  @images: "../img";
+  ```
 
-# Usage
-.@{my-selector} {
-  font-weight: bold;
-  background: url("@{images}/white-sand.png");
-}
+  >Usage
+  ```
+  .@{my-selector} {
+    font-weight: bold;
+    background: url("@{images}/white-sand.png");
+  }
+  ```
 
 ## 2.2.  Scoping:
 
+  ```
   @great-color: #4455EE;
   #header {
     @great-color: #EE3322;
     color: @great-color;
   }
+  ```
 
   # Output
-
+  ```
   #header { color: #EE3322; }
+  ```
 
 ## 3. Reusing Whole Classes / Mixin
 
+```
   .rounded-corners {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -105,9 +117,10 @@ npm run less:compile
   #login-box {
     .rounded-corners;
   }
+```
 
 ## 3.1. With mixin with arguments:
-
+```
   .rounded-corners(@radius: 5px) {
     -webkit-border-radius: @radius;
     -moz-border-radius: @radius;
@@ -117,9 +130,9 @@ npm run less:compile
   #login-box {
     .rounded-corners(10px);
   }
-
+```
 ## 3.2 If you don't want the mixin to appear as a rule in the CSS
-
+```
   #circle(){
     background-color: #4CAF50;
     border-radius: 100%;
@@ -130,7 +143,7 @@ npm run less:compile
     height: 100px;
     #circle
   }
-
+```
 ## 4.  Operations
 
   @base-margin: 25px;
