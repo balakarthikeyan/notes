@@ -1,3 +1,38 @@
+## CDN for Bootstrap & Jquery
+```
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>  
+```
+## Mixins
+#### Run all Mix
+`npm run dev`
+
+#### Run all Mix and minify
+`npm run production`
+
+#### Watching Assets For Changes
+`npm run watch`
+
+#### Loading Js & Css
+```
+mix.sass('resources/sass/app.sass', 'public/css')
+mix.styles([
+    'public/css/reset.css',
+    'public/css/common.css'
+], 'public/css/app.css');
+
+mix.js('resources/js/app.js', 'public/js');
+mix.js('resources/js/app.js', 'public/js').version();  
+mix.scripts([
+    'public/js/utils.js',
+    'public/js/theme.js'
+], 'public/js/all.js');
+
+mix.copy('resources/font-awesome/fonts/*', 'public/fonts/');
+mix.copyDirectory('resources/img', 'public/images');
+```
 ## Blade directives:
 
 ```
