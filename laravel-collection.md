@@ -3,7 +3,7 @@ Laravel's Collection class ( Illuminate\Support\Collection ), provides some stat
 
 ### make()
 make() method create a new instance of a collection from an array
-### Method
+> Method
 ```
 /**
 * Create a new collection instance if the value isn't one already.
@@ -30,7 +30,7 @@ $isCollection = $collection instanceof Collection; // true
 ```
 ### wrap()
 wrap() method will create a collection from any value supplied to it
-### Method
+> Method
 ```
 /**
  * Wrap the given value in a collection if applicable.
@@ -52,7 +52,7 @@ use Illuminate\Support\Collection;
 $product = new Product();
 $products = Collection::wrap($product);
 ```
-### Method
+> Method
 ```
 /**
  * Get the underlying items from the given collection if applicable.
@@ -75,7 +75,7 @@ $items = Collection::unwrap($users);
 ```
 ### map()
 The map method applies a given callback function to each element of a collection. The callback function will modify the item and create a new Laravel collection for them.
-### Method
+> Method
 ```
 /**
  * Run a map over each of the items.
@@ -102,7 +102,7 @@ $names = $collection->map(function($item, $key) {
 ```
 ### times()
 The times() method of Laravel Collection is similar to PHP’s range() function with some extra functionality for Collections.
-### Method
+> Method
 ```
 /**
  * Create a new collection by invoking the callback a given amount of times.
@@ -131,7 +131,7 @@ $nextWeek = Collection::times(7, function ($index) {
 ```
 ### collapse()
 The collapse() method can be used to convert a multi-dimensional collection into a single dimension collection.
-### Method
+> Method
 ```
 /**
  * Collapse the collection of items into a single array.
@@ -201,7 +201,7 @@ $cities->each(function($item, $key) {
 ```
 ### toJson()
 The toJson() method will return the JSON encoded version of the data stored in a Laravel Collection
-### Method
+> Method
 ```
 /**
  * Get the collection of items as JSON.
