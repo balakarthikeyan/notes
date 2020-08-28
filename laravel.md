@@ -173,4 +173,13 @@ php artisan vendor:publish --tag=laravel-pagination
 composer require laravel/passport
 php artisan migrate
 php artisan passport:install
+composer require doctrine/dbal
+
+composer require laravel/telescope --dev
+php artisan telescope:install
+php artisan migrate
+
+php artisan make:rule UpperCase
+php artisan storage:link
+php artisan cache:clear
 ```
