@@ -287,3 +287,53 @@ php artisan make:migration create_role_permissions_table --create=role_permissio
     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 ###### Query
     ALTER TABLE `posts` ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
+## What are Notifications?
+Laravel provides mailables which can be used to send emails, these emails are long with custom markup styling but we can not be sent through different channels. Laravel Notifications solves our this problem, by providing an elegant and fun way to send notifications to users.
+
+### Laravel Notifications Channels
+The whole beauty of Laravel Notifications is that it allows you to choose from different notifications channels through which your notifications will be delivered. Let’s go through the different notifications channels currently supported by Laravel Framework.
+
+- **Mail :** The notifications will be send in the form of email to users.
+- **SMS :** Users will revieve notifications on their mobile phones.
+- **Database : This option allows you to save notifications into the database, which you can show to users in your own way.
+- **Slack :** This option allows us to send notification messages to Slack channel.
+
+## Storage
+```
+Storage::disk('local')->put('filename.txt', 'File content goes here..');
+Storage::get('filename.txt');
+Storage::append('filename.txt', 'Append this text');
+Storage::prepend('filename.txt', 'Append this text');
+Storage::download('filename.txt');
+Storage::url('filename.txt');
+Storage::size('filename.txt');
+Storage::delete('filename.txt');
+Storage::files($directory);
+Storage::allFiles($directory);
+Storage::directories($directory);
+Storage::allDirectories();
+Storage::makeDirectory($name);
+Storage::deleteDirectory($name);
+```
+## Routes
+> Return with dynamic data for route like `Route::get('post/{id}', 'PostController@edit')-name('post.edit');`
+```
+return redirect()->route('post.edit', ['id' => $post->id]);
+return redirect()->route('post.edit', $post->id);
+```
+> With return message
+` return redirect()->back()->with('success', 'Post saved successfully.');`
+
+> With more Response
+```
+$response = [
+    'success'   =>  'Post saved successfully.',
+    'post_id'   =>  $post->id,
+];
+return redirect()->back()->with($response);
+```
+> Controller action
+```
+return redirect()->action('PostController@create);
+return response()->action('PostController@edit', ['id' => $post->id]);
+```
