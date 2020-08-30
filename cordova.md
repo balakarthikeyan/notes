@@ -38,6 +38,31 @@ cordova build
 cordova build ios
 cordova emulate android
 cordova plugins
+cordova platform rm android
+cordova platform rm ios
+cordova platform rm browser
+cordova platform add android
+cordova platform add ios
+cordova platform add browser
+cordova plugin add com.telerik.plugins.nativepagetransitions
+cordova plugin add cordova-plugin-android-fingerprint-auth
+cordova plugin add cordova-plugin-camera
+cordova plugin add cordova-plugin-compat
+cordova plugin add cordova-plugin-contacts
+cordova plugin add cordova-plugin-dialogs
+cordova plugin add cordova-plugin-globalization
+cordova plugin add cordova-plugin-inappbrowser
+cordova plugin add cordova-plugin-mfp
+cordova plugin add cordova-plugin-mfp-push
+cordova plugin add cordova-plugin-okhttp
+cordova plugin add cordova-plugin-spinnerdialog
+cordova plugin add cordova-plugin-touch-id
+cordova plugin add cordova-plugin-x-socialsharing
+cordova plugin add es6-promise-plugin
+cordova plugin add com.filfatstudios.spinnerdialog
+
+<allow-intent href="geo:*" />
+<allow-intent href="*" />
 
 npm install -g typescript
 npm install -g cordova ionic
