@@ -68,43 +68,40 @@ mix.options({
 ```
 
 ## Blade directives:
-
-```
-@include pulls in information from the files in the includes directory.
-@yield pulls in information from the content section of the home page.
-@extends tells Laravel that the contents of this file extend another view. It also defines the view that it's extending as our default template: resources/views/layouts/default.blade.php.
-@section defines the beginning of a section, which we have named content. Everything contained in this section will appear in the @yield which we defined in the template.
-@endsection closes that section. 
-@section and @endsection are terms which must be used in pairs, much like other HTML tags (for example, <div> and </div>).
-```
+- `@include` pulls in information from the files in the includes directory.
+- `@yield` pulls in information from the content section of the home page.
+- `@extends` tells Laravel that the contents of this file extend another view. It also defines the view - that it's extending as our default template: resources/views/layouts/default.blade.php.
+- `@section` defines the beginning of a section, which we have named content. Everything contained in this section will appear in the @yield which we defined in the template.
+- `@endsection` closes that section. 
+- `@section and @endsection` are terms which must be used in pairs, much like other HTML tags (for example, <div> and </div>).
 > Examples
 ```
-1.	@include
+1.@include
         @include('partials.sidebar',['menu' => $menu])
-2.	@push & @stack
-3.	@php
-4.	@hasSection
+2.@push & @stack
+3.@php
+4.@hasSection
         @hasSection('navigation') 
         // your logic here
         @endif
-5.	@each
+5.@each
         @each('users.index', $users, 'user', 'users.notfound')
-6.	@includeWhen
+6.@includeWhen
         @includeWhen($isUserAdmin, 'users.admin_card', ['user' => $user])
-7.	@json
+7.@json
         var data = @json($product);
-8.	@forelse
+8.@forelse
         @forelse($users as $user)
         {{ $user->name }}
         @empty
         No Users Found
         @endforelse
-9.	@verbatim
+9.@verbatim
         @{{ name }} 
         @verbatim
         {{ name }}
         @endverbatim    
-10.	@isset & @empty
+10.@isset & @empty
         @isset($users)
         // your logic here
         @endisset
@@ -112,11 +109,11 @@ mix.options({
         @empty($users)
         // your logic here
         @endempty
-11.	@inject
+11.@inject
         @inject('menu', 'App\Services\MenuService')
         // then in your view
         {!! $menu->render() !!}
-12.	@csrf & @method
+12.@csrf & @method
 ```
 ## Macroable
 
@@ -170,17 +167,17 @@ API resources is made of two entities: a resource class and a resource collectio
 A resource class represents a single model that needs to be transformed into a JSON structure, while a resource collection is used for transforming collections of models into a JSON structure.
 
 ### Status Code	Meaning
-    `200:` OK. The standard success code and default option.
-    `201:` Object created. Useful for the store actions.
-    `204:` No content. When an action was executed successfully, but there is no content to return.
-    `206:` Partial content. Useful when you have to return a paginated list of resources.
-    `400:` Bad request. The standard option for requests that fail to pass validation. (Wrong with URL or parameters)
-    `401:` Unauthorized. The user needs to be authenticated.
-    `403:` Forbidden. The user is authenticated, but does not have the permissions to perform an action.
-    `404:` Not found. This will be returned automatically by Laravel when the resource is not found.
-    `422:` Un-processable Entity (validation failed)
-    `500:` Internal server error. Ideally you're not going to be explicitly returning this, but if something unexpected breaks, this is what your user is going to receive.
-    `503:` Service unavailable. Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
+- `200:` OK. The standard success code and default option.
+- `201:` Object created. Useful for the store actions.
+- `204:` No content. When an action was executed successfully, but there is no content to return.
+- `206:` Partial content. Useful when you have to return a paginated list of resources.
+- `400:` Bad request. The standard option for requests that fail to pass validation. (Wrong with URL or parameters)
+- `401:` Unauthorized. The user needs to be authenticated.
+- `403:` Forbidden. The user is authenticated, but does not have the permissions to perform an action.
+- `404:` Not found. This will be returned automatically by Laravel when the resource is not found.
+- `422:` Un-processable Entity (validation failed)
+- `500:` Internal server error. Ideally you're not going to be explicitly returning this, but if something unexpected breaks, this is what your user is going to receive.
+- `503:` Service unavailable. Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
 
 ## Laravel Pagination Instance Methods
 ```
@@ -200,17 +197,17 @@ $results->url($page)
 ## Laravel Model Events
 Eloquent provides a handful of events to monitor the model state which are:
 
-    `retrieved :` after a record has been retrieved.
-    `creating :` before a record has been created.
-    `created :` after a record has been created.
-    `updating :` before a record is updated.
-    `updated :` after a record has been updated.
-    `saving :` before a record is saved (either created or updated).
-    `saved :` after a record has been saved (either created or updated).
-    `deleting :` before a record is deleted or soft-deleted.
-    `deleted :` after a record has been deleted or soft-deleted.
-    `restoring :` before a soft-deleted record is going to be restored.
-    `restored :` after a soft-deleted record has been restored.
+- `retrieved :` after a record has been retrieved.
+- `creating :` before a record has been created.
+- `created :` after a record has been created.
+- `updating :` before a record is updated.
+- `updated :` after a record has been updated.
+- `saving :` before a record is saved (either created or updated).
+- `saved :` after a record has been saved (either created or updated).
+- `deleting :` before a record is deleted or soft-deleted.
+- `deleted :` after a record has been deleted or soft-deleted.
+- `restoring :` before a soft-deleted record is going to be restored.
+- `restored :` after a soft-deleted record has been restored.
 
 ## Laravel Scheduler Methods
 Laravel scheduler provides many methods which map to a cron job timing, some of them are below which I have used a lot.
