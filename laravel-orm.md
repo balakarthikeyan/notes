@@ -1,3 +1,97 @@
+## Eloquent
+Laravel has an object-relational mapper (ORM) named “Eloquent” which allows you to work with your database. Eloquent is a new technique to work with the database queries using the model in Laravel. Eloquent provides simple and beautiful syntax to gain complex queries in a few seconds without writing long queries.
+
+## Relationship
+A relationship, in the context of the database, is a relation or link between two tables via primary key and reference key. One table has a foreign key that references the primary key of another table. Relationships allow relational databases to split and store data in different tables.
+
+> Types of Eloquent Relationships in Laravel
+- One To One
+- One To Many
+- Many To Many
+- HasMany Through
+- Many To Many 
+- Polymorphic Relation
+
+> One to One Relationship with Example
+```
+class Post extends Model
+{
+    public function post_content()
+    {
+        return $this->hasOne('App\Content');
+    }
+}
+```
+> Inverse of One to One Relationship Example
+```
+class Content extends Model
+{
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+}
+```
+> Usage
+```
+$content = Post::find(10)->post_content;
+```
+> One to Many Relationship Example
+```
+class Author extends Model
+{
+    public function post()
+    {
+        return $this->hasMany('App\Post');
+    }
+}
+```
+> Usage
+```
+$posts = App\Author::find(10)->post()->get();
+```
+> Inverse One to Many Relationship Example
+```
+class Post extends Model
+{
+    public function author()
+    {
+        return $this->belongsTo('App\Author');
+    }
+}
+```
+> Usage
+```
+$post->author->author_name;
+```
+> Many to Many Relationship Example
+```
+class Post extends Model
+{
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+}
+```
+> Usage
+```
+$post = App\Post::find(8);
+```
+> Inverse of Many to Many Relationship Example
+```
+class Tag extends Model
+{
+    public function posts()
+    {
+        return $this->belongsToMany('App\Post');
+    }
+}
+```
+> Usage
+```
+$tag = App\Tag::find(8);
+```
 ## Common Functions on Eloquent ORM
 > Select
 ```
@@ -290,4 +384,13 @@ DB::listen(function($sql, $bindings, $time) {
     var_dump($bindings);
     var_dump($time);
 }); 
+```
+## FOREIGN KEY CONSTRAINTS
+> Query Builder
+```
+$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+```
+> Query
+```
+ALTER TABLE `posts` ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
 ```
