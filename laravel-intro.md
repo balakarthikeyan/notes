@@ -45,7 +45,7 @@ Laravel is web development framework for building web applications with PHP. It'
 - Routing
 - Models, controllers and views
 - Blade templating
-- Requests and responses
+- Requests and Responses
 - Database migrations
 - Middlewares
 - Eloquent ORM
@@ -70,7 +70,7 @@ Laravel makes use a templating language called Blade which is powerful and easy 
     Blade is the simple, yet powerful templating engine provided with Laravel. Unlike other popular PHP templating engines, Blade does not restrict you from using plain PHP code in your views. 
     In fact, all Blade views are compiled into plain PHP code and cached until they are modified, meaning Blade adds essentially zero overhead to your application. Blade view files use the .blade.php file extension and are typically stored in the resources/views directory.
 
-### Request and responses
+### Request and Responses
 Traditionnal frameworks like Laravel works based on HTTP request and response cycles. Requests are sent from clients using HTTP verbs like GET, POST, DELETE and UPDATE. When they are processed by Laravel, appropriate responses are created and sent back to clients. A response is created and sent from the controller mapped to the route which received the request.
 
 ### Laravel 6/7 Models and Migrations
@@ -78,17 +78,37 @@ In Laravel, the Model from the MVC pattern represents the part that contains the
 
 Migrations allow you to create the intial database tables and their fields and then track any changes made to the database schema during the development or even in production and apply them without the need of dropping and recreating the database each time.
 
-### Laravel middlewares
+### Laravel Middlewares
 Middlewares are pieces of code that are executed before some specific HTTP requests before running the correspong controllers. Laravel includes several builtin middlewares for authentication and CSRF protection but you can also create your custom middlewares when needed.
 
 ### Laravel Eloquent ORM
 Laravel makes use of an ORM which stands for Object Relationnal Mapper and implements the PHP Active Record Pattern. This allows you to work with databases without actually dealing with SQL and the differences between database systems. The Laravel ORM is called Eloquent ORM.
-
-## Commands
+## Artisan Commands
 ```
-composer global require "laravel/lumen-installer"
-lumen new mylumen
-
+  make:channel         Create a new channel class
+  make:command         Create a new Artisan command
+  make:controller      Create a new controller class
+  make:event           Create a new event class
+  make:exception       Create a new custom exception class
+  make:factory         Create a new model factory
+  make:job             Create a new job class
+  make:listener        Create a new event listener class
+  make:mail            Create a new email class
+  make:middleware      Create a new middleware class
+  make:migration       Create a new migration file
+  make:model           Create a new Eloquent model class
+  make:notification    Create a new notification class
+  make:observer        Create a new observer class
+  make:policy          Create a new policy class
+  make:provider        Create a new service provider class
+  make:request         Create a new form request class
+  make:resource        Create a new resource
+  make:rule            Create a new validation rule
+  make:seeder          Create a new seeder class
+  make:test            Create a new test class
+```
+## My working Commands
+```
 composer global require "laravel/installer"
 laravel new mylaravel
 (or)
@@ -97,13 +117,18 @@ composer create-project --prefer-dist laravel/laravel mylaravel
 php artisan serve
 php artisan serve --port=8000 --host=localhost
 
-php artisan make:controller NameController
-php artisan make:controller NameController --resource --model=tablename
-php artisan make:model NameModel -fmr //Model, Factory , Table and Controller
-php artisan make:model NameModel -m
+php artisan make:controller NameController // Parameters: --resource, --api, --invokable, --model=NameModel
+php artisan make:controller NameController --resource --model=NameModel
+
+// Creates: Model, Factory, Table and Controller
+php artisan make:model NameModel --factory --migration --resource /-fmr 
+php artisan make:model NameModel --migration --controller --resource / -mcr
 
 php artisan make:migration create_tablename_table --create=tablename
-php artisan make:migration add_to_users_table --table=tablename
+php artisan make:migration add_to_tablename_table --table=tablename
+
+php artisan make:factory NameFactory --model=NameModel
+
 php artisan migrate 
 php artisan migrate --force
 php artisan migrate:install
@@ -115,31 +140,47 @@ php artisan db:seed --class=NameSeeder
 php artisan make:seeder NameSeeder
 
 php artisan make:component NameComponent
-php artisan make:middleware TestMiddleware
+php artisan make:middleware NameMiddleware
 
 php artisan down 
 php artisan up 
 
-php artisan make:mail NewMail
-php artisan make:mail TestEmail --markdown=emails.testmail
+php artisan make:mail NameMail
+php artisan make:mail NameEmail --markdown=view_folder.view_filename
 
-php artisan make:event SendMail
-php artisan make:listener SendMailFired --event="SendMail"
+php artisan make:event NameEvent
+php artisan make:listener NameListener --event="NameEvent" --queued
 
-php artisan make:command NewUserCreated
+php artisan make:command NewCommandName --command=Command
 php artisan command:name
 
 php artisan notifications:table
-php artisan make:notification NotifyInactiveUser
+php artisan make:notification NameNotification --markdown
 
 php artisan schedule:run
+
 php artisan queue:table
+php artisan make:job JobName --sync
 php artisan queue:work
 
 php artisan make:provider NameServiceProvider
-php artisan view:clear
 
 php artisan make:policy NewPolicy --model=ModelName
+
+php artisan make:rule NewRule
+php artisan storage:link
+
+php artisan view:clear
+php artisan cache:clear
+
+php artisan make:request NameControllerRequest
+php artisan make:observer NameObserver --model=NameModel
+
+php artisan make:exception CustomException --render --report
+
+php artisan make:test NameControllerTest --unit
+
+php artisan make:resource NameModelResource --collection=NameModel
 
 php artisan tinker
 factory(App\User::class,5)->create()
@@ -178,8 +219,4 @@ composer require doctrine/dbal
 composer require laravel/telescope --dev
 php artisan telescope:install
 php artisan migrate
-
-php artisan make:rule UpperCase
-php artisan storage:link
-php artisan cache:clear
 ```
