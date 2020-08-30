@@ -8,7 +8,6 @@ Laravel is web development framework for building web applications with PHP. It'
 - PHP >= 7.2.0 
 
 ### PHP should have the following extensions:
-- PHP >= 7.2.0
 - BCMath PHP Extension
 - Ctype PHP Extension
 - JSON PHP Extension
@@ -18,7 +17,7 @@ Laravel is web development framework for building web applications with PHP. It'
 - Tokenizer PHP Extension
 - XML PHP Extension
 
-## The New Features of Laravel 6 & 7
+## The New Features of Laravel
 
 ### Laravel 6:
 
@@ -83,6 +82,7 @@ Middlewares are pieces of code that are executed before some specific HTTP reque
 
 ### Laravel Eloquent ORM
 Laravel makes use of an ORM which stands for Object Relationnal Mapper and implements the PHP Active Record Pattern. This allows you to work with databases without actually dealing with SQL and the differences between database systems. The Laravel ORM is called Eloquent ORM.
+
 ## Artisan Commands
 ```
   make:channel         Create a new channel class
@@ -107,6 +107,7 @@ Laravel makes use of an ORM which stands for Object Relationnal Mapper and imple
   make:seeder          Create a new seeder class
   make:test            Create a new test class
 ```
+
 ## My working Commands
 ```
 composer global require "laravel/installer"
