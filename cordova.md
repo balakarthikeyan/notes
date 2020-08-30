@@ -1,9 +1,10 @@
 ### Add the following values to the Path system variable in Environment Variables:
 
 > **Variable:** `ANDROID_HOME`
+
 > **Value:** ` C:\Users\balakarthikeyan.a\AppData\Local\Android\Sdk`
 
-> **Variable:** `ANT_HOME` 
+> **Variable:** `ANT_HOME`
 > **Value:** `C:\apache-ant`
 
 > **Variable:** `JAVA_HOME`
