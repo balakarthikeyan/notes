@@ -70,7 +70,7 @@ mix.options({
 ## Blade directives:
 
 ```
-@include pulls in information from the files in the includes directory.
+`@include` pulls in information from the files in the includes directory.
 @yield pulls in information from the content section of the home page.
 @extends tells Laravel that the contents of this file extend another view. It also defines the view that it's extending as our default template: resources/views/layouts/default.blade.php.
 @section defines the beginning of a section, which we have named content. Everything contained in this section will appear in the @yield which we defined in the template.
@@ -85,7 +85,7 @@ mix.options({
 3. @php
 4. @hasSection
     @hasSection('navigation') 
-    ...
+    // your logic here
     @endif
 5. @each
     @each('users.index', $users, 'user', 'users.notfound')
@@ -105,157 +105,53 @@ mix.options({
         {{ name }}
     @endverbatim    
 10. @isset & @empty
-    @isset($users)
-    // your logic here
-    @endisset
-    @empty($users)
-    // your logic here
-    @endempty
-11. @inject
-    @inject('menu', 'App\Services\MenuService')
-    // then in your view
-    {!! $menu->render() !!}
-12. @csrf & @method
-```
-## Common Query Builder
-```
-$Query = DB::table('users')
-        ->where('active', true)
-        ->get();
-
-$Query = DB::table('users')
-    ->where('created_at', '>', Carbon::now()->subDay())
-    ->get();
-
-$Query = DB::table('users')
-        ->where('active', true)
-        ->orWhere('last_login', '>', Carbon::now()->subDay())
-        ->where('isSubscribed', true)
-        ->get();
-
-$Query = DB::table('users')
-    ->where('active', true)
-    ->orWhere(function ($query) {
-        $query->where('last_login', '>', Carbon::now()->subDay())
-            ->where('isSubscribed', true);
-    })
-    ->get();
-
-$Query = DB::table('users')
-    ->whereExists(function ($query) {
-        $query->select('id')
-            ->from('reviews')
-            ->whereRaw('reviews.user_id = users.id');
-    })
-    ->get();
-
-$Query = DB::table('users')->skip(30)->take(10)->get(); //Page 4
-
-$Count = DB::table('users')
-        ->where('active', true)
-        ->count();
-
-$highestCost = DB::table('orders')->max('amount');
-
-$averageCost = DB::table('orders')
-                ->where('status', 'completed')
-                ->avg('amount');
-
-$Query = DB::table('users')
-        ->join('contacts', 'users.id', '=', 'contacts.user_id')
-        ->select('users.*', 'contacts.name', 'contacts.status')
-        ->get();
-
-$Query = DB::table('users')
-        ->join('contacts', function ($join) {
-            $join
-                ->on('users.id', '=', 'contacts.user_id')
-                ->orOn('users.id', '=', 'contacts.proxy_user_id');
-        })
-        ->get();
-
-$SubQuery = DB::table('contacts')->whereNull('first_name');
+        @isset($users)
+        // your logic here
+        @endisset
         
-$Query = DB::table('contacts')
-        ->whereNull('last_name')
-        ->union($SubQuery)
-        ->get();
-
-$id = DB::table('contacts')->insertGetId([
-        'name' => 'bala',
-        'email' => 'balakarthikeya@gmail.com',
-    ]);
-
-$Query = DB::table('contacts')->insert([
-            [
-                'name' => 'Tamika Johnson',
-                'email' => 'tamikaj@gmail.com'
-            ],
-            [
-                'name' => 'Jim Patterson',
-                'email' => 'james.patterson@hotmail.com'
-            ],
-        ]);
-
-$Query = DB::table('contacts')
-        ->where('points', '>', 100)
-        ->update(
-            [
-                'status' => 'vip'
-            ]
-        );
-
-$Query = DB::table('contacts')->increment('tokens', 5);
-$Query = DB::table('contacts')->decrement('tokens', 5);
-
-$Query = DB::table('users')
-        ->where('last_login', '<', Carbon::now()->subYear())
-        ->delete();
-
-$Query = DB::table('contacts')->truncate();
-
-Log::debug(DB::getQueryLog());
-
-DB::listen(function($sql, $bindings, $time) {
-    var_dump($sql);
-    var_dump($bindings);
-    var_dump($time);
-}); 
+        @empty($users)
+        // your logic here
+        @endempty
+11. @inject
+        @inject('menu', 'App\Services\MenuService')
+        // then in your view
+        {!! $menu->render() !!}
+12. @csrf & @method
 ```
 ## Macroable
 
 Allow Laravel's macros to be created by using the Illuminate\Support\Traits\Macroable trait. 
 Here are some of the most commonly used classes to create macros :
 
-- Request: Illuminate\Http\Request
-- Response: Illuminate\Http\Response
-- Collection: Illuminate\Support\Collection
-- Str: Illuminate\Support\Str
-- Router: Illuminate\Routing\Router
-- UrlGenerator: Illuminate\Routing\UrlGenerator
-- Cache: Illuminate\Cache\Repository
-- Filesystem: Illuminate\Filesystem\Filesystem
-- Arr: Illuminate\Support\Arr
-- Rule: Illuminate\Validation\Rule
+- **Request:** Illuminate\Http\Request
+- **Response:** Illuminate\Http\Response
+- **Collection:** Illuminate\Support\Collection
+- **Str:** Illuminate\Support\Str
+- **Router:** Illuminate\Routing\Router
+- **UrlGenerator:** Illuminate\Routing\UrlGenerator
+- **Cache:** Illuminate\Cache\Repository
+- **Filesystem:** Illuminate\Filesystem\Filesystem
+- **Arr:** Illuminate\Support\Arr
+- **Rule:** Illuminate\Validation\Rule
 
 ## Gate & Policy
-#### Gate
+> Gate
 `Route::get('/posts/delete', 'PostController@delete')->middleware('can:delete')->name('post.delete');`
 
-#### Route
+> Route
 ```
 Route::put('/post/{post}', function (Post $post) {
     // The current user may update the post...
 })->middleware('can:update,post');
 ```
 
-#### Policy
+> Policy
 ```
 if ($user->can('update', $post)) {
     //user is authorized now
 }
 ```
-#### Blade directive
+> Blade directive
 ```
 @can('update', $post)
     
@@ -263,9 +159,9 @@ if ($user->can('update', $post)) {
     
 @endcan
 ```
-#### Policy Methods
+## Policy Methods
 ```
-Controller      	   Policy
+Controller              Policy
 index	               viewAny
 show	               view
 create	               create
@@ -282,11 +178,6 @@ php artisan make:migration create_user_permissions_table --create=user_permissio
 php artisan make:migration create_user_roles_table --create=user_roles
 php artisan make:migration create_role_permissions_table --create=role_permissions
 ```
-#### FOREIGN KEY CONSTRAINTS
-###### Query Builder
-    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-###### Query
-    ALTER TABLE `posts` ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
 ## What are Notifications?
 Laravel provides mailables which can be used to send emails, these emails are long with custom markup styling but we can not be sent through different channels. Laravel Notifications solves our this problem, by providing an elegant and fun way to send notifications to users.
 
@@ -295,7 +186,7 @@ The whole beauty of Laravel Notifications is that it allows you to choose from d
 
 - **Mail :** The notifications will be send in the form of email to users.
 - **SMS :** Users will revieve notifications on their mobile phones.
-- **Database : This option allows you to save notifications into the database, which you can show to users in your own way.
+- **Database :** This option allows you to save notifications into the database, which you can show to users in your own way.
 - **Slack :** This option allows us to send notification messages to Slack channel.
 
 ## Storage
