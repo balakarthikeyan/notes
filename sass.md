@@ -1,11 +1,11 @@
 ## Node Installation
-npm install node-sass
+`npm install node-sass`
 
 ## Using SASS 
-sass --watch scss/index.scss:public/css/style.css
+`sass --watch scss/index.scss:public/css/style.css`
 
 ## Using REPL 
-node-sass input.scss output.css
+`node-sass input.scss output.css`
 
 ## Using package.json
 ```
@@ -99,7 +99,7 @@ npm run sass:compile
     background-color: #87bae1;
   }
 ```
-  to
+> to
 ```
   .dialog-button, .confirm {
     box-sizing: border-box;
