@@ -1,22 +1,28 @@
-﻿#Setup
-C:\Program Files\MongoDB
-1. Create two folders here, name them data and log.
-2. Create another folder inside data and name it as db
+## Setup
+> C:\Program Files\MongoDB
 
-C:\Program Files\MongoDB\Bin
+1. Create two folders here, name them `data` and `log`.
+2. Create another folder inside data and name it as `db`
+
+> C:\Program Files\MongoDB\Bin
+```
 mongod --directoryperdb --dbpath "C:\Program Files\MongoDB\data\db" --logpath "C:\Program Files\MongoDB\log\mongo.log" --logappend --rest --install
+```
 
-#Start
+> Start
+```
 net start MongoDB
-
-#Check to Run
+```
+> Check to Run
+```
 mongo
-
-#Stop 
+```
+> Stop 
+```
 net stop MongoDB
-
-#Commands
-
+```
+## Commands
+```
 use testdb
 db
 show dbs
@@ -46,3 +52,4 @@ db.collection_name.createIndex({field_name: 1 or -1})
 db.collection_name.getIndexes()
 db.collection_name.dropIndex({index_name: 1})
 db.collection_name.dropIndexes()
+```
