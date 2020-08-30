@@ -1,3 +1,4 @@
+## Common Functions on Eloquent ORM
 > Select
 ```
   ->select('col1','col2')
@@ -186,4 +187,107 @@
 DB::enableQueryLog();
 DB::getQueryLog();
 Model::where()->toSql() // output sql query
+```
+## Examples
+```
+$Query = DB::table('users')
+        ->where('active', true)
+        ->get();
+
+$Query = DB::table('users')
+    ->where('created_at', '>', Carbon::now()->subDay())
+    ->get();
+
+$Query = DB::table('users')
+        ->where('active', true)
+        ->orWhere('last_login', '>', Carbon::now()->subDay())
+        ->where('isSubscribed', true)
+        ->get();
+
+$Query = DB::table('users')
+    ->where('active', true)
+    ->orWhere(function ($query) {
+        $query->where('last_login', '>', Carbon::now()->subDay())
+            ->where('isSubscribed', true);
+    })
+    ->get();
+
+$Query = DB::table('users')
+    ->whereExists(function ($query) {
+        $query->select('id')
+            ->from('reviews')
+            ->whereRaw('reviews.user_id = users.id');
+    })
+    ->get();
+
+$Query = DB::table('users')->skip(30)->take(10)->get(); //Page 4
+
+$Count = DB::table('users')
+        ->where('active', true)
+        ->count();
+
+$highestCost = DB::table('orders')->max('amount');
+
+$averageCost = DB::table('orders')
+                ->where('status', 'completed')
+                ->avg('amount');
+
+$Query = DB::table('users')
+        ->join('profiles', 'users.id', '=', 'profiles.user_id')
+        ->select('users.*', 'profiles.username', 'profiles.status')
+        ->get();
+
+$Query = DB::table('users')
+        ->join('profiles', function ($join) {
+            $join->on('users.id', '=', 'profiles.user_id')->orOn('profiles.status', '=', 'vip');
+        })
+        ->get();
+
+$SubQuery = DB::table('profiles')->whereNull('first_name');
+        
+$Query = DB::table('profiles')
+        ->whereNull('last_name')
+        ->union($SubQuery)
+        ->get();
+
+$id = DB::table('profiles')->insertGetId([
+        'username' => 'bala',
+        'dob' => '1989-01-07',
+]);
+
+$Query = DB::table('profiles')->insert([
+            [
+                'username' => 'balakarthikeya',
+                'status' => 'free'
+            ],
+            [
+                'username' => 'ramesh',
+                'status' => 'vip'
+            ],
+        ]);
+
+$Query = DB::table('profiles')
+        ->where('points', '>', 100)
+        ->update(
+            [
+                'status' => 'vip'
+            ]
+        );
+
+$Query = DB::table('profiles')->increment('points', 5);
+$Query = DB::table('profiles')->decrement('points', 5);
+
+$Query = DB::table('users')
+        ->where('last_login', '<', Carbon::now()->subYear())
+        ->delete();
+
+$Query = DB::table('profiles')->truncate();
+
+Log::debug(DB::getQueryLog());
+
+DB::listen(function($sql, $bindings, $time) {
+    var_dump($sql);
+    var_dump($bindings);
+    var_dump($time);
+}); 
 ```
