@@ -1,21 +1,21 @@
-# Node Installation
+## Node Installation
 npm install node-sass
 
-# Using SASS 
+## Using SASS 
 sass --watch scss/index.scss:public/css/style.css
 
-# Using REPL 
+## Using REPL 
 node-sass input.scss output.css
 
-# Using package.json
+## Using package.json
+```
 "scripts": {
   "sass:compile": "node-sass --include-path sass INPUT_FILE.scss OUTPUT_FILE.css",
 }
 npm run sass:compile
-
-
+```
 ## 1.  Variables
-
+```
   $title-font: normal 24px/1.5 'Open Sans', sans-serif;
   $cool-red: #F44336;
   $box-shadow-bottom-only: 0 2px 1px 0 rgba(0, 0, 0, 0.2);
@@ -25,17 +25,17 @@ npm run sass:compile
     color: $cool-red;
     box-shadow: $box-shadow-bottom-only;
   }
-
-  to
-
+```
+> to
+```
   h1.title {
     font: normal 24px/1.5 "Open Sans", sans-serif;
     color: #F44336;
     box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.2);
   }
-
+```
 ## 1.1 Scopes and Global
-
+```
   $primaryColor: #eeccff;
 
   body {
@@ -45,9 +45,9 @@ npm run sass:compile
   p {
     color: $primaryColor;
   }
-
-  to
-
+```
+> to
+```
   body {
     background: #ccc;
   }
@@ -55,9 +55,9 @@ npm run sass:compile
   p {
     color: #ccc;
   }
-
+```
 ## 2.  Mixins
-
+```
   @mixin square($size, $color) {
     width: $size;
     height: $size;
@@ -88,9 +88,9 @@ npm run sass:compile
           width: 100%;
       }
   }
-
+```
 ## 3.  Extend
-
+```
   .dialog-button {
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
   }
@@ -98,9 +98,9 @@ npm run sass:compile
     @extend .dialog-button;
     background-color: #87bae1;
   }
-
+```
   to
-
+```
   .dialog-button, .confirm {
     box-sizing: border-box;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
@@ -108,18 +108,18 @@ npm run sass:compile
   .confirm {
     background-color: #87bae1;
   }
-
+```
 ## 4.  Nesting
-
+```
   ul {
     list-style: none;
     li {
       padding: 15px;
     }
   }
-
-  to
-
+```
+> to
+```
   ul {
     list-style: none; 
   }
@@ -127,9 +127,9 @@ npm run sass:compile
   ul li {
     padding: 15px;
   }
-
+```
 ## 5.  Operations
-
+```
 $container-width: 100%;
 $column-count: 4;
 $margin: 1%;
@@ -142,9 +142,9 @@ $margin: 1%;
   width: ($container-width / $column-count) - ($margin * 2);
   margin: 0 $margin;
 }
-
+```
 ## 6.  Functions
-
+```
   $awesome-blue: #2196F3;
 
   a {
@@ -167,10 +167,10 @@ $margin: 1%;
     width: getColumnWidth($container-width,$column-count,$margin);
     margin: 0 $margin;
   }
-
+```
 ## 7. Theme Development
-
-# Example 1
+> Example 1
+```
 $settings: (
     maxWidth: 800px,
     columns: 12,
@@ -222,8 +222,9 @@ $settings: (
 }
 
 @include renderGridStyles($settings);
-
-# Example 2
+```
+> Example 2
+```
 @mixin themable($theme-name, $container-bg, $left-bg, $right-bg, $innertext, $button-bg) {
    .#{$theme-name} {
        .wrapper {
@@ -272,3 +273,4 @@ $settings: (
 
 @include themable(theme-1, #f7eb80, #497265, #82aa91, #fff, #bc6a49);
 @include themable(theme-2, #e4ada7, #d88880, #cc6359, #fff, #481b16);
+```
