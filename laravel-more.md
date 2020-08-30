@@ -79,44 +79,44 @@ mix.options({
 ```
 > Examples
 ```
-1. @include
-    @include('partials.sidebar',['menu' => $menu])
-2. @push & @stack
-3. @php
-4. @hasSection
-    @hasSection('navigation') 
-    // your logic here
-    @endif
-5. @each
-    @each('users.index', $users, 'user', 'users.notfound')
-6. @includeWhen
-    @includeWhen($isUserAdmin, 'users.admin_card', ['user' => $user])
-7. @json
-    var data = @json($product);
-8. @forelse
-    @forelse($users as $user)
+1.	@include
+        @include('partials.sidebar',['menu' => $menu])
+2.	@push & @stack
+3.	@php
+4.	@hasSection
+        @hasSection('navigation') 
+        // your logic here
+        @endif
+5.	@each
+        @each('users.index', $users, 'user', 'users.notfound')
+6.	@includeWhen
+        @includeWhen($isUserAdmin, 'users.admin_card', ['user' => $user])
+7.	@json
+        var data = @json($product);
+8.	@forelse
+        @forelse($users as $user)
         {{ $user->name }}
-    @empty
+        @empty
         No Users Found
-    @endforelse
-9. @verbatim
-    @{{ name }} //Call
-    @verbatim
+        @endforelse
+9.	@verbatim
+        @{{ name }} 
+        @verbatim
         {{ name }}
-    @endverbatim    
-10. @isset & @empty
+        @endverbatim    
+10.	@isset & @empty
         @isset($users)
         // your logic here
         @endisset
-        
+
         @empty($users)
         // your logic here
         @endempty
-11. @inject
+11.	@inject
         @inject('menu', 'App\Services\MenuService')
         // then in your view
         {!! $menu->render() !!}
-12. @csrf & @method
+12.	@csrf & @method
 ```
 ## Macroable
 
@@ -134,50 +134,6 @@ Here are some of the most commonly used classes to create macros :
 - **Arr:** Illuminate\Support\Arr
 - **Rule:** Illuminate\Validation\Rule
 
-## Gate & Policy
-> Gate
-`Route::get('/posts/delete', 'PostController@delete')->middleware('can:delete')->name('post.delete');`
-
-> Route
-```
-Route::put('/post/{post}', function (Post $post) {
-    // The current user may update the post...
-})->middleware('can:update,post');
-```
-
-> Policy
-```
-if ($user->can('update', $post)) {
-    //user is authorized now
-}
-```
-> Blade directive
-```
-@can('update', $post)
-    
-@elsecan('create', App\Post::class)
-    
-@endcan
-```
-## Policy Methods
-```
-Controller              Policy
-index	               viewAny
-show	               view
-create	               create
-store	               create
-edit	               update
-update	               update
-destroy	               delete
-```
-## Roles & Premissions
-```
-php artisan make:migration create_permissions_table --create=permissions
-php artisan make:migration create_roles_table --create=roles
-php artisan make:migration create_user_permissions_table --create=user_permissions
-php artisan make:migration create_user_roles_table --create=user_roles
-php artisan make:migration create_role_permissions_table --create=role_permissions
-```
 ## What are Notifications?
 Laravel provides mailables which can be used to send emails, these emails are long with custom markup styling but we can not be sent through different channels. Laravel Notifications solves our this problem, by providing an elegant and fun way to send notifications to users.
 
@@ -206,25 +162,67 @@ Storage::allDirectories();
 Storage::makeDirectory($name);
 Storage::deleteDirectory($name);
 ```
-## Routes
-> Return with dynamic data for route like `Route::get('post/{id}', 'PostController@edit')-name('post.edit');`
-```
-return redirect()->route('post.edit', ['id' => $post->id]);
-return redirect()->route('post.edit', $post->id);
-```
-> With return message
-` return redirect()->back()->with('success', 'Post saved successfully.');`
+## API resources
 
-> With more Response
+API resources present a way to easily transform our models into JSON responses. 
+It acts as a transformation layer that sits between our Eloquent models and the JSON responses that are actually returned by our API. 
+API resources is made of two entities: a resource class and a resource collection. 
+A resource class represents a single model that needs to be transformed into a JSON structure, while a resource collection is used for transforming collections of models into a JSON structure.
+
+### Status Code	Meaning
+`200:` OK. The standard success code and default option.
+`201:` Object created. Useful for the store actions.
+`204:` No content. When an action was executed successfully, but there is no content to return.
+`206:` Partial content. Useful when you have to return a paginated list of resources.
+`400:` Bad request. The standard option for requests that fail to pass validation. (Wrong with URL or parameters)
+`401:` Unauthorized. The user needs to be authenticated.
+`403:` Forbidden. The user is authenticated, but does not have the permissions to perform an action.
+`404:` Not found. This will be returned automatically by Laravel when the resource is not found.
+`422:` Un-processable Entity (validation failed)
+`500:` Internal server error. Ideally you're not going to be explicitly returning this, but if something unexpected breaks, this is what your user is going to receive.
+`503:` Service unavailable. Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
+
+## Laravel Pagination Instance Methods
 ```
-$response = [
-    'success'   =>  'Post saved successfully.',
-    'post_id'   =>  $post->id,
-];
-return redirect()->back()->with($response);
+$results->count()
+$results->currentPage()
+$results->firstItem()
+$results->hasMorePages()
+$results->lastItem()
+$results->lastPage() (Not available when using simplePaginate)
+$results->nextPageUrl()
+$results->onFirstPage()
+$results->perPage()
+$results->previousPageUrl()
+$results->total() (Not available when using simplePaginate)
+$results->url($page)
 ```
-> Controller action
+## Laravel Model Events
+Eloquent provides a handful of events to monitor the model state which are:
+
+`retrieved :` after a record has been retrieved.
+`creating :` before a record has been created.
+`created :` after a record has been created.
+`updating :` before a record is updated.
+`updated :` after a record has been updated.
+`saving :` before a record is saved (either created or updated).
+`saved :` after a record has been saved (either created or updated).
+`deleting :` before a record is deleted or soft-deleted.
+`deleted :` after a record has been deleted or soft-deleted.
+`restoring :` before a soft-deleted record is going to be restored.
+`restored :` after a soft-deleted record has been restored.
+
+## Laravel Scheduler Methods
+Laravel scheduler provides many methods which map to a cron job timing, some of them are below which I have used a lot.
 ```
-return redirect()->action('PostController@create);
-return response()->action('PostController@edit', ['id' => $post->id]);
+->everyMinute(); : Run the task every minute
+->everyFiveMinutes(); : Run the task every five minutes
+->hourly(); : Run the task every hour
+->hourlyAt(15); : Run the task every hour at 15 mins past the hour
+->daily(); : Run the task every day at midnight
+->dailyAt('15:00'); : Run the task every day at 15:00
+->weekly(); : Run the task every week
+->monthly(); : Run the task every month
 ```
+> Cron setup
+`* * * * * php /path-to-your-laravel-project/artisan schedule:run >> /dev/null 2>&1`
