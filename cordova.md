@@ -1,26 +1,27 @@
 ### Add the following values to the Path system variable in Environment Variables:
 
-Variable: ANDROID_HOME 
-Value: C:\Users\balakarthikeyan.a\AppData\Local\Android\Sdk
+> **Variable:** `ANDROID_HOME`
+> **Value:** ` C:\Users\balakarthikeyan.a\AppData\Local\Android\Sdk`
 
-Variable: ANT_HOME 
-Value: C:\apache-ant
+> **Variable:** `ANT_HOME` 
+> **Value:** `C:\apache-ant`
 
-Variable: JAVA_HOME 
-Value: C:\Program Files\Java\jdk1.8.0_131
+> **Variable:** `JAVA_HOME`
+> **Value:** `C:\Program Files\Java\jdk1.8.0_131`
 
 ### Path Variable
-%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;
+`%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;`
 
 ### via Command prompt
+```
 setx JAVA_HOME "C:\Program Files\Java\jdk1.8.0_131"
 setx ANT_HOME "C:\apache-ant"
 setx ANDROID_HOME "C:\Users\balakarthikeyan.a\AppData\Local\Android\Sdk"
 setx PATH "%PATH%;%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;";
 setx PATH "%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;"
-
+```
 ### To setup project
-
+```
 npm -v
 npm install -g npm@latest / npm update -g npm
 npm config ls -l
@@ -51,3 +52,4 @@ ionic start myApp sidemenu
 ionic start myAwesomeApp
 ionic info
 ionic serve
+```
