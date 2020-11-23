@@ -93,6 +93,16 @@ node-inspector --web-port=5500
 > Method 3
 node --debug-brk script.js
 
+### to work with mutliple version of node use nvm
+> Install
+`nvm install 12.0.0` or`to install latest `nvm install latest 
+> Use node version
+`nvm use 10.14.0`
+> Other general commands
+```
+nvm list
+nvm ls
+```
 ### Examples
 ```
 npm i uuid
