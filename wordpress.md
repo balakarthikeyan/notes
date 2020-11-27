@@ -1,3 +1,58 @@
+## Wordpress Features
+    Custom Header, Logo & Background
+    Menus
+    Widgets
+    Theme Options & Framework
+    Child Theme
+    Functions
+    Shortcode
+    Custom Taxonomies
+    Custom Post Types
+    Threaded Comments
+    Featured Image
+    Sticky / Featured Post
+    Breadcrumbs
+    Microformats
+    Canonical
+    Web Fonts
+    Sliders
+
+## Wordpress snippets for templates
+    the_content(); Content of the posts
+    have_posts(); Check if there are posts
+    the_post(); Shows posts if posts are available
+    get_header(); Header.php file's content
+    get_sidebar(); Sidebar.php file's content
+    get_footer(); Footer.php file's content
+    the_time('m-d-y'); The date in 'month-day-year′ format
+    comments_popup_link(); Link for the comments on the post
+    the_title()'; Title of a specific post or page
+    the_permalink(); URL of a specific post or page
+    the_category(); Category of a specific post or page
+    the_author(); Author of a specific post or page
+    the_ID(); ID of a specific post or page
+    edit_post_link(); Link to edit a specific post or page
+    get_links_list(); Links from the blogroll
+    comments_template(); Comment PHP file's content
+    wp_list_pages(); List of pages of the site
+    wp_list_cats(); List of categories for the site
+    next_post_link('%link'); URL to the next post
+    previoust_post_link('%link'); URL to the previous post
+    get_calendar(); The built-in calendar
+    wp_get_archives(); List of archives for the site
+    posts_nav_link(); Next and previous post links
+    bloginfo('description'); Site's description
+    wp_meta(); Meta for administrators
+    timer_stop(1); Time to load the page
+    get_num_queries(); Queries to load the page
+    include(TEMPLATEPATH . <filename>); Include any file
+    the_search_query(); Value for search form
+    _e('Message'); Prints out message
+    wp_register(); Displays the register link
+    wp_loginout(); Displays the login/logout link
+    wp_list_pages('sort_column=menu_order&depth;=1&title;_li='); Displays the menus 
+    wp_list_categories('title_li=&orderby;=id'); Displays the categories
+
 ## Customer Header & Logo
 ```
 function acetheme_custom_header_setup() {
