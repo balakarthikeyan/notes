@@ -72,3 +72,14 @@ git revert HEAD
 git checkout feature
 git rebase master
 ```
+
+## gitignore File
+```
+.gitignore
+.DS_Store
+Thumbs.db
+npm-debug.log
+/bower_components
+/node_modules
+/vendor
+```
