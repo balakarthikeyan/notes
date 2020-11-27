@@ -29,3 +29,22 @@ composer require balakarthikeyan/hello-composer "dev-master"
 composer remove vendor_name/package_name
 composer show
 ```
+
+## My package
+```
+{
+"repositories" : [
+			{
+			"type" : "vcs",
+			"url" : "https://github.com/balakarthikeyan/hello-composer"
+			}
+		],
+"require" : {
+	"monolog/monolog": "master",
+	"balakarthikeyan/hello-composer": "dev-master"
+},
+"minimum-stability" : "stable"
+}
+
+Packgist Token: 5d0e18d2c6cac315a19143cbb214b40a0b4da965
+```
