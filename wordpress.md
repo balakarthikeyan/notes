@@ -53,6 +53,15 @@
     wp_list_pages('sort_column=menu_order&depth;=1&title;_li='); Displays the menus 
     wp_list_categories('title_li=&orderby;=id'); Displays the categories
 
+## Wordpress User roles:
+
+	Super Admin: The profile that has access to the entire website, including network administrative features.
+	Administrator: The profile(s) that has all administrative privileges.
+	Editor: The profile(s) that can create, edit, publish theirs, and other users’ posts.
+	Author: The profile(s) that can create, edit, publish their posts only.
+	Contributor: The profile(s) that can create, edit their posts but cannot publish them.
+	Subscriber: The profile(s) that can only manage their profiles.
+
 ## Customer Header & Logo
 ```
 function acetheme_custom_header_setup() {
