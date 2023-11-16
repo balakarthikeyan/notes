@@ -83,3 +83,9 @@ npm-debug.log
 /node_modules
 /vendor
 ```
+## Reset Revert Rebase Commands
+```
+git reset --hard origin/master 
+git pull --rebase origin preview
+git push --force origin <branch-name>
+```
