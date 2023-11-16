@@ -1,4 +1,5 @@
 # Linux Commands
+```
 `ll`	to list the files
 `tree <foldername>`	to list files in tree structure
 `apt-get`	is command line software for installing packages on Ubuntu
@@ -25,3 +26,4 @@
 `tar`	Create & Unpack compressed archives.
 `wget`	Download files from the internet.
 `du`	Get file size.
+```
