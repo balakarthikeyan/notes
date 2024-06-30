@@ -44,6 +44,7 @@ class SampleClass {
      */
     public int|float $number;
 	
+	// Constructor Property Promotion
     public function __construct(
         public string $firstname,
         public string $lastname,
@@ -72,7 +73,9 @@ $message = match ($statusCode) {
     500 => 'server error',
     default => 'unknown status code',
 };
+
 echo '<pre>'; var_dump($message); echo '</pre>';
+
 
 //New String functions
 str_contains('string with lots of words', 'words'); // true
@@ -84,6 +87,7 @@ str_ends_with('haystack', 'stack'); // true
 echo '<pre>'; var_dump(array_is_list($numbers)); echo '</pre>'; // true 
 
 //Enums
+
 interface MyInterface{
     public static function hello();
 }

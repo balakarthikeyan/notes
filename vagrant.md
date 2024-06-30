@@ -171,3 +171,42 @@ date.timezone = Asia/Calcutta
 ```
 <?php phpinfo(); ?>
 ```
+
+### Install PHP 8
+```
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+```
+
+### Install PHP as Apache
+```
+sudo apt update
+sudo apt install php8.0 libapache2-mod-php8.0
+sudo apt install php8.0-mysql php8.0-gd
+sudo systemctl restart apache2
+```
+
+### Configure Apache with PHP-FPM
+```
+sudo apt update
+sudo apt install php8.0-fpm libapache2-mod-fcgid
+sudo a2enmod proxy_fcgi setenvif
+sudo a2enconf php8.0-fpm
+systemctl restart apache2
+```
+
+### Installing Nginx
+```
+sudo apt update
+sudo apt install php8.0-fpm
+systemctl status php8.0-fpm
+sudo systemctl restart nginx
+```
+
+### Installing Cert
+```
+ssh-keygen -t rsa
+ssh-copy-id -p 2222 vagrant@127.0.0.1
+cat <username>/.ssh/id_rsa.pub | ssh vagrant@12.0.0.1 "mkdir <username>/.ssh/; cat >> <username>/.ssh/authorized_keys"
+vagrant ssh-config > vagrant-ssh; ssh -F vagrant-ssh default
+```
