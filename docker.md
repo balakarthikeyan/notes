@@ -1,7 +1,13 @@
-# What is Docker:
+# What is Docker?
 
 Docker is a set of platform as a service product that use OS-level virtualisation to deliver software in packages called containers. 
 By using Docker, developers can build, pack, share, deploy and run applications as lightweight, portable, self-sufficient containers and running virtually anywhere.
+
+# What is a Docker Image?
+In Docker, An image is a combination of a file system and parameters. It is a single file with all the dependencies and configurations required to run a program.
+
+# What is a Container?
+A container is an instance of an image, which is a running program. 
 
 ## Containers:
 
@@ -93,12 +99,24 @@ A Dockerfile is where you write the instructions to build a Docker image.
 
 The Docker image is created at build time and the Docker container is created at run time
 
+# What is a Dockerfile?
+Dockerfile is simply a text file written in a specific format, which basically has instructions & arguments that Docker can understand.
+
+Every Docker Image must be based off from another Image. It can be based either on an Operating System or an exiting Image.
+
+Example: 
+```
+FROM node
+Or
+RUN npm install
+```
+
 # Dockerfile instructions:
 
 FROM — specifies the base (parent) image.
 LABEL —provides metadata. Good place to include maintainer info.
 ENV — sets a persistent environment variable.
-RUN —runs a command and creates an image layer. Used to install packages into containers (software package).
+RUN —runs a command and creates an image layer instructs to run a particular command on the image. Used to install packages into containers (software package).
 COPY — copies files and directories to the container.
 ADD — copies files and directories to the container. Can upack local .tar files.
 CMD — provides a command and arguments for an executing container. Parameters can be overridden. There can be only one CMD.
@@ -118,7 +136,6 @@ EXPOSE 8000
 
 $ sudo apt-get update
 $ sudo apt install docker.io
-$ sudo snap install docker
 $ docker -v
 
 We can push the image to a Docker Hub just like we do in Github and then we can put it into any machine from the Docker hub 
@@ -180,18 +197,34 @@ docker run balakarthikeya/docker-app
 
 # Basic Commands
 
+## Create the image
+    docker create <image_name>
+## Start container
+    docker start <container_name>
+## Run the images
+    docker run <image_name> command
+    docker run = docker create + docker start.
+## Restarting the exited container.
+    docker start -a <container_name>
+    "-a" simply means to attach the terminal.
 ## List images
-    docker images 
-## List all images
-    docker ps -a
+    docker images  ls
+## List all container
+    docker ps -all
 ## List running containers
     docker ps
-## Run a command in a running container 
+## How to execute a command in a running container ?
     docker exec -it <service-name-in-compose-file> bash 
+## To kill a container?
+    docker kill <container_name>
+## Stop a specific container
+    docker stop <container_name>
 ## Stop one or more running containers
     docker stop $(docker ps -aq)
+## Delete a specific container (only if stopped).
+    docker rm <container_name>
 ## Remove all containers
-    docker rm -fv $(docker ps -aq)
+    docker rm -fv $(docker ps -a -q)
 ## Remove all images at once
     docker rmi -f $(docker images -q) 
 ## Show the history of an image
@@ -206,6 +239,14 @@ docker run balakarthikeya/docker-app
     docker build
 ## Check running container
     docker container ls --all
+## Delete a specific image.
+    docker image rm <image_name>
+## Delete all existing images.
+    docker image rm $(docker images -a -q)
+## Change a container name at running time.
+    docker run --name <container_name> <image_name>
+## Display logs of a container.
+    docker logs <container_name>
 
 # Technology Used in Docker:
 
@@ -261,3 +302,23 @@ none : disables communication between docker containers.
 overlay: used to enable communication between docker containers on different hosts (swarm nodes).
 
 macvlan: this allows containers to grab a unique IP address from the physical LAN network with DHCP.
+
+# Docker Concepts
+Images are read-only templates that you build from a set of instructions written in your Dockerfile.
+
+The Docker image is built using a Dockerfile. Each instruction in the Dockerfile adds a new “layer” to the image, with layers representing a portion of the images file system that either adds to or replaces the layer below it. Layers are key to Docker’s lightweight yet powerful structure. Docker uses a Union File System to achieve this:
+
+The Docker daemon receives the command from the client and manages Docker objects, such as images, containers, networks, and volumes. The Docker client and daemon can either run on the same system, or you can connect a Docker client to a remote Docker daemon. They can communicate using a REST API, over UNIX sockets or a network interface.
+
+The Docker image is created at build time and the Docker container is created at run time.
+
+The Dockerfile is at the heart of Docker. The Dockerfile tells Docker how to build the image that will be used to make containers.
+
+Each Docker image contains a file named Dockerfile with no extension. The Dockerfile is assumed to be in the current working directory when docker build is called to create an image.
+
+Recall that a container is built from a series of layers. Each layer is read only, except the final container layer that sits on top of the others. The Dockerfile tells Docker which layers to add and in which order to add them.
+
+By simply adding Dockerfile that contains instructions that are further used by Docker to package up the application into an image. 
+
+# Union File Systems
+Docker uses Union File Systems to build up an image. You can think of a Union File System as a stackable file system, meaning files and directories of separate file systems (known as branches) can be transparently overlaid to form a single file system.

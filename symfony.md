@@ -22,6 +22,7 @@ composer create-project symfony/skeleton:"6.2.*" <project-name>
 # Few Bundles
 ```
 symfony check:requirements
+composer create-project symfony/skeleton:"6.2.*"
 symfony new . --version="6.2.*"
 composer require --dev maker
 composer require --dev ormfixtures 
@@ -35,6 +36,7 @@ composer require form validator
 composer require security security-csrf annotations
 composer require doctrine twig
 composer require doctrine/annotations
+composer require --dev symfony/test-pack
 ```
 
 # Console commands
@@ -53,12 +55,15 @@ symfony server:start --no-tls
 # Doctrine commands
 ```
 symfony console doctrine:database:create
+symfony console make:entity <entity_name>
+symfony console make:migration
 symfony console doctrine:migrations:migrate
 symfony console doctrine:schema:update --force
 symfony console doctrine:fixtures:load
 symfony console doctrine:fixtures:load --purge-with-truncate
 ```
 
+# Project based commands
 ```
 php -S localhost:8000 -t public/
 php bin/console doctrine:query:sql 'SELECT * FROM user'
@@ -66,14 +71,6 @@ php bin/console debug:router
 php bin/console debug:autowiring
 ```
 
-# REST API
-
-REST stands for representational state transfer and API stand for application programming interface. 
-RESTful API is a type of API that uses the REST architectural style, an API is uses REST if it has this characteristics:
-
-`Client-Server` – The communication between Client and Server.
-`Stateless` – After the server completed a http request, no session information is retained on the server.
-`Cacheable` – Response from the server can be cacheable or non cacheable.
-`Uniform Interface` – This are the constraints that simplify things. The constraints are Identification of the resources, resource manipulation through representations, self-descriptive messages, hypermedia as the engine of application state.
-`Layered System` – These are intermediaries between client and server like proxy servers, cache servers, etc.
-`Code on Demand`(Optional) – This is optional, the ability of the server to send executable codes to the client like java applets or JavaScript code, etc.
+`symfony/maker-bundle:` This bundle helps you create empty commands, controllers, form classes, tests, and more so you can forget about writing boilerplate code.
+`symfony/security-bundle:` This bundle integrates the complete security system for our Symfony web application and provides ways to authorize authenticated users based on their roles.
+`symfony/flex:` This is a tool that makes adding new features seamless through the use of a simple command.

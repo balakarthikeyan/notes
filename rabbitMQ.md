@@ -39,3 +39,18 @@ The port 5672 is used to make connections with clients for RabbitMQ, while the p
 `Message Handler` – processes for servicing messages
 `Transport` – sending and receiving messages, sending to queues for example via RabbitMQ
 `Worker` – processing and consuming messages
+
+# Symfony Installation
+```
+composer require symfony/amqp-messenger
+composer req messenger amqp
+php bin/console debug:messenger
+php bin/console messenger:consume -v
+php bin/console messenger:consume async -vv
+php bin/console messenger:consume external_messages 
+```
+
+the message class is the class that holds the message’s data;
+the handler class is in charge of reading the Message. It also will delegate the action to one or more services;
+the serializer class is where the information gets translated into a readable version for our application to use it;
+transport is what we need for sending and receiving messages;

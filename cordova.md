@@ -67,6 +67,7 @@ cordova plugin add com.filfatstudios.spinnerdialog
 npm install -g typescript
 npm install -g cordova ionic
 npm install -g ionic@latest
+npm install -g ionic@3.3.0
 
 ionic start myApp blank
 ionic start myApp tabs
@@ -74,4 +75,10 @@ ionic start myApp sidemenu
 ionic start myAwesomeApp
 ionic info
 ionic serve
+ionic -v
+```
+
+### Ionic bundle script
+```
+<script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
 ```

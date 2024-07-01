@@ -171,8 +171,10 @@ php artisan make:policy NewPolicy --model=ModelName
 php artisan make:rule NewRule
 php artisan storage:link
 
-php artisan view:clear
 php artisan cache:clear
+php artisan route:clear
+php artisan config:clear 
+php artisan view:clear
 
 php artisan make:request NameControllerRequest
 php artisan make:observer NameObserver --model=NameModel
@@ -220,4 +222,9 @@ composer require doctrine/dbal
 composer require laravel/telescope --dev
 php artisan telescope:install
 php artisan migrate
+
+composer config --global --auth github-oauth.github.com <token>
+composer update kylekatarnls/update-helper
+composer update --prefer-source
+composer dump-autoload
 ```
