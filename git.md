@@ -89,3 +89,8 @@ git reset --hard origin/master
 git pull --rebase origin preview
 git push --force origin <branch-name>
 ```
+## Commit git with the previous date?
+```
+git commit --amend --date="YYYY-MM-DD HH:MM:SS"
+git commit --date="YYYY-MM-DD HH:MM:SS" -m "Your commit message"
+```

@@ -20,12 +20,18 @@ setx PATH "%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;"
 ### To setup project
 ```
 npm -v
-npm install -g npm@latest / npm update -g npm
+npm install -g npm@latest
+npm update -g npm
 npm config ls -l
+npm install -g express
 npm install -g cordova
 npm info cordova version
 npm install -g phonegap
 npm info phonegap version
+npm install -g grunt-cli
+
+node .help
+node .exit
 
 phonegap -v
 phonegap analytics off
@@ -68,6 +74,17 @@ npm install -g typescript
 npm install -g cordova ionic
 npm install -g ionic@latest
 npm install -g ionic@3.3.0
+
+npm install -g typescript
+npm install --save @angular/material
+npm install --save angular2
+npm install --save mongodb
+
+npm install --save @angular/core@4.1.0 
+npm install --save @angular/compiler 
+npm install --save @angular/common 
+npm install --save @angular/platformbrowser 
+npm install --save @angular/platform-browser-dynamic rxjs reflect-metadata zone.js
 
 ionic start myApp blank
 ionic start myApp tabs

@@ -78,3 +78,15 @@ wscui.cpl
 
 Wireless Link
 irprops.cpl
+
+Computer Management
+compmgmt.msc
+
+GUI Windows Explorer
+explorer.exe
+
+Edit Group Policy
+gpedit.msc
+
+Registry Editor
+regedit

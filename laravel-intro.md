@@ -110,6 +110,8 @@ Laravel makes use of an ORM which stands for Object Relationnal Mapper and imple
 
 ## My working Commands
 ```
+composer global require "laravel/lumen-installer"
+lumen new mylumen
 composer global require "laravel/installer"
 laravel new mylaravel
 (or)

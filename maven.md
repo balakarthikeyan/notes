@@ -1,9 +1,9 @@
 ## Create Maven Project
-`mvn archetype:generate -DgroupId=com.java.samples -DartifactId=JavaSamples -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false`
+`mvn archetype:generate -DgroupId=com.painter.HelloWorld -DartifactId=Painter -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false`
 
 ## Description
-- `groupId` will be `com.java.samples`, representing the package.
-- `artifactId` will be JavaSamples (on the build, JavaSamples.jar will be created)
+- `groupId` will be `com.painter.HelloWorld`, representing the package.
+- `artifactId` will be Painter (on the build, Painter.jar will be created)
 - `archetypeArtifactId` is nothing but the template used for creating this Java project. In the above case we defined maven-archetype-quickstart
 - `interactiveMode` is used when the developer is aware of the actual spelling of the artifact id. If interactiveMode is set to be TRUE so that it will scan the remote repositories for all available archetypes.
 
@@ -51,6 +51,7 @@
 
 ## Jetty Server Run
 `mvn jetty:run`
+`mvn spring-boot:run -D server.port=8181`
 
 ## Run tomcat plugin
 ```
