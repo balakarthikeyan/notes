@@ -247,6 +247,8 @@ docker run balakarthikeya/docker-app
     docker run --name <container_name> <image_name>
 ## Display logs of a container.
     docker logs <container_name>
+## Create network for container.
+    docker network create --driver=bridge --attachable network_name
 
 # Technology Used in Docker:
 

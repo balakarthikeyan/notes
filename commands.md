@@ -27,3 +27,23 @@
 `wget`	Download files from the internet.
 `du`	Get file size.
 ```
+ps -o pid,user,%mem,command ax | sort -b -k3 -r
+sudo pmap 917 | tail -n 1 | awk '/[0-9]K/{print $2}'
+
+ps aux | head -1; ps aux | sort -rnk 4 | head -5
+alias mem-by-proc="ps aux | head -1; ps aux | sort -rnk 4"
+
+lscpu | egrep 'Model name|Socket|Thread|NUMA|CPU\(s\)'
+```
+CPU Core: 8
+Thread per core: 2
+Total threads: 16 ( CPU core[8] * Thread per core [2])
+```
+echo "CPU threads: $(grep -c processor /proc/cpuinfo)"
+echo "Threads/core: $(nproc --all)"
+
+lscpu -b -p=Core,Socket | grep -v '^#' | sort -u | wc -l
+
+netstat -tulpn
+pgrep -fl <name>
+adb logcat | grep -i "nameofyourapp"

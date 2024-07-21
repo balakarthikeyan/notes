@@ -70,3 +70,14 @@ composer install --no-ansi --no-dev --no-interation --no-progress --no-scripts -
 - Stop installation scripts (might cause issue during build but completely dependent on your business logic)( --no-scripts ) 
 - It will not print progress and will work without generating o/p or asking for any i/p ( --no-progress --no-interaction and --no-ansi )
 ```
+
+## .gitignore File:
+
+```
+.DS_Store
+Thumbs.db
+npm-debug.log
+/bower_components
+/node_modules
+/vendor
+```

@@ -94,3 +94,13 @@ git push --force origin <branch-name>
 git commit --amend --date="YYYY-MM-DD HH:MM:SS"
 git commit --date="YYYY-MM-DD HH:MM:SS" -m "Your commit message"
 ```
+
+# Change CLRF
+git config core.autocrlf false
+
+# Remove local commit
+git rm --cached -r .
+git reset --hard
+
+# Change remote URL
+git remote set-url origin git_url
