@@ -1,92 +1,95 @@
-## What are the key components of the Symfony framework?
+### What is Symfony?
+> `Ans:` Symfony is a high-performance PHP framework that follows the Model-View-Controller (MVC) architectural pattern. It provides reusable components and libraries for accelerating the development process of web applications.
+
+### What are the key components of the Symfony framework?
 
 > Symfony is built on a set of decoupled and reusable components such as Routing, Templating (Twig), Forms, Dependency Injection, and ORM (Doctrine).
 
-## How does Symfony compare to other PHP frameworks like Laravel or CodeIgniter?
+### How does Symfony compare to other PHP frameworks like Laravel or CodeIgniter?
 
 > Symfony is known for its flexibility and modular architecture, while Laravel is admired for its elegant syntax and rapid development features. CodeIgniter is more lightweight and has a smaller footprint.
 
-## What is Twig in the Symfony ecosystem?
+### What is Twig in the Symfony ecosystem?
 
 > Twig is a flexible and fast templating engine integrated with Symfony for creating dynamic views.
 
-## How does Symfony handle database interactions?
+### What is a Symfony bundle?
+
+> `Ans:`  A bundle in Symfony is a structured set of files (PHP files, stylesheets, JavaScripts, images) that implement a specific feature. Bundles are reusable packages or modules in Symfony that encapsulate functionality such as controllers, models, views, configuration files, and routes. They help in organizing code and promoting code reusability across different projects.
+
+### How does Symfony handle database interactions?
 
 > Symfony often uses Doctrine, an ORM (Object-Relational Mapping) tool, to interact with databases.
 
-## How can you enhance the performance of a Symfony application?
+### How can you enhance the performance of a Symfony application?
 
 > Performance can be improved by optimizing the code, using caching mechanisms like Varnish or Symfony's built-in HTTPCache, and optimizing database queries.
 
-## How does Symfony support API development?
+### How does Symfony support API development?
 
 > Symfony has built-in tools and bundles like FOSRestBundle and API Platform that facilitate the creation of RESTful and GraphQL APIs.
 
-## What's the role of the Symfony profiler?
+### What's the role of the Symfony profiler?
 
 > The Symfony profiler is a development tool that provides detailed insights into an application's performance, database queries, and other vital metrics.
 
-## How do you handle forms in Symfony?
+### How do you handle forms in Symfony?
 
 > Symfony provides a Form component that allows developers to create, render, and handle forms in an object-oriented manner.
 
-## How can you secure a Symfony application?
+### How can you secure a Symfony application?
 
 > Symfony offers a Security component that manages authentication, authorization, CSRF protection, and more.
 
-## What are Symfony Flex and Symfony Recipes?
+### What are Symfony Flex and Symfony Recipes?
 
 > Symfony Flex is a Composer plugin that automates installing and configuring Symfony bundles. Recipes are instructions defined by bundles to automate configuration tasks.
 
-## How does Symfony handle sessions and cookies?
+### How does Symfony handle sessions and cookies?
 
 > Symfony provides a Session component to manage user sessions and a Cookie class for handling cookies.
 
-## What's the role of a Controller in a Symfony application?
-
-> In Symfony, a Controller is responsible for handling HTTP requests, processing logic, and returning a response, typically a rendered view.
-
-## How do you handle translations and internationalization in Symfony?
+### How do you handle translations and internationalization in Symfony?
 
 > Symfony offers a Translation component that provides tools for internationalization and translations.
 
-## What is a Symfony bundle?
-
-> A bundle in Symfony is a structured set of files (PHP files, stylesheets, JavaScripts, images) that implement a specific feature. It's similar to a plugin in other software.
-
-## How can you handle errors and exceptions in Symfony?
+### How can you handle errors and exceptions in Symfony?
 
 > Symfony provides an Error Handling component that manages errors and exceptions, allowing developers to create custom error pages and log issues.
 
-## How do you integrate third-party libraries in Symfony?
+### How do you integrate third-party libraries in Symfony?
 
 > Third-party libraries can be integrated into Symfony projects using Composer and then utilized within the application's code.
 
-## How do you manage configurations in a Symfony project?
+### How do you manage configurations in a Symfony project?
 
 > Symfony uses YAML, XML, or PHP files to manage configurations, and the configuration values can be accessed using the service container.
 
-## How can you optimize database queries in Symfony?
+### How can you optimize database queries in Symfony?
 
 > Using Doctrine, developers can utilize the DQL (Doctrine Query Language), ensure proper indexing, and use caching mechanisms to optimize queries.
 
-## What is the role of the service container in Symfony?
+### What's the role of a Controller in a Symfony application?
+
+> In Symfony, a Controller is responsible for handling HTTP requests, processing logic, and returning a response, typically a rendered view.
+
+### What is the role of the Service container in Symfony?
 
 > The service container in Symfony is a dependency injection container that manages object instances and their dependencies.
 
-## How do you handle events and listeners in Symfony?
+### How do you handle events and listeners in Symfony?
 
 > Symfony provides an EventDispatcher component, which allows developers to create, dispatch, and listen to events throughout the application.
 
-## How do you manage assets in a Symfony project?
+### How do you manage assets in a Symfony project?
 
 > Symfony offers an Asset component and Webpack Encore to manage and compile assets like CSS, JavaScript, and images.
 
-## How do you set up authentication using Symfony Guard?
+### How do you set up authentication using Symfony Guard?
 
 > Symfony Guard is a powerful and customizable authentication system. By creating a Guard authenticator class and configuring the security settings, developers can define custom authentication processes.
 
-## What is Symfony?
+### What is Symfony?
 
 ```
 Symfony is a PHP framework that aims to accelerate the design and maintenance of web applications and replace recurrent coding tasks. A few prerequisites are mandate for installation: Linux, FreeBSD, Mac OS or Microsoft Windows, and a web server with PHP. 
@@ -95,11 +98,11 @@ Rails-like programming method, clean design, and code readability. Symfony offer
 
 Symfony can be utilized to create powerful applications in an enterprise context as it permits developers to test, debug, and document projects, giving them complete control over configuration and customization - from the directory structure to the foreign libraries. Symfony utilizes the Model-View-Controller design pattern, splitting the business logic from the presentation layer. 
 ```
-## What are the benefits of Symfony?
+### What are the benefits of Symfony?
 
 > Symfony PHP framework is effortless to use gratitude to its Ruby-On-As a development framework. Symfony simplifies a developer's work, as it doesn't require writing extensive codes to create web applications.
 
-## Advantages of Symfony Framework: 
+### Advantages of Symfony Framework: 
 
 - `Fast-Paced Development:` Time requires fast and high-performance applications. The developer community needs the flexibility to create great applications. Symfony 2 has the ability for performance optimization of applications. It ingests less memory and authorizes developers to develop applications at a considerable speed. 
 - `Flexibility:` Symfony is fully adjustable to a developer's unique requirements, with independent and configurable components. Developers can easily create complicated applications with multiple functional features with their event dispatcher and dependency injector. The required functionalities can be built brick by brick and carry out the development task at their own pace. 
@@ -108,11 +111,11 @@ Symfony can be utilized to create powerful applications in an enterprise context
 - `Comfort & Convenience:` The Framework delivers a highly functional development environment and conveys to developers the desired level of pleasure and ease. Instead of concentrating on minor functionalities, the framework facilitates developers to focus more on the core functional features of an application. This improves a developer's productivity and makes their task smooth and error-free. Symfony devices, such as the Web Debug Toolbar, bring more convenience for a developer to address errors and security-related issues. 
 - `User Friendly:` Symfony is an easy-to-use framework for any developer and is highly convenient for beginners and advanced users, with a host of documentation and support from the company and the community. With an acceptable level of professional support, a newbie can quickly learn the best practices of Symfony Development to help create agile and performance-driven solutions. 
 
-##  What are the components in Symfony?
+###  What are the components in Symfony?
 
 Symfony Components are a collection of decoupled and reusable PHP libraries. It is open-source software that desires to quicken or speed up the creation and maintenance of web applications, substitute repetitive coding tasks, create powerful and robust applications in an enterprise context, and give developers complete control over the configuration. 
 
-Symfony Components are decoupled libraries for PHP applications. Thousands of projects have been downloaded billions of times and are the foundation of essential PHP projects. Symfony provides components ranging from the simple feature, say file system, to advanced features, events, container technology, and dependency injection. 
+Symfony Components are decoupled libraries for PHP applications. Symfony provides components ranging from the simple feature, say file system, to advanced features, events, container, and dependency injection. 
 
 ```
 How to install a Symfony Application using Composer?
@@ -144,11 +147,7 @@ php bin/console server:run
 Open your browser and navigate to localhost.
 ```
 
-Q1. What is Symfony?
-Ans: Symfony is a high-performance PHP framework that follows the Model-View-Controller (MVC) architectural pattern. It provides reusable components and libraries for accelerating the development process of web applications.
 
-Q2. Explain Symfony Bundles.
-Ans: Bundles are reusable packages or modules in Symfony that encapsulate functionality such as controllers, models, views, configuration files, and routes. They help in organizing code and promoting code reusability across different projects.
 
 Q3. Differentiate between Symfony 4 and Symfony 5.
 Ans: Symfony 4 introduced Flex, a new way of managing Symfony applications and bundles, making it more lightweight and customizable. Symfony 5 further improved performance and introduced new features like Mailer and HttpClient.
@@ -200,6 +199,29 @@ Ans. In Symfony, the registerBundles() method of the Kernel class is used to ena
 
 4. In Symfony2, which is the default routing configuration file?
 Ans. Following is the default configuration file: app/config/routing.yml
+
+2. What are the advantages of using Symfony?
+The main advantages of using the Symfony framework are given below - 
+
+It is time-efficient
+The MVC pattern is followed
+Provides extreme flexibility to users
+It is user-friendly as well as stable a framework
+It is easy to use and customize
+It has a large community.
+
+3. What are the components in Symfony?
+Symfony Components are reusable libraries that are the foundation of almost all main PHP projects. The objectives of this open-source software are maintaining web apps, replacing repetitive coding, speeding up the creation, building vigorous enterprise apps, and offering developers complete configuration control.
+
+4. What is meant by bundles in Symfony?
+A Symfony bundle collects the folders and files that are arranged in a specific manner. You can use these bundles in several applications. Usually, the "AppBundle" contains the package of the main application. There are app-specific bundles available also, like BlogBundle. You can't share these bundles with other apps. But you can use the general bundle as a particular part of your app. The common files and structure of bundles are as follows:
+
+Controller - All the controllers are collected here.
+DepedencyInjection - It contains the code of dependency injection and extension classes also.
+Tests - It contains all the unit test files connected to the bundle.
+Resources/config - The configurations related to the bundle are contained here, such as routing.yaml.
+Resources/public - Static resources like JavaScripts, stylesheets, images, etc., are contained in this.
+Resources/view - The view templates are collected in this.
 
 5. What do you mean by Serializer in Symfony?
 Ans. Serializer is used to convert a PHP object into other formats like JSON, Binary, XML, etc. You can do this by creating a Serializer object and adding normalizers, encoders, etc.
@@ -407,3 +429,114 @@ Best Practices
 •	URL written in lowercase
 •	Hyphens instead of underscores
 •	Beware of trailing slash!!! (eqs-news.com/ instead of eqs-news.com)
+
+
+31. How can the request parameters be obtained in Symfony 2.0?
+In Symfony, we can get the request parameters using the following method:
+
+$request = $this->container->get('request');  
+
+$name=$request->query->get('name')
+32. What is the syntax for checking a valid email address?
+The following syntax is used for checking valid email addresses:
+
+Use Symfony\Component\Validator\Constraints as Assert; 
+class Student {     
+/**   
+   * @Assert\Email(   
+    * message = "The email '{{ value }}' is not a valid email.",   
+     * checkMX = true   
+      * )   
+*/     
+  protected $email;     
+} 
+33. What is the default port of Symfony?
+8000 is the default port in Symfony.
+
+34. How can an action be created in the controller of Symfony 2.0?
+Action in Symfony 2 can be created in the Symfony 2.0 controller with the help of given commands:
+
+public function indexAction()    
+    {    
+        return $this->render('user/index.html.twig', [ ]);    
+    }  
+35. Which method does Symfony use for handling a server-side request of Ajax?
+The given method is used by Symfony for handling a server-side request of Ajax:
+
+if ($request->isXmlHttpRequest()) {      
+   // Ajax request      
+} else {      
+   // Normal request      
+}  
+36. In Symfony, is the directory structure of bundles fixed?
+No, the directory structure of bundles is not fixed in Symfony.
+
+37. Which file of routing configuration is set as default in Symfony 2.0?
+app/config/routing.yml is the file of routing configuration that is set as default in Symfony 2.0.
+
+
+Introduction
+SOLID is an acronym that represents five design principles for writing maintainable and scalable software. These principles were introduced by Robert C. Martin and have become fundamental guidelines for object-oriented design. This repository serves as a practical guide to implementing SOLID principles in PHP with real-world examples.
+
+SOLID Principles
+Single Responsibility Principle (SRP)
+The SRP states that a class should have only one reason to change. In other words, a class should have only one responsibility.
+
+A class should have one and only one reason to change, meaning that a class should have only one job.
+
+Open/Closed Principle (OCP)
+The OCP suggests that a class should be open for extension but closed for modification. This means that you can add new functionality without altering existing code.
+
+Objects or entities should be open for extension but closed for modification.
+
+Liskov Substitution Principle (LSP)
+The LSP states that objects of a superclass should be able to replace objects of a subclass without affecting the correctness of the program.
+
+Interface Segregation Principle (ISP)
+The ISP recommends that a class should not be forced to implement interfaces it does not use. It promotes the creation of smaller, more specific interfaces.
+
+Dependency Inversion Principle (DIP)
+The DIP emphasizes that high-level modules should not depend on low-level modules, but both should depend on abstractions. It also introduces the concept that abstractions should not depend on details, but details should depend on abstractions.
+
+What is auto wiring, it is “Defining Services Dependencies Automatically” as stated on the symfony page. Before auto wiring symfony had a need to manually configure all you classes in service definitions. Those would be in yaml, xml and php files.
+config/services.yaml
+
+Value Resolvers:
+
+Symfony Value Resolvers are a mechanism that allows, for example, to obtain as arguments of an action:
+
+services registered in the application container
+session object or logged in user
+request or a single request attribute
+
+
+Design patterns are a fundamental part of object-oriented programming, providing a blueprint for solving recurring problems in a structured and maintainable way.
+
+the Factory Method design pattern is a powerful tool for creating objects while allowing subclasses to determine the exact type of objects to be created.
+
+
+Session management is handled by Symfony HttpFoundation component, that has a very powerful and flexible session subsystem which is designed to provide session management through a simple object-oriented interface using a variety of session storage drivers.
+
+Typically, by default, it will save to file in directory /var/cache/sessions/
+
+
+#Session Attributes
+Session attributes are stored in a bag, and acts like an array.
+
+set() : Sets an attribute by key.
+get() : Gets an attribute by key.
+all() : Gets all attributes as an array of key => value.
+has() : Returns true if the attribute exists.
+replace() : Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+remove() : Deletes an attribute by key.
+clear() : Clear all attributes.
+#Bag Management
+registerBag() : Registers a SessionBagInterface.
+getBag() : Gets a SessionBagInterface by bag name.
+getFlashBag() : Gets the FlashBagInterface. This is just a shortcut for convenience.
+#Basic Example
+use Symfony\Component\HttpFoundation\Session\Session;
+
+Source code
+
+<?php $session = new Session(); $session->start(); // setting and getting sessions $session->set('username', 'digvijaytiwari'); $session->get('name'); ?>

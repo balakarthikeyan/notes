@@ -28,7 +28,7 @@
 
 ## Examples:
 
-```
+```php
 $numbers = [1, 2, 3, 4, 5, 6];
 $squares = array_map(array:  $numbers, callback: function($n) {
     return $n * $n;

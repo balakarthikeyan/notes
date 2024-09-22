@@ -17,6 +17,77 @@ Laravel is web development framework for building web applications with PHP. It'
 - Tokenizer PHP Extension
 - XML PHP Extension
 
+### Laravel's significant features include:
+- Route Handling
+- Security
+- Migration
+- Templating
+- Sessions
+- Data Validation
+- Cache Handling
+- Error Handling
+- Testing
+- Storage and File Management
+- Email
+- Notifications
+
+## Basic Concepts
+
+- Routing
+- Models, controllers and views
+- Blade Template Engine
+- Requests and Responses
+- Database Migrations
+- Middlewares
+- Eloquent ORM
+- Artisan CLI
+- MVC architecture
+- Securtiy
+- Built in Multi-language support
+- Background Jobs/Queues
+- Unit Testing
+- Dependecy Injection
+- Real time events
+- Scalability
+
+## Important structures and functionalities in Laravel
+
+- **Service Containers**
+The service container is one of the core components of Laravel. Service containers manage class dependencies and dependency injection.
+
+- **Service Providers**
+Classes and dependencies are injected into the service containers.
+
+- **Facades & Packages**
+A facade is a static interface for classes bound in the service container.
+
+- **Command-Line Interfaces**
+Laravel includes a set of command-line interfaces (CLIs). The Artisan Console includes commands that help developers quickly build skeleton code, simplify and automate repetitive tasks, and more easily complete an application build
+
+- **Eloquent**
+Eloquent is an object-relational mapper (ORM) that allows easy interaction with databases. 
+
+- **Composer**
+Composer is a third-party application-level PHP dependency management tool
+
+- **Homestead**
+Laravel Homestead is a development environment allowing development on a virtual machine by providing a pre-packaged Vagrant box. 
+
+**Authentication Starter Kits**
+- `Laravel Breeze` is an authentication starter kit. It includes common authentication and user account features such as user registration, login, email verification, and password confirmation and reset.
+- `Jetstream`, first introduced in Version 8. Jetstream also offers additional advanced features such as two-factor authentication, session management, API support via `Laravel Sanctum`, and optional team management.
+- `Fortify` is the engine for the `Jetstream` authentication starter kit and includes all of the Laravel authentication features.
+- Laravel also offers social media-based authentication (OAuth) through `Laravel Socialite`.
+- `Forge` allows for deployment through a variety of infrastructure providers with minimal configuration efforts. 
+- `Vapor` is a serverless deployment platform based on AWS.
+
+**Packages**
+- Authentication i.e. `Laravel Breeze/Fortify`
+- Billing/Subscription i.e. `Laravel Cashier`
+- Browser Automation and Testing i.e. `Laravel Dusk`
+- Remote Task Manager i.e. `Laravel Envoy`
+- Local Development i.e. `Laravel Sail/Homestead`
+
 ## The New Features of Laravel
 
 ### Laravel 6:
@@ -39,15 +110,84 @@ Laravel is web development framework for building web applications with PHP. It'
 - **HTTP Client:** An API for making HTTP requests,
 - Route Caching Speed Improvements, etc.
 
-## Basic Concepts
+### Laravel 9:
 
-- Routing
-- Models, controllers and views
-- Blade templating
-- Requests and Responses
-- Database migrations
-- Middlewares
-- Eloquent ORM
+Laravel 9 installation requires the most up-to-date form of PHP 8, PHPUnit 9, has Symfony 6
+
+- Anonymous Stub Migration
+```
+php artisan make:migration
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('people', function (Blueprint $table)
+        {
+            $table->string('first_name')->nullable();
+        });
+    }
+};
+```
+- New Query Builder Interface
+```
+Illuminate\Contracts\Database\QueryBuilder interface
+Illuminate\Database\Eloquent\Concerns\DecoratesQueryBuilder trait
+
+return Model::query()
+	->whereNotExists(function($query) {
+		// $query is a Query\Builder
+	})
+	->whereHas('relation', function($query) {
+		// $query is an Eloquent\Builder
+	})
+	->with('relation', function($query) {
+		// $query is an Eloquent\Relation
+	});
+```
+- PHP 8 String Functions
+```
+\Illuminate\Support\Str class
+
+functions include the use of str_contains(), str_starts_with(), and str_ends_with() 
+```
+
+#### Migration of Laravel 8 to 9
+- **Flysystem 2.0** Laravel 9.x has migrated from Flysystem 1.x to 2.x.
+- **Symfony Mailer**  SwiftMailer has stopped the support.
+- **Custom Casts & null** In Laravel 9.x, the set strategy of the cast course will be invoked with null as the given $value argument
+- **Default HTTP Client Timeout** The HTTP client now includes a default timeout of 30 seconds.
+- **The lang Directory** the resources/lang directory as of now is located within the root project directory.
+- **The Password Rule** which validates that the given input esteem matches the confirmed user’s current password
+
+### Laravel 10:
+
+Laravel 10 installation requires the most up-to-date form of PHP 8.1
+
+- Artisan Command Becomes More Interactive
+- Invokable Validation Rules by Default
+- Uses Native Types Instead of Docblocks
+- Dropped Support for Predis v1
+
+#### Migration of Laravel 9 to 10
+- Remove various deprecations
+- Remove deprecated dates property
+- Remove handleDeprecation method
+- Remove deprecated assertTimesSent method
+- Remove deprecated ScheduleListCommand’s $defaultName property
+- Remove deprecated Route::home method
+- Remove deprecated dispatchNow functionality
+
+### Laravel 11:
+Laravel 11 introduce streamlined application structure, per-second rate limiting, health routing etc.
+Laravel middleware is a mechanism that filters HTTP requests entering your application. It sits between the request and the application's core, allowing you to intercept, modify, or reject requests based on certain conditions. Middleware can be used for tasks like authentication, logging, and request manipulation. It provides a flexible way to handle cross-cutting concerns in your application's HTTP lifecycle, ensuring clean and modular code organization.
 
 ### Laravel 6/7 Routing
 Routing is an important feature in any web application and allows your app to route HTTP requests to the appropriate handler which sends an appropriate response be it an HTML view or a JSON response.
@@ -62,15 +202,6 @@ A Laravel controller reresents the C part in the MVC architecture which is repon
 
 ### Laravel 6/7 Views
 A Laravel view represents the V part of the MVC architecture. They are simply HTML pages (with CSS and JavaScript) composing the UI of the application that are sent to the client once they are processed and rendered. Views are merely presentationel i.e they don't contain business logic .
-
-### Blade templating
-Laravel makes use a templating language called Blade which is powerful and easy to use. They support modern features like inheritance which enables the reuse of templates.You can create templates in the resources/views folder of your project using the blade.php extension.
-
-    Blade is the simple, yet powerful templating engine provided with Laravel. Unlike other popular PHP templating engines, Blade does not restrict you from using plain PHP code in your views. 
-    In fact, all Blade views are compiled into plain PHP code and cached until they are modified, meaning Blade adds essentially zero overhead to your application. Blade view files use the .blade.php file extension and are typically stored in the resources/views directory.
-
-### Request and Responses
-Traditionnal frameworks like Laravel works based on HTTP request and response cycles. Requests are sent from clients using HTTP verbs like GET, POST, DELETE and UPDATE. When they are processed by Laravel, appropriate responses are created and sent back to clients. A response is created and sent from the controller mapped to the route which received the request.
 
 ### Laravel 6/7 Models and Migrations
 In Laravel, the Model from the MVC pattern represents the part that contains the business/domain logic. It corresponds to a table in the database and allow you to interact with the database with high level APIs.
@@ -115,17 +246,16 @@ lumen new mylumen
 composer global require "laravel/installer"
 laravel new mylaravel
 (or)
-composer create-project --prefer-dist laravel/laravel mylaravel
+composer create-project laravel/laravel mylaravel --prefer-dist 
+composer create-project laravel/laravel mylaravel "11.*" --prefer-dist
 
 php artisan serve
 php artisan serve --port=8000 --host=localhost
 
 php artisan make:controller NameController // Parameters: --resource, --api, --invokable, --model=NameModel
-php artisan make:controller NameController --resource --model=NameModel
 
 // Creates: Model, Factory, Table and Controller
-php artisan make:model NameModel --factory --migration --resource /-fmr 
-php artisan make:model NameModel --migration --controller --resource / -mcr
+php artisan make:model NameModel --factory --migration --controller --resource / -fmcr
 
 php artisan make:migration create_tablename_table --create=tablename
 php artisan make:migration add_to_tablename_table --table=tablename
@@ -187,6 +317,10 @@ php artisan make:test NameControllerTest --unit
 
 php artisan make:resource NameModelResource --collection=NameModel
 
+```
+
+## Tinker
+```
 php artisan tinker
 factory(App\User::class,5)->create()
 exit
@@ -198,35 +332,169 @@ $user->email = 'balakarthikeyan@mail.com'
 $user->password = bcrypt('password')
 $user->save()
 exit
+```
 
-mkdir resources/views/layouts
-mkdir resources/views/pages
-mkdir resources/views/includes
-code resources/views/layouts/default.blade.php
-
+## Enable UI
+```
 composer require laravel/ui --dev
 php artisan ui bootstrap --auth
 npm install && npm run dev 
+```
 
+## Enable Capctcha
+```
 composer require captcha-com/laravel-captcha:"4.*"
 php artisan vendor:publish
+```
 
+## Enable Social
+```
 composer require laravel/socialite
 php artisan vendor:publish
+```
 
+## Enable pagination
+```
 php artisan vendor:publish --tag=laravel-pagination
+```
 
-composer require laravel/passport
-php artisan migrate
-php artisan passport:install
-composer require doctrine/dbal
-
-composer require laravel/telescope --dev
-php artisan telescope:install
-php artisan migrate
-
+## Enable Oauth
+```
 composer config --global --auth github-oauth.github.com <token>
 composer update kylekatarnls/update-helper
 composer update --prefer-source
 composer dump-autoload
+```
+
+## Re-Run or Migrate
+```
+php artisan key:generate
+php artisan config:cache
+php artisan route:cache
+php artisan migrate or php artisan migrate --force
+php artisan db:seed or php artisan migrate:refresh --seed
+php artisan optimize:clear
+php artisan serve
+```
+
+## Run Laravel 11
+```
+php artisan key:generate
+php artisan migrate
+php artisan make:migration create_notes_table --create=notes
+php artisan make:migration add_to_notes_table --table=notes
+php artisan make:request NoteStoreRequest
+php artisan make:request NoteUpdateRequest
+php artisan make:controller NoteController --resource --api --invokable --model=Note
+php artisan make:model Note -fmcr
+
+php artisan lang:publish
+php artisan lang:publish --existing
+php artisan make:class Helpers/Helper
+php artisan make:interface Interfaces/TestInterface
+php artisan make:enum Enums/NoteStatus
+php artisan make:trait Traits/Sluggable
+php artisan make:command TestJob
+php artisan make:exception InvalidProductException
+php artisan make:factory UserFactory
+php artisan make:seeder UserSeeder
+php artisan db:seed UserSeeder
+php artisan make:middleware IsAdmin
+php artisan config:publish cors
+php artisan make:class OnceTest
+php artisan make:command ShowMethod --command=show:method
+php artisan make:resource MyCollection
+php artisan install:api
+php artisan make:view layouts.app
+php artisan make:view auth.register
+php artisan make:view auth.login
+php artisan make:view auth.home
+php artisan make:scope ActiveScope
+php artisan make:rule Uppercase
+php artisan make:observer ProductObserver --model=Product
+
+php artisan tinker
+App\Models\Note::factory()->count(5)->create();
+User::factory(30)->create();
+```
+
+### Tailwind CSS and its peer dependencies:
+Tailwind CSS is an open-source CSS framework. The main feature of this library is that, unlike other CSS frameworks like Bootstrap, it does not provide a series of predefined classes for elements such as buttons or tables.
+``
+npm install -D tailwindcss postcss autoprefixer
+npm install -D @tailwindcss/forms
+``
+
+Run the following command to generate the tailwind.config.js and postcss.config.js files: `npx tailwindcss init -p`
+
+### Enable Query Log
+```
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+DB::enableQueryLog(); Log::debug(DB::getQueryLog());
+```
+
+### Enable Fortify
+```
+composer clear-cache
+composer require laravel/fortify
+php artisan fortify:install
+php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+php artisan migrate
+```
+
+### Enable Passport
+```
+composer require doctrine/dbal
+composer require laravel/passport
+php artisan migrate
+php artisan passport:install
+```
+
+### To create passport password
+```
+php artisan passport:keys
+php artisan passport:client --password
+```
+
+### Enable Jetstream
+Jetstream provides the implementation for your application's login, registration, email verification, two-factor authentication, session management, API via Laravel Sanctum, and optional team management features.
+
+```
+composer require laravel/jetstream
+php artisan jetstream:install livewire
+php artisan migrate
+php artisan make:livewire posts
+php artisan livewire:publish --config
+```
+
+### Enable Telescope
+```
+composer require laravel/telescope --dev
+php artisan telescope:install
+php artisan migrate
+localhost:8000/telescope/requests
+```
+
+### Enable Maintaince
+```
+php artisan down --render="errors::503"
+```
+
+### Enable JWT
+```
+composer require php-open-source-saver/jwt-auth
+php artisan vendor:publish --provider="PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider"
+php artisan jwt:secret
+
+```
+
+### Enable Swagger
+```
+composer require "darkaonline/l5-swagger"
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+npm install swagger-ui-dist
+php artisan l5-swagger:generate
+http://localhost:8000/api/documentation
+
 ```

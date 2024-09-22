@@ -1,4 +1,4 @@
-Mocha supports more traditional TDD interfaces:
+## Mocha supports more traditional TDD interfaces:
 
 suite: analogous to describe
 test: analogous to it
@@ -7,8 +7,8 @@ teardown: analogous to after
 suiteSetup: analogous to beforeEach
 suiteTeardown: analogous to afterEach
 
-TDD with the Assert
+### TDD with the Assert
 var assert = require('chai').assert;
 
-BDD with the Except
+### BDD with the Except
 var expect = require('chai').expect;

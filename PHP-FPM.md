@@ -27,13 +27,14 @@ In this mode, PHP-FPM dynamically manages the number of available child processe
 
 This configuration uses five configuration options; these are:
 
-pm.max_children: The maximum number of child processes allowed to be spawned.
-pm.start_servers: The number of child processes to start when PHP-FPM starts.
-pm.min_spare_servers: The minimum number of idle child processes PHP-FPM will create. More are created if fewer than this number are available.
-pm.max_spare_servers: The maximum number of idle child processes PHP-FPM will create. If there are more child processes available than this value, then some will be killed off.
-pm.process_idle_timeout: The idle time, in seconds, after which a child process will be killed.
+- `pm.max_children:` The maximum number of child processes allowed to be spawned.
+- `pm.start_servers:` The number of child processes to start when PHP-FPM starts.
+- `pm.min_spare_servers:` The minimum number of idle child processes PHP-FPM will create. More are created if fewer than this number are available.
+- `pm.max_spare_servers:` The maximum number of idle child processes PHP-FPM will create. If there are more child processes available than this value, then some will be killed off.
+- `pm.process_idle_timeout:` The idle time, in seconds, after which a child process will be killed.
 
-Setting	Value
+## Setting	Value
+```bash
 max_children	    (Total RAM – Memory used for Linux, DB, etc.) / process size
 start_servers	    Number of CPU cores x 4
 min_spare_servers	Number of CPU cores x 2
@@ -50,12 +51,17 @@ Low:           2.0G        504M        1.5G
 High:            0B          0B          0B
 Swap:          979M          0B        979M
 
-banandakumar@eqs-hk-wordpress-wps001:~$ grep MemTotal /proc/meminfo
+banandakumar@wordpress:~$ grep MemTotal /proc/meminfo
 MemTotal:        2001920 kB
+```
 
+## Configuration
+
+```ini
 pm = dynamic
 pm.max_children = 5
 pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 pm.max_requests = 500
+```

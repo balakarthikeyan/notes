@@ -1,10 +1,5 @@
-# What is Laravel?
-
-Laravel is one of the most popular, highly used, open-source modern web application framework. It provides unique features like Eloquent ORM, Query builder ,Homestead which are the modern features, only present in Laravel.
-I like Laravel because of its unique architectural design.Behind the scene Laravel uses different design pattern such as Singleton, Factory, Builder, Facade, Strategy, Provider, Proxy etc. 
-
 # Dependency Inversion
-
+Laravel uses different design pattern such as Singleton, Factory, Builder, Facade, Strategy, Provider, Proxy etc. 
 Dependency Inversion Principle it will help us to understand why we need IoC Container
 High-level modules should not depend on low-level modules. Both should depend on abstractions.
 Abstractions should not depend on details. Details should depend on abstractions.
@@ -160,3 +155,13 @@ App::bind('DatabaseWriter', function(){
 });
 ```
 As I already said, the DatabaseWriter itself does not know anything about the dependencies of it's dependencies. But the IoC-Container knows all about them and also knows where to find them. So eventually when the DatabaseWriter class is going to be instantiated, the IoC-Container first is asked how it needs to be instantiated.
+
+What is the Service Design Pattern?
+The Service Design Pattern, also known as the Service Layer Pattern, involves creating a service layer that encapsulates the business logic of an application. This layer serves as an intermediary between the controller and the data access layer, ensuring that each layer remains distinct and focused on its responsibilities.
+
+In Laravel, this pattern helps keep controllers lean, enhances testability, and centralizes business logic, making it easier to maintain and update.
+
+Repository pattern in laravel?
+It allows using objects without having to know how these objects are persisted. It is an abstraction of the data layer. It means that our business logic no need to know how data is retrieved. The business logic relies on the repository to get the correct data.
+
+Basically it is used to decouple the data access layers and business logic in our application.

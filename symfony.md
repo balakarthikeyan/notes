@@ -15,15 +15,14 @@ Symfony is a PHP framework used to develop web application, APIs, microservices 
 
 # Create project
 ```
+symfony check:requirements
 composer create-project symfony/website-skeleton:<version> <project-name>
 composer create-project symfony/skeleton:"6.2.*" <project-name>
+symfony new <project-name> --version="6.2.*"
 ```
 
 # Few Bundles
 ```
-symfony check:requirements
-composer create-project symfony/skeleton:"6.2.*"
-symfony new . --version="6.2.*"
 composer require --dev maker
 composer require --dev ormfixtures 
 composer require --dev fakerphp/faker
@@ -31,46 +30,58 @@ composer require symfony/maker-bundle
 composer require symfony/twig-bundle
 composer require symfony/mailer
 composer require symfony/google-mailer
-composer require symfony/test-pack
 composer require form validator
 composer require security security-csrf annotations
-composer require doctrine twig
-composer require doctrine/annotations
+composer require doctrine doctrine/annotations
+composer require twig
 composer require --dev symfony/test-pack
 ```
 
 # Console commands
 ```
-symfony console make:entity <entity-name>
-symfony console make:migration
-symfony console make:fixture <fixture-name>
 symfony console make:controller <controller-name>
 symfony console make:crud <project-name>
 symfony console make:user
 symfony console make:auth
 symfony console make:registration
-symfony server:start --no-tls
 ```
 
 # Doctrine commands
 ```
 symfony console doctrine:database:create
-symfony console make:entity <entity_name>
+symfony console make:entity <entity-name>
 symfony console make:migration
 symfony console doctrine:migrations:migrate
 symfony console doctrine:schema:update --force
+symfony console make:fixture <fixture-name>
 symfony console doctrine:fixtures:load
 symfony console doctrine:fixtures:load --purge-with-truncate
 ```
 
 # Project based commands
 ```
+symfony server:start --no-tls
 php -S localhost:8000 -t public/
 php bin/console doctrine:query:sql 'SELECT * FROM user'
 php bin/console debug:router
 php bin/console debug:autowiring
 ```
 
-`symfony/maker-bundle:` This bundle helps you create empty commands, controllers, form classes, tests, and more so you can forget about writing boilerplate code.
-`symfony/security-bundle:` This bundle integrates the complete security system for our Symfony web application and provides ways to authorize authenticated users based on their roles.
-`symfony/flex:` This is a tool that makes adding new features seamless through the use of a simple command.
+# Debugging
+- `php bin/console debug:container`
+This command will show you all the services already registered or auto wired. 
+
+- `php bin/console debug:container log`
+This will list all the services that do things with logging. 
+
+```bash
+php bin/console cache:warmup
+php bin/console debug:container hello
+```
+The above commands warm up the cache and search for the hello service in the container.
+
+# Bundles
+
+- `symfony/maker-bundle:` This bundle helps you create empty commands, controllers, form classes, tests, and more so you can forget about writing boilerplate code.
+- `symfony/security-bundle:` This bundle integrates the complete security system for our Symfony web application and provides ways to authorize authenticated users based on their roles.
+- `symfony/flex:` This is a tool that makes adding new features seamless through the use of a simple command.

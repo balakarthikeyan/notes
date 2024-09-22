@@ -158,13 +158,15 @@ db.posts.remove({ title: 'Post Four' });
     Mongoose provides a straight-forward, schema-based solution to model your application data.
 
     npm install mongoose --save.
-
+	
+```javascript
     const mongoose = require('mongoose');
     mongoose.connect('mongodb://localhost:27017/database', { useNewUrlParser: true, useUnifiedTopology: true });
     const Schema = mongoose.Schema;
     const blog = new Schema({
-                                    author: String,
-                                    title: String,
-                                    body: String,
-                                    date: { type: Date, default: Date.now }
-                                });
+		author: String,
+		title: String,
+		body: String,
+		date: { type: Date, default: Date.now }
+	});
+```

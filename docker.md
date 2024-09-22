@@ -133,11 +133,11 @@ EXPOSE 8000
 # Installing Docker:
 
 ## Commands to install docker on Ubuntu:
-
+```
 $ sudo apt-get update
 $ sudo apt install docker.io
 $ docker -v
-
+```
 We can push the image to a Docker Hub just like we do in Github and then we can put it into any machine from the Docker hub 
 And run it virtually as it contains all the specific dependencies required by the application to run.
 

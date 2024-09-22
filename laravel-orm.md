@@ -9,8 +9,8 @@ A relationship, in the context of the database, is a relation or link between tw
 - One To Many
 - Many To Many
 - HasMany Through
-- Many To Many 
 - Polymorphic Relation
+- Many To Many Polymorphic
 
 > One to One Relationship with Example
 ```
