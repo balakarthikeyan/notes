@@ -82,11 +82,19 @@ Laravel Homestead is a development environment allowing development on a virtual
 - `Vapor` is a serverless deployment platform based on AWS.
 
 **Packages**
-- Authentication i.e. `Laravel Breeze/Fortify`
-- Billing/Subscription i.e. `Laravel Cashier`
-- Browser Automation and Testing i.e. `Laravel Dusk`
-- Remote Task Manager i.e. `Laravel Envoy`
-- Local Development i.e. `Laravel Sail/Homestead`
+- `Laravel Breeze:` A simple, minimal implementation of all Laravel's authentication features including login, registration, password reset, email verification and password confirmation.
+- `Laravel Fortify:` A headless authentication backend that includes the above authentication features along with two-factor authentication.
+- `Laravel Jetstream:` An application starter kit that provides a UI on top of Laravel Fortify's authentication features.
+- `Laravel Passport:` An OAuth2 authentication provider.
+- `Laravel Sanctum:` An API token authentication provider.
+- `Laravel Telescope:` It is a powerful debugging assistant for Laravel applications. It provides insights into the requests coming into your application, exceptions, database queries, and much more.
+- `Laravel Octane` supercharges your application’s performance by serving requests using high-performance application servers like Swoole and RoadRunner.
+- `Laravel Sail/Homestead:` Local Development
+- `Laravel Envoy:` Remote Task Manager
+- `Laravel Dusk:` Browser Automation and Testing
+- `Laravel Cashier:` Billing/Subscription
+- `Laravel Scout:` 
+- `Laravel Horizon:` 
 
 ## The New Features of Laravel
 
@@ -100,6 +108,18 @@ Laravel Homestead is a development environment allowing development on a virtual
 - Eloquent Subquery Enhancements,
 - **Laravel UI:** UI scaffolding logic such as Bootstrap or Vue, is extracted in its own laravel/ui package.
 - **Ignition:** A new and smart error page.
+
+Other features
+
+- Inbuilt CRSF (cross-site request forgery ) Protection.
+- Inbuilt paginations
+- Reverse Routing
+- Query builder
+- Route caching
+- Database Migration
+- IOC (Inverse of Control) Container Or service container.
+- Job middleware
+- Lazy collections
 
 ### Laravel 7:
 
@@ -458,8 +478,6 @@ php artisan passport:client --password
 ```
 
 ### Enable Jetstream
-Jetstream provides the implementation for your application's login, registration, email verification, two-factor authentication, session management, API via Laravel Sanctum, and optional team management features.
-
 ```
 composer require laravel/jetstream
 php artisan jetstream:install livewire
@@ -467,6 +485,14 @@ php artisan migrate
 php artisan make:livewire posts
 php artisan livewire:publish --config
 ```
+## Installation Laravel Breeze
+composer create-project laravel/laravel laravel-breeze-example
+composer require laravel/breeze — dev
+php artisan breeze:install blade
+php artisan migrate
+npm install
+npm run dev
+php artisan serve
 
 ### Enable Telescope
 ```
@@ -486,7 +512,6 @@ php artisan down --render="errors::503"
 composer require php-open-source-saver/jwt-auth
 php artisan vendor:publish --provider="PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider"
 php artisan jwt:secret
-
 ```
 
 ### Enable Swagger
@@ -496,5 +521,4 @@ php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 npm install swagger-ui-dist
 php artisan l5-swagger:generate
 http://localhost:8000/api/documentation
-
 ```

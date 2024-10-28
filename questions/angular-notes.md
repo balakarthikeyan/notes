@@ -1,3 +1,21 @@
+# What is Angular ?
+Angular is a powerful front-end framework that is widely used for building dynamic web applications. It is open-source and maintained by Google. One of the key features of Angular is its use of TypeScript, a typed superset of JavaScript that makes code easier to read, maintain, and debug.
+
+my-workspace/
+├── ... #workspace-wide configuration files
+├── src
+│   ├── app
+│   │   ├── app.module.ts #defines the root module, that tells Angular how to assemble the application
+│   │   ├── app.component.ts #defines the logic for the application's root component
+│   │   ├── app.component.html #defines the HTML template associated with the root component
+│   │   ├── app.component.css #defines the base CSS stylesheet for the root component
+│   │   ├── app.component.spec.ts #defines a unit test for the root component
+│   │   └── app-routing.module.ts #provides routing capability for the application
+│   ├── ...
+│   ├── index.html #main HTML page, where the component will be rendered
+├── angular.json #provides workspace-wide and project-specific configuration defaults
+└── tsconfig.json #provides the base TypeScript configuration for projects in the workspace
+
 # Angular 15:
 - `Standalone Components:` Angular 15 introduced fully standalone components, allowing developers to create components without needing NgModules, simplifying the structure and dependencies of applications.
 - `Directive Composition API:` This feature enables the reuse of directives by composing them together.
@@ -91,15 +109,15 @@ In compiled programming languages, static analysis might be built into the compi
 7. Checking Types
 
 ## What is Garbage Collector Angular ?
-High-level and low-level languages allow us to have better memory management with the Garbage Collector (GC), which, in essence, monitors memory allocations and determines whether a certain memory block is or isn’t necessary for us.
+High-level and low-level languages allow us to have better memory management with the Garbage Collector (GC), which, in essence, monitors memory allocations and determines whether a certain memory block is or isn't necessary for us.
 
 ## Vendor.js :
-The vendor.js file is generated during the build process of an Angular application. It contains all the external libraries and dependencies that your application relies on. These can include frameworks like Angular itself, as well as third-party libraries like RxJS, Angular Material, or Bootstrap. The purpose of bundling these dependencies into a single file is to optimize the application’s loading time by reducing the number of network requests needed to fetch multiple JavaScript files.
+The vendor.js file is generated during the build process of an Angular application. It contains all the external libraries and dependencies that your application relies on. These can include frameworks like Angular itself, as well as third-party libraries like RxJS, Angular Material, or Bootstrap. The purpose of bundling these dependencies into a single file is to optimize the application's loading time by reducing the number of network requests needed to fetch multiple JavaScript files.
 
 By bundling the vendor dependencies together, the Angular build process creates a separate chunk that can be cached by the browser, resulting in faster subsequent loads of your application.
 
 ## Polyfill.js :
-Polyfills play a vital role in ensuring that your Angular application runs smoothly across different browsers and versions. They provide modern JavaScript features to older browsers that do not natively support them. The polyfill.js file includes a collection of JavaScript code that “polyfills” or replicates missing features in older browsers.
+Polyfills play a vital role in ensuring that your Angular application runs smoothly across different browsers and versions. They provide modern JavaScript features to older browsers that do not natively support them. The polyfill.js file includes a collection of JavaScript code that "polyfills" or replicates missing features in older browsers.
 
 Angular applications leverage features from the ECMAScript standards, and not all browsers support the latest specifications. Polyfills bridge this gap by enabling the use of modern JavaScript syntax, APIs, and functionalities in older browsers. The polyfill.js file is automatically generated during the build process, and its contents are based on the browser support configuration specified in the Angular project.
 
@@ -137,7 +155,7 @@ Zone.js is a JavaScript library used in Angular to provide execution context and
 6. Limited dynamic behavior: AOT introduces some limitations on dynamic behaviors, such as dynamic template generation or dynamic component loading, as the templates and components are pre-compiled during the build process.
 
 ## What are annotations in Angular? 
-Annotations in Angular are essential for defining components, services, directives, and other building blocks of an Angular application. They help Angular understand the structure and behavior of your application’s elements. They are the metadata set on the class used to reflect the metadata library. 
+Annotations in Angular are essential for defining components, services, directives, and other building blocks of an Angular application. They help Angular understand the structure and behavior of your application's elements. They are the metadata set on the class used to reflect the metadata library. 
 
 Some of the most commonly used annotations (decorators) in Angular include:
 
@@ -186,8 +204,24 @@ Angular's change detection is a mechanism that detects and propagates changes in
 - Observables provide a way to subscribe to and receive notifications when new data or events are emitted, enabling you to react to changes in real-time.
 
 ## Difference between Observables & Subjects ?
+It is a part of the Reactive Extensions for JavaScript (RxJS) library, which is included by default in Angular projects.
 Plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable)
 Subjects are multicast.
 
-- A Subject is like an observable but can be multicast to many Observers. Subjects are like Event Emitters: they maintain a registry of many listeners.
-- It is a part of the Reactive Extensions for JavaScript (RxJS) library, which is included by default in Angular projects.
+## Difference between cold observables and hot observables ?
+
+Cold Observables:
+
+A cold observable starts emitting values when a subscription is made. Each subscription to a cold observable triggers a separate execution of the observable's logic. The data stream is independent for each subscriber, and each subscriber receives the full sequence of emitted values from the beginning. Example Observable.
+
+Hot Observables:
+
+A hot observable emits values regardless of subscriptions. It starts emitting values immediately upon creation, and subscribers receive only values emitted after they subscribe. The data stream is shared among subscribers, and late subscribers may miss previously emitted values. Example Subject.
+
+## Difference between ng add and  npm install ?
+
+`ng add` is a convenient way to add Angular-specific packages or schematics to your project while automating the necessary setup steps.
+`npm install` is a general-purpose command used to install any package from the npm registry into your project, regardless of the specific framework or library being used.
+
+## What is DomSanitizer ?
+DomSanitizer, a service of Angular helps to prevent attackers from injecting malicious client-side scripts into web pages, which is often referred to as Cross-site Scripting or XSS.

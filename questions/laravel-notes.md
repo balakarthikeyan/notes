@@ -1,6 +1,8 @@
 ## What is a Service Provider in Laravel?
 A Service Provider is a class responsible for registering services in the container. The AppServiceProvider class for instance.
 
+All service providers extend the `Illuminate\Support\ServiceProvider` class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container. You should never attempt to register any event listeners, routes, or any other piece of functionality within the register method.
+
 ## What is Laravel Container?
 The container, in simple terms, is like a magic box in which you store your services that can retrieve and conveniently serve you whatever you need.
 

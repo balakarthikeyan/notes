@@ -85,3 +85,14 @@ The above commands warm up the cache and search for the hello service in the con
 - `symfony/maker-bundle:` This bundle helps you create empty commands, controllers, form classes, tests, and more so you can forget about writing boilerplate code.
 - `symfony/security-bundle:` This bundle integrates the complete security system for our Symfony web application and provides ways to authorize authenticated users based on their roles.
 - `symfony/flex:` This is a tool that makes adding new features seamless through the use of a simple command.
+
+# Debugging  my project
+```
+composer dump-autoload
+composer update --no-scripts
+composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+php bin/console cache:clear
+php bin/console route:cache
+php bin/console view:clear
+php bin/console migrate --force
+```

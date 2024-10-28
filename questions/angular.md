@@ -7,6 +7,24 @@
 - Property Binding
 - Attribute, Class and Style Bindings
 
+## Data binding
+Binding refers to the process of communication between a component and its corresponding view. It is utilized for transferring data to and from the Angular framework. Data can be passed through various means, such as through events, interpolation, properties, or through the two-way binding mechanism. Moreover, data can also be shared between related components (parent-child relation) and between two unrelated components using the Service feature.
+
+We can classify binding by data flow:
+
+- `Data source to view target` (includes interpolation, properties, attributes, classes and styles); can be applied by using [] or {{}} in template;
+- `View target to data source (includes events);` can be applied by using () in template;
+- `Two-Way;` can be applied by using [()] in template.
+
+Binding can be called on properties, events, and attributes, as well as on any public member of a source directive:
+
+- `Property` - element property, component property, directive property	`<img [alt]="hero.name" [src]="heroImageUrl" />`
+- `Event`	- element event, component event, directive event	`<button type="button" (click)="onSave()" />`
+- `Two-way`	- event and property	`<input [(ngModel)]="name" />`
+- `Attribute`	- attribute property	`<button type="button" [attr.aria-label]="help" />`
+- `Class`	- class property	`<div [class.special]="isSpecial">Special</div>`
+- `Style`	- style property	`<button type="button" [style.color]="isSpecial ? 'red' : 'green'" />`
+
 > One Way Binding(Interpolation):
 
 Interpolation is way to bind dynamic values directly into the text content of HTML elements.
@@ -44,7 +62,6 @@ Allows you to respond to user events (such as clicks, keypresses, etc.) by trigg
 <button (click)="onClick()">Click me</button>
 <input (input)="onInputChange($event)">
 ```
-This data binding type is when information flows from the view to the component when an event is triggered. The view sends the data from an event like the click of a button to be used to update the component.
 
 ## What is a Pipe ?
 Pipes are simple functions to use in template expressions to accept an input value and return a transformed value. 
@@ -109,12 +126,12 @@ The Signals API is a small and easy-to-use API, with three main reactive primiti
 
 - `Writable signals:` These are signals that you can change. For example, if you have a signal for a number, you can increase or decrease this number.
 - `Computed signals:` Their value depends on other signals. If the signal they depend on changes, they change too.
-Effects: These are special functions that respond when signal values change.
+- `Effects:` These are special functions that respond when signal values change.
 
 ## What are RxJS Operators ?
 - `toSignal:` As httpClient returns an observable, a good approach is to use toSignal() to convert or transform the observables into a signal.
 
-- `Subject:` A Subject is a special type of Observable which shares a single execution path among observers and allows values to be multicast to many Observers. Their message (the subject) is being delivered to many (multicast) people (the observers) at once. This is the basis of multicasting.
+- `Subject:` A Subject is a special type of Observable which shares a single execution path among observers and allows values to be multicast to many Observers. Their message (the subject) is being delivered to many (multicast) people (the observers) at once. This is the basis of multicasting. Subjects are like Event Emitters: they maintain a registry of many listeners.
 
 - `interval:` An operator that returns an observable which emits numbers in sequence based on provided timeframe.
 
@@ -131,11 +148,11 @@ A `ReplaySubject` remembers and replays a specific number of values to any subsc
 
 The key features of a `ReplaySubject` are:
 
-1. Buffering: A ReplaySubject keeps a buffer of values that it has emitted. You can specify the maximum number of values to buffer using the buffer size parameter when creating the ReplaySubject.
+1. `Buffering`: A ReplaySubject keeps a buffer of values that it has emitted. You can specify the maximum number of values to buffer using the buffer size parameter when creating the ReplaySubject.
 
-2. Subscription: When a new subscriber subscribes to a ReplaySubject, it immediately receives the buffered values. If the buffer size is reached, older values are dropped from the buffer to accommodate new values.
+2. `Subscription`: When a new subscriber subscribes to a ReplaySubject, it immediately receives the buffered values. If the buffer size is reached, older values are dropped from the buffer to accommodate new values.
 
-3. Timeframe: In addition to the buffer size, you can also specify a timeframe for the ReplaySubject. With a timeframe, the ReplaySubject will only buffer values emitted within a specific time window.
+3. `Timeframe`: In addition to the buffer size, you can also specify a timeframe for the ReplaySubject. With a timeframe, the ReplaySubject will only buffer values emitted within a specific time window.
 
 ### How to make multiple http calls in parallel in Angular ?
 Using `forkJoin`, this operator takes an array of observables and waits for all the source observables to complete. Once they all complete, it emits an array of the last emitted values from each observable. 
@@ -179,7 +196,7 @@ Patch operators are imported as methods on the `Observable` class and are then u
 The `reduce` operator is used to apply an accumulation function to the values emitted by an observable sequence and emit a single accumulated result. It is similar to the Array.prototype.reduce() function in JavaScript. The reduce operator is useful when you want to obtain a single accumulated result from a sequence of values.
 
 ### What is a BehaviorSubject?
- BehaviorSubject is a type of Observable provided by the RxJS library. Unlike traditional Observables that emit values only upon specific events, BehaviorSubject maintains the latest value it has emitted and immediately dispatches it to new subscribers upon subscription.
+BehaviorSubject is a type of Observable provided by the RxJS library. Unlike traditional Observables that emit values only upon specific events, BehaviorSubject maintains the latest value it has emitted and immediately dispatches it to new subscribers upon subscription.
 
 ## What is HttpClient:
 `HttpClient` is a tool provided by Angular that helps us communicate with servers over the internet. We use it to fetch data from servers or send data to servers.
@@ -370,3 +387,35 @@ Server-side rendering (SSR) is a process that involves rendering pages on the se
 `<div *ngFor="let photo of photos; trackById"></div>`
 simplification is:
 `<ng-template ngFor let-photo [ngForOf]="photos" ngForTrackById"></ng-template>`
+
+## What is Angular security model ?
+Angular's design includes encoding or sanitization of all data by default, making it increasingly difficult to discover and exploit XSS vulnerabilities in Angular projects. There are 6 types of `SecurityContext`
+
+- `None`;
+- `HTML` is used, when interpreting value as HTML;
+- `STYLE` is used, when binding CSS into the style property;
+- `URL` is used for URL properties, such as `<a href>`;
+- `SCRIPT` is used for JavaScript code;
+- `RESOURCE_URL` as a URL that is loaded and executed as code, for example, in `<script src>`.
+
+## What are Bypass Security Trust Methods ?
+Angular introduces a list of methods to bypass its default sanitization process and to indicate that a value can be used safely in a specific context.
+
+> Bypass Security Trust Methods
+- `bypassSecurityTrustUrl` is used to indicate the given value is a safe style URL
+- `bypassSecurityTrustResourceUrl` is used to indicate the given value is a safe resource URL
+- `bypassSecurityTrustHtml` is used to indicate the given value is safe HTML. 
+- `bypassSecurityTrustScript` is used to indicate the given value is safe JavaScript.
+- `BypassSecurityTrustStyle` is used to indicate the given value is safe CSS.
+
+> HTML Injection
+
+This vulnerability occurs when user input is bound to any of these three properties: innerHTML, outerHTML, or iframe srcdoc. While binding to these attributes interprets HTML as it is, the input is sanitized using SecurityContext.HTML. Thus, HTML injection is possible, but cross-site scripting (XSS) is not.
+
+> Template Injection - Client-Side Rendering (CSR)
+
+Angular leverages templates to construct pages dynamically. This approach entails enclosing template expressions for Angular to evaluate within double curly brackets `({{}})`. 
+
+> Server-Side Rendering (SSR)
+
+Unlike CSR, which occurs in the browser's DOM, Angular Universal is responsible for the SSR of template files. These files are then delivered to the user. Despite this distinction, Angular Universal applies the same sanitization mechanisms used in CSR to enhance SSR security. 

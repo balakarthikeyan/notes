@@ -115,6 +115,16 @@ mix.options({
         {!! $menu->render() !!}
 12.@csrf & @method
 ```
+## Understanding Macros
+A macro is the injection of custom code into the core of a framework, without the need for complex inheritance or modification.
+
+To implement macros we use the Macroable trait, which has two main methods macro() and mixin().
+
+Laravel macros allow you to extend core functionality and create custom methods for classes like Eloquent models and collections.
+
+### Mixin Macro
+The concept of macros allows multiple user-defined functions to be registered at once via a mixin class. Each method of which must return a closure. The name of the method acts as the name of the macro.
+
 ## Macroable
 
 Allow Laravel's macros to be created by using the Illuminate\Support\Traits\Macroable trait. 
@@ -223,3 +233,78 @@ Laravel scheduler provides many methods which map to a cron job timing, some of 
 ```
 > Cron setup
 `* * * * * php /path-to-your-laravel-project/artisan schedule:run >> /dev/null 2>&1`
+
+## Why Laravel might be vulnerable to SQL injections?
+Raw queries
+Insufficient input validation
+Insecure query building
+Failure to use parameterized statements
+Outdated libraries or framework versions
+
+## What is Laravel Data?
+Spatie developed this package to simplify data transfer and transformation within Laravel applications. It allows you to easily manage data coming into and going out of your application, ensuring that it is properly formatted, validated, and transformed as needed.
+
+### Benefits Of Using LaravelData
+`Cleaner Code:` DTO helps us to keep code organized by using Data Transfer Objects (DTOs) to manage data, making it easier to read and maintain.
+
+`Easy Validation:` You can simplify data validation by defining validation rules directly in your DTOs, ensuring that data is correct before processing it.
+
+`Automatic Data Transformation:` DTO automatically transforms data between different formats, saving the time and reducing errors when working with APIs.
+
+`Type Safety:` By defining data types in DTOs, it helps catch errors early, ensuring that your data is always in the expected format.
+
+`Simplified Serialization:` It makes serializing and deserializing data easy, so you can quickly convert data to and from formats like JSON, without writing extra code.
+
+## Understanding Cron Jobs and Laravel’s Task Scheduler
+Cron jobs are time-based tasks that run automatically at specified intervals on a Unix-based system. Laravel’s Task Scheduler allows you to define and manage these cron jobs using expressive syntax and commands.
+
+## Permission
+`composer require spatie/laravel-permission`
+Publish the configuration file for the Spatie package by running the following command. This command will create a permissions.php configuration file in your config directory.
+
+`php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"`
+
+## Sitemap
+
+To generate a dynamic sitemap XML file in Laravel, we'll use a package called laravel-sitemap. You can install it via Composer by running the following command.
+
+```bash
+composer require spatie/laravel-sitemap
+php artisan make:controller SitemapController
+```
+
+## What is ReactPHP ?
+
+PHP has been known for its synchronous, blocking execution model, but ReactPHP changes that by enabling asynchronous programming within PHP.
+
+ReactPHP is a low-level library for event-driven programming in PHP. It allows you to build scalable applications with non-blocking I/O operations, making it perfect for real-time applications, long-running processes, and microservice
+
+ReactPHP is an open-source, event-driven library for asynchronous programming in PHP.
+
+It brings non-blocking I/O capabilities to PHP, enabling you to execute tasks like reading from a file, querying a database, or sending an HTTP request without waiting for the operation to complete.
+
+This non-blocking behavior allows PHP to handle multiple tasks concurrently, improving performance in scenarios that require real-time.
+
+## To show HTML tag directly in view
+`{{ $username }}` is simply used to display text contents but `{!! $username !!}` is used to display content with HTML tags if exists.
+
+## To add Constant 
+Add in config
+```php
+return [
+  'ADMINEMAIL' => 'info@bestinterviewquestion.com',
+];
+```
+Now we can display constant:
+`Cofig::get('constants.ADMINEMAIL');`
+
+## To add CSRF ?
+In between head, tag put `<meta name="csrf-token" content="{{ csrf_token() }}">` and in Ajax, we have to add
+
+```javascript
+$.ajaxSetup({
+   headers: {
+     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+   }
+});
+```

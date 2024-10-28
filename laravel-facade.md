@@ -1,5 +1,14 @@
 ## What are the Facade?
-In Laravel, a Facade is a design pattern that provides a static interface to the classes that are available in the Laravel service container.
+In Laravel, a Facade is a design pattern that provides a static interface to the classes that are available in the Laravel service container. Facades provides direct access to object from a container. Facades provides us the static interface to classes.
+```php
+// if want to use it then we wll use like:
+$car = new car();
+$car->name();
+
+// with the help of facade we can use it like:
+car::name();
+```
+All of Laravel's facades are defined in the `Illuminate\Support\Facades` namespace.
 
 ## Explain Facade in Laravel?
 A Facade is a proxy to a dependency registered in the container.
@@ -11,7 +20,7 @@ Facades have a bad reputation because people think you perform a real static cal
 `You → Facade::foo() → Laravel → __callStatic() → Container → $dependency→foo()`
 
 You call Facade::foo();
-Laravel intercepts the call to the foo() method using the magic method __callStatic() (here's magic methods documentation).
+Laravel intercepts the call to the foo() method using the magic method __callStatic()
 It pulls from the container the corresponding dependency (which is defined in a Facade's getFacadeAccessor() method).
 Then, the framework basically translates Facade::foo() to app('some-dependency')->foo().
 
