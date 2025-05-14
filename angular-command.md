@@ -1,5 +1,5 @@
 ## Install Global Angular For Project
-```
+```bash
 npm install -g @angular/cli@16.1.6 / npm install -g @angular/cli@17.3.8
 ng v / ng version
 ng serve --open --configuration=<env/lang> // development/production
@@ -20,7 +20,7 @@ ng generate @angular/material:table table
 ```
 
 ## Install Old project
-```
+```bash
 npm install
 npm audit fix --force
 ```
@@ -36,7 +36,7 @@ npm audit fix --force
 - *Better Compatibility:* Improved support for modern web standards and third-party libraries.
 
 ## Uninstall Globally
-```
+```bash
 npm uninstall -g angular-cli
 npm uninstall -g @angular/cli
 npm cache clean --force
@@ -49,7 +49,7 @@ npm cache verify --force
 ## Step-by-Step Upgrade Guide 
 > npm install -g @angular/cli@latest
 
-```
+```bash
 ng update @angular/cli@latest @angular/core@latest --force
 ng update @angular/material@latest
 npm install @angular-devkit/build-angular@latest --force
@@ -57,7 +57,7 @@ ng update @angular-eslint/schematics@latest --allow-dirty --force
 ```
 
 ## Handle Third-Party Dependencies:
-```
+```bash
 npm outdated
 npm update
 ```
@@ -74,27 +74,27 @@ This command will initialize a base project using some configuration options:
 - `--skip-tests.` it avoids the generations of the .spec.ts files, which are used for testing
 
 ## Update TypeScript Version
-```
+```bash
 npm install typescript@<required_version>
 npm install typescript@">=3.4.0 and <3.5.0" --save-dev
 ```
 
 ## Getting ESLint Set Up in Your Angular Project
-```
+```bash
 ng lint
 ng add @angular-eslint/schematics@17.5.2
 ng update @angular-eslint/schematics@latest
 ```
 
 ## Getting Spinner
-```
+```bash
 npm install ngx-spinner --save
 ng add ngx-spinner
 ng update ngx-spinner@latest --allow-dirty --force
 ```
 
 ## Getting Bootstrap
-```
+```bash
 npm install bootstrap@5.3
 npm install bootstrap bootstrap-icons
 ng add @ng-bootstrap/ng-bootstrap
@@ -102,7 +102,7 @@ ng update @ng-bootstrap/ng-bootstrap@latest --allow-dirty --force
 ```
 
 ## Getting Localisation
-```
+```bash
 npm install @angular/localize --save
 ng add @angular/localize
 ng extract-i18n --output-path src/locale --i18n-format xlf
@@ -129,7 +129,7 @@ mat.red-palette to mat.$m2-red-palette
 - Updates calls to `afterRender` with an explicit phase to the new API.
 
 ## Step by Step Upgrade for older project
-```
+```bash
 nvm use 18
 ng update @angular/core@14 @angular/cli@14 --force
 ng update @angular/core@15 @angular/cli@15 --force
@@ -140,7 +140,7 @@ ng update @angular/core@latest @angular/cli@latest --force
 ```
 
 ## Dockerize angular
-```
+```bash
 ng new angular-docker --ssr false --routing true --style scss
 npm start
 docker build -t my_angular_app:latest .
@@ -149,14 +149,14 @@ docker run -d -it -p 4200:4200/tcp --name my_angular_app my_angular_app:latest
 ```
 
 ## Tailwind CSS
-```
+```bash
 npm install tailwindcss
 npx tailwindcss init
 npx tailwindcss -i ./src/style.css -o ./src/stylesheet.css --watch
 ```
 
 ## Prettier
-```
+```bash
 npm install --save-dev --save-exact prettier
 node --eval "fs.writeFileSync('.prettierrc','{}\n')"
 npx prettier . --write
@@ -164,7 +164,7 @@ npx prettier . --write
 
 ## Surge for deploying angular
 Surge is an npm package used for deploying static websites for free. 
-```
+```bash
 $ npm install --global surge
 $ surge
 $ npm run build
@@ -176,15 +176,15 @@ SURGE_LOGIN = <Email used on surge>
 SURGE_TOKEN = <Surge token saved in the previous step>
 ```
 
-```
+```bash
 git add .
 git commit -m "added gitlab.yml"
 git push origin main
 
-Running as balakarthikeyan07@gmail.com (Student)
-project: project_name
-domain: insidious-stream.surge.sh 
-token: 7a76ce0d677762cb2bd449c05fdb6a65
+# Running as balakarthikeyan07@gmail.com (Student)
+# project: project_name
+# domain: insidious-stream.surge.sh 
+# token: 7a76ce0d677762cb2bd449c05fdb6a65
 ```
 
 ## Generate AppRoutingModule:

@@ -14,7 +14,7 @@ Symfony is a PHP framework used to develop web application, APIs, microservices 
 - `vendor`: Contains all application dependencies installed by Composer
 
 # Create project
-```
+```bash
 symfony check:requirements
 composer create-project symfony/website-skeleton:<version> <project-name>
 composer create-project symfony/skeleton:"6.2.*" <project-name>
@@ -22,7 +22,7 @@ symfony new <project-name> --version="6.2.*"
 ```
 
 # Few Bundles
-```
+```bash
 composer require --dev maker
 composer require --dev ormfixtures 
 composer require --dev fakerphp/faker
@@ -34,24 +34,31 @@ composer require form validator
 composer require security security-csrf annotations
 composer require doctrine doctrine/annotations
 composer require twig
+composer require symfony/orm-pack
 composer require --dev symfony/test-pack
+composer require --dev symfony/profiler-pack
 ```
 
 # Console commands
-```
+```bash
 symfony console make:controller <controller-name>
 symfony console make:crud <project-name>
 symfony console make:user
 symfony console make:auth
 symfony console make:registration
+symfony console make:form
+symfony console make:command <command_name>
+symfony console make:voter
 ```
 
 # Doctrine commands
-```
+```bash
+symfony console list doctrine
 symfony console doctrine:database:create
 symfony console make:entity <entity-name>
 symfony console make:migration
 symfony console doctrine:migrations:migrate
+symfony console doctrine:migrations:migrate --help
 symfony console doctrine:schema:update --force
 symfony console make:fixture <fixture-name>
 symfony console doctrine:fixtures:load
@@ -59,7 +66,7 @@ symfony console doctrine:fixtures:load --purge-with-truncate
 ```
 
 # Project based commands
-```
+```bash
 symfony server:start --no-tls
 php -S localhost:8000 -t public/
 php bin/console doctrine:query:sql 'SELECT * FROM user'
@@ -87,7 +94,7 @@ The above commands warm up the cache and search for the hello service in the con
 - `symfony/flex:` This is a tool that makes adding new features seamless through the use of a simple command.
 
 # Debugging  my project
-```
+```bash
 composer dump-autoload
 composer update --no-scripts
 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader

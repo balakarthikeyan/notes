@@ -1,4 +1,6 @@
-𝟭. 𝗙𝗲𝗮𝘁𝘂𝗿𝗲𝘀 - Start with the main features of the system. For example, if asked to design Twitter, list its key features. This helps ensure you're aligned with the interviewer.
+𝟭. 𝗙𝗲𝗮𝘁𝘂𝗿𝗲𝘀 
+
+Start with the main features of the system. For example, if asked to design Twitter, list its key features. This helps ensure you're aligned with the interviewer.
 
 𝟮. 𝗨𝘀𝗲𝗿𝘀
 
@@ -36,26 +38,26 @@ Use load balancers and reverse proxies for better availability and security.
 
 Choose the right messaging protocols (TCP/UDP) and tools (Kafka, RabbitMQ) based on your needs.
 
-Popular System Design Components & Concepts that help you create fast, scalable and robust systems:
+- `System Design Components & Concepts` that help you create fast, scalable and robust systems:
 
-DNS (Domain Name System): Helps to map a domain name into an IP address. So we only need to remember easy domain names and not complicated IP addresses.
+- `DNS (Domain Name System):` Helps to map a domain name into an IP address. So we only need to remember easy domain names and not complicated IP addresses.
 
-Horizontal Scaling: Increase the throughput of a system by adding more nodes (machines/computers) rather than increasing the individual capacity of a particular node. Leads to distributed systems.
+- `Horizontal Scaling:` Increase the throughput of a system by adding more nodes (machines/computers) rather than increasing the individual capacity of a particular node. Leads to distributed systems.
 
-Load Balancing: In distributed systems, a load balancer decides how to route the traffic between multiple nodes. Consider that as a traffic policeman who manages the traffic.
+- `Load Balancing:` In distributed systems, a load balancer decides how to route the traffic between multiple nodes. Consider that as a traffic policeman who manages the traffic.
 
-Cache: A faster memory lane, available on the client side as well as the server side. Very simple data type, and mostly uses primary storage to remain swift. Redis, Memcache, and Varnish are common examples.
+- `Cache:` A faster memory lane, available on the client side as well as the server side. Very simple data type, and mostly uses primary storage to remain swift. Redis, Memcache, and Varnish are common examples.
 
-Queues (or schedulers): Most tasks need time! and the system cannot put other tasks on hold during this time. Queues help in efficiently scheduling tasks, and inform the system once the task is completed. Exactly how YouTube processes video asynchronously.
+- `Queues (or schedulers):` Most tasks need time! and the system cannot put other tasks on hold during this time. Queues help in efficiently scheduling tasks, and inform the system once the task is completed. Exactly how YouTube processes video asynchronously.
 
-Sharding: Large databases are generally the culprits for slow services. Sharding is used to break the database into smaller parts, making the queries super efficient.
+- `Sharding:` Large databases are generally the culprits for slow services. Sharding is used to break the database into smaller parts, making the queries super efficient.
 
-Continuous deployment: The practice of automatically deploying every build to production after it passes automatic tests
+- `Continuous deployment:` The practice of automatically deploying every build to production after it passes automatic tests
 
-Continuous integration: The practice of automatically and frequently building and unit testing an entire application, ideally on every source code check-in.
+- `Continuous integration:` The practice of automatically and frequently building and unit testing an entire application, ideally on every source code check-in.
 
-End-to-End (E2E) testing: Tests performed to exercise the full flow of an application in the same way an end user
+- `End-to-End (E2E) testing:` Tests performed to exercise the full flow of an application in the same way an end user
 
-Integration: Tests performed as application pieces are brought together
+- `Integration:` Tests performed as application pieces are brought together
 
-Security testing: Tests performed to identify flaws in code and runtime to prevent compromises and data leaks in production
+- `Security testing:` Tests performed to identify flaws in code and runtime to prevent compromises and data leaks in production

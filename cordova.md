@@ -10,7 +10,7 @@
 `%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\build-tools;`
 
 ### via Command prompt
-```
+```bash
 setx JAVA_HOME "C:\Program Files\Java\jdk-1.8"
 setx ANT_HOME "C:\apache-ant"
 setx ANDROID_HOME "C:\Users\Balakarthikeyan\AppData\Local\Android\Sdk"
@@ -18,7 +18,7 @@ setx PATH "%PATH%;%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%
 setx PATH "%JAVA_HOME%\bin;%ANT_HOME%\bin;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\build-tools;"
 ```
 ### To setup project
-```
+```bash
 npm -v
 npm install -g npm@latest
 npm update -g npm
@@ -71,12 +71,16 @@ cordova plugin add cordova-plugin-x-socialsharing
 cordova plugin add es6-promise-plugin
 cordova plugin add com.filfatstudios.spinnerdialog
 
+```
+
+### To Enable Geolocation
+```xml
 <allow-intent href="geo:*" />
 <allow-intent href="*" />
 ```
 
 ### Ionic Prerequisites
-```
+```bash
 npm install -g typescript
 npm install -g cordova ionic
 npm install -g ionic@latest
@@ -100,40 +104,43 @@ ionic serve
 ionic -version
 ```
 ### Ionic bundle script
-```
+```html
 <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
 ```
 
-Angular is a platform for building web applications. 
-Angular is an open-source front-end framework that empowers developers to create dynamic, single-page applications using HTML and TypeScript.
+## Build Application
+Angular is a platform for building web applications. It is an open-source front-end framework that empowers developers to create dynamic, single-page applications using HTML and TypeScript.
 
 Ionic, is a popular open-source framework for building cross-platform mobile apps using familiar web technologies such as HTML, CSS, and JavaScript. It leverages Angular for building the application logic, while providing a library of pre-designed components, gestures, and tools for developing fast, highly interactive apps.
 
-Setting Up the Environment
-
+###  Setting Up the Environment
+```bash
 npm install -g @ionic/cli
 npm install -g @angular/cli
+```
 
-Creating a New Ionic and Angular Project
+### Creating a New Ionic and Angular Project
 
-ionic start myApp tabs --type=angular
+> `ionic start myApp tabs --type=angular`
 
-Understanding the Project Structure
+### Understanding the Project Structure
 
-src: This is where you’ll spend most of your development time. It contains the app’s source code, including Angular components, templates, styles, and images.
-node_modules: This folder contains all the npm packages necessary for your project.
-www: This folder contains the built version of your application.
-app: This folder contains all the Angular components, modules, and services for your app. Each component consists of a TypeScript file (.ts), a template file (.html), and a style file (.scss).
-assets: This folder is for storing images, icons, and other static files.
-environments: This folder is for setting different environment variables, like API endpoints.
+- `src:` This is where you’ll spend most of your development time. It contains the app’s source code, including Angular components, templates, styles, and images.
+- `node_modules:` This folder contains all the npm packages necessary for your project.
+- `www:` This folder contains the built version of your application.
+- `app:` This folder contains all the Angular components, modules, and services for your app. Each component consists of a TypeScript file (.ts), a template file (.html), and a style file (.scss).
+- `assets:` This folder is for storing images, icons, and other static files.
+- `environments:` This folder is for setting different environment variables, like API endpoints.
 
 ## Ionic Cli
+```bash
 npm install -g @ionic/cli
 ionic -version
 ionic info
+```
 
 ## Update old Ionic Project
-```
+```bash
 npm uninstall -g ionic --force
 npm uninstall -g @ionic/cli --force
 
@@ -142,25 +149,26 @@ npm install -g @angular/cli
 ```
 
 ## Update Angular in Ionic Project
-```
+```bash
 ng update @angular/cli@18 @angular/core@18 --allow-dirty
 ionic cordova prepare android
 ionic cordova run android
 npm run watch
 ```
+
 ## Latest Ionic setup 
-```
+```bash
 ionic start modernApp blank --type angular
 npm install @ionic/angular@latest --save
 ng add @ionic/angular
 ```
 
-- Go to your new project: cd .\MyIonicApp
+- Go to your new project: `cd .\MyIonicApp`
 - Run ionic serve within the app directory to see your app in the browser
 - Run ionic capacitor add to add a native iOS or Android project using Capacitor
-- Generate your app icon and splash screens using cordova-res --skip-config --copy
+- Generate your app icon and splash screens using `cordova-res --skip-config --copy`
 
-```console
+```bash
 ionic generate page
 ionic generate component
 ionic generate service
@@ -168,23 +176,22 @@ ionic generate module
 ionic generate class
 ionic generate directive
 ionic generate guard
-```
 
-```
 ionic g service services/movie
 ionic g page details
 ```
 
 ## Create both the iOS and Android projects:
 
-```
+```bash
 ionic cap add ios
 ionic cap add android
-```
-ionic build that updates your web directory (default: www), you'll need to copy those changes into your native projects:
-```
+
+# updates your web directory (default: www), you'll need to copy those changes into your native projects:
+ionic build
 ionic cap copy
-After making updates to the native portion of the code
+
+# After making updates to the native portion of the code
 ionic cap sync
 ionic cap open android
 ```
@@ -192,7 +199,7 @@ ionic cap open android
 ## Run and Test the Ionic/Angular Apps
 
 ### Add Capacitor to the Project
-```
+```bash
 npm install @capacitor/cli @capacitor/core
 npm install @capacitor/android
 npx cap init myAppName com.example.myapp
@@ -208,16 +215,16 @@ ionic capacitor run android
 
 ### For Android:
 
-Open your Android Studio project and select the "myAppName" target
-Select the "myAppName" target and press the "Run" button to start debugging on an Android emulator or an Android device.
+Open your Android Studio project and select the `"myAppName"` target
+Select the `"myAppName"` target and press the "Run" button to start debugging on an Android emulator or an Android device.
 
 ### For iOS:
 
-Open your Xcode project and select the "myAppName" target
-Select the "myAppName" target and go to "Signing & Capabilities"
-Select your development team, then press "Run" to start debugging on an iOS simulator or an iOS device.
+- Open your Xcode project and select the `"myAppName"` target
+- Select the `"myAppName"` target and go to "Signing & Capabilities"
+- Select your development team, then press "Run" to start debugging on an iOS simulator or an iOS device.
 
-First Install the Intel x86 Emulator Accelerator HAXM from the Android SDK manager next create a device in genymotion, Once its done, go to settings and then go to the ADB tab and select use genymotion android tools. Once done, run this command: ionic run android, so that ionic can detect the device created using genymotion. If you use ionic emulate android then ionic will not recognise your device.
+First Install the `Intel x86 Emulator Accelerator HAXM` from the `Android SDK manager` next create a device in genymotion, Once its done, go to settings and then go to the ADB tab and select use genymotion android tools. Once done, run this command: `ionic run android`, so that ionic can detect the device created using genymotion. If you use `ionic emulate android` then ionic will not recognise your device.
 
 `ionic cordova run <ios or android> --device -l --debug`
 
@@ -229,6 +236,6 @@ Select your device and click Inspect.
 
 Type `adb connect 192.168.56.101` (or whatever the IP address was that you saw earlier from the `devices list` command line).
 Type `adb devices` to confirm that it is connected.
-Type ionic platform add android to add Android as a platform for your app.
+Type `ionic platform add android` to add Android as a platform for your app.
 
-Finally, type ionic run android.
+Finally, type `ionic run android`.

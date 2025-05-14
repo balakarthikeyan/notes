@@ -18,3 +18,9 @@ In Linux, a soft link (or symbolic link) is a file that points to another file o
 
 13	What is a Linux process?	
 A process in Linux is an instance of a running program. It is a unit of execution that has its own memory space, system resources, and priority. Processes can be started and stopped by the user, and can communicate with each other through interprocess communication (IPC) mechanisms such as pipes and sockets.
+
+Linux operating systems, Whenever we are executing a command, we are creating three file descriptors :
+
+- STDIN : also called the standard input that will be used in order to type and submit your commands (for example a keyboard, a terminal etc..);
+- STDOUT : called the standard output, this is where the process outputs will be written (the terminal itself, a file, a database etc..);
+- STDERR : called the standard error, it is very related to the standard output and is used in order to display errors.

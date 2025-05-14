@@ -126,7 +126,7 @@ Location /
 ```sudo systemctl start nginx``` 
 
 ### What are the main tasks of the Nginx web server? 
-- **Ans:** The main tasks of the Nginx web server are:  
+**Ans:** The main tasks of the Nginx web server are:  
 - To accept and process HTTP requests from clients 
 - To serve static files such as images, CSS, JavaScript, etc. 
 - To pass dynamic requests to upstream servers such as PHP, Python, Ruby, etc. 
