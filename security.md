@@ -2,7 +2,7 @@
 
 The term HTTP Security Header summarizes a set of HTTP response headers that allow the webserver to communicate with the browser using security features. These include:
 
-`Content Security Policy (CSP):` With this header, the server specifies which resources are allowed to be loaded onto the page. It can also be used to prevent cross-site scripting attacks and other malicious code from being executed. We'll explain which parameters to set here in a moment.
+`Content Security Policy (CSP):` With this header, the server specifies which resources are allowed to be loaded onto the page. It can also be used to prevent cross-site scripting attacks and other malicious code from being executed.
 
 `X-Frame-Options:` With this header, the server determines whether the page can be displayed in a frame or iframe on another website. This can prevent so-called clickjacking attacks.
 ```
@@ -39,3 +39,6 @@ Permissions-Policy: <directive>=(<allowlist>), <directive>=(<allowlist>)
 Example:
 Strict-Transport-Security: max-age=<expire-time>; includeSubdomains
 ```
+
+Cross-Site Scripting (XSS)
+Cross-Site Scripting (XSS) is a type of attack where malicious JavaScript code is injected into a displayed variable.

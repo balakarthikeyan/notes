@@ -1,3 +1,11 @@
+## What is Composer?
+Composer is a PHP dependency manager. It helps you manage the various libraries and tools your projects rely on and will manage (install/update) them for you.
+
+- `Declares Dependencies:` Specify Composer exactly which libraries your project needs to function.
+- `Automates Installation:` Once declared your specification, Composer fetches and installs those specific libraries for you.
+- `Updates Made Easy:` Keeping your libraries up-to-date is crucial. Composer streamlines this process by allowing you to update all dependencies with a single command.
+- `Version Control:` Composer ensures compatibility by installing the exact versions of libraries your project requires, avoiding conflicts.
+
 ## Usage of Composer via PHP
 ```bash
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -20,7 +28,7 @@ php composer.phar start
 php composer.phar install
 php composer.phar update
 php composer.phar dump-autoload
-php -S localhost:8080 -t public //public is the folder to run
+php -S localhost:8080 -t public # public is the folder to run
 ```
 
 ## Run Globally:
@@ -58,7 +66,7 @@ Packgist Token: 5d0e18d2c6cac315a19143cbb214b40a0b4da965
 
 ## Composer Autoload
 ```bash
-composer dump autoload -o
+composer dump-autoload -o
 composer update --no-scripts
 composer update --with-all-dependencies
 composer update --dry-run

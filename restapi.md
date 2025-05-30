@@ -1,7 +1,7 @@
 # REST API
 
-REST stands for representational state transfer and API stand for application programming interface. REST is known for its simplicity, scalability, and cacheability.
-𝗥𝗘𝗦𝗧  is great for web services, microservices, CRUD applications, and mobile apps. Its stateless, scalable nature makes it a strong choice for many applications.
+REST stands for `Representational State Transfer` and API stand for `Application Programming Interface`. REST is known for its simplicity, scalability, and cacheability.
+𝗥𝗘𝗦𝗧 is great for web services, microservices, CRUD applications, and mobile apps. Its stateless, scalable nature makes it a strong choice for many applications.
 REST API is used for communication between  client and server. 
 RESTful API is a type of API that uses the REST architectural style, an API is uses REST if it has this characteristics:
 

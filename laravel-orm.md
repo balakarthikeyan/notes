@@ -14,7 +14,7 @@ If you only need the first record that matches your criteria, use the first() me
 > $newestProduct = Product::orderBy('created_at', 'desc')->first();
 
 3. `find($id):` Get a Record by Its Primary Key
-If you know the primary key (usually ‘id’) of a specific record, you can retrieve it using the find() method:
+If you know the primary key (usually 'id') of a specific record, you can retrieve it using the find() method:
 
 > $product = Product::find(1); // Retrieve the product with ID 1
 
@@ -49,7 +49,7 @@ If you only need specific columns from your records, you can use the select() me
 > $productNamesAndPrices = Product::select('name', 'price')->get();
 
 10. `distinct():` Retrieve Distinct Records
-When you want unique records, use the distinct() method. It’s especially useful with select():
+When you want unique records, use the distinct() method. It's especially useful with select():
 
 > $uniqueCategories = Product::select('category')->distinct()->get();
 
@@ -334,6 +334,14 @@ DB::enableQueryLog();
 DB::getQueryLog();
 Model::where()->toSql() // output sql query
 ```
+## Log with Laravel ?
+```php
+DB::listen(function($sql, $bindings, $time) {
+    var_dump($sql);
+    var_dump($bindings);
+    var_dump($time);
+}); 
+```
 ## Examples
 ```php
 $Query = DB::table('users')
@@ -431,13 +439,6 @@ $Query = DB::table('users')
 
 $Query = DB::table('profiles')->truncate();
 
-Log::debug(DB::getQueryLog());
-
-DB::listen(function($sql, $bindings, $time) {
-    var_dump($sql);
-    var_dump($bindings);
-    var_dump($time);
-}); 
 ```
 ## FOREIGN KEY CONSTRAINTS
 > Query Builder
@@ -488,7 +489,7 @@ $usersWithOrders = DB::table('users')
 ```
 
 ### RIGHT JOIN
-A RIGHT JOIN retrieves all records from the right table and the matched records from the left table. While Laravel Eloquent doesn’t natively support RIGHT JOIN, you can achieve the same effect using raw queries or the query builder.
+A RIGHT JOIN retrieves all records from the right table and the matched records from the left table. While Laravel Eloquent doesn't natively support RIGHT JOIN, you can achieve the same effect using raw queries or the query builder.
 ```php
 $posts = Post::rightJoin('users', 'posts.user_id', '=', 'users.id')
              ->select('posts.*', 'users.name as user_name')
@@ -501,7 +502,7 @@ $ordersWithUsers = DB::table('orders')
 ```
 
 ### FULL JOIN
-A FULL JOIN retrieves all records when there is a match in either the left or right table. Eloquent doesn’t directly support FULL JOIN, but you can simulate it using a union of LEFT JOIN and RIGHT JOIN.
+A FULL JOIN retrieves all records when there is a match in either the left or right table. Eloquent doesn't directly support FULL JOIN, but you can simulate it using a union of LEFT JOIN and RIGHT JOIN.
 ```php
 $leftJoin = User::leftJoin('posts', 'users.id', '=', 'posts.user_id')
                 ->select('users.*', 'posts.title as post_title');

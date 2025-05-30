@@ -1,6 +1,6 @@
 𝟭. 𝗙𝗲𝗮𝘁𝘂𝗿𝗲𝘀 
 
-Start with the main features of the system. For example, if asked to design Twitter, list its key features. This helps ensure you're aligned with the interviewer.
+Start with the main features of the system.
 
 𝟮. 𝗨𝘀𝗲𝗿𝘀
 

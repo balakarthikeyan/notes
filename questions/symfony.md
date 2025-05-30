@@ -48,7 +48,7 @@ Symfony can be utilized to create powerful applications in an enterprise context
 
 Symfony Components are a collection of decoupled and reusable PHP libraries. It is open-source software that desires to quicken or speed up the creation and maintenance of web applications, substitute repetitive coding tasks, create powerful and robust applications in an enterprise context, and give developers complete control over the configuration. 
 
-Symfony Components are decoupled reusable libraries for PHP applications. Symfony provides components ranging from the simple feature, say file system, to advanced features, events, container, and dependency injection. 
+Symfony provides components ranging from the simple feature, say file system, to advanced features, events, container, and dependency injection. 
 
 ```bash
 ## Run the command in cmd to install Symfony using Composer 
@@ -135,12 +135,9 @@ php bin/console server:run
 
 > Twig is a flexible, fast and secure template engine used in Symfony for rendering views. It provides a syntax similar to HTML and allows developers to write reusable and maintainable templates by separating presentation logic from business logic.
 
-### Describe Twig?
-Tasks like sandboxing, whitespace control, and automatic HTML escaping can be done using a powerful templating language of Symfony called Twig.
-
 ### What are Symfony Events and Event Listeners?
 
-> `Symfony Event component` allow developers to hook into the application's lifecycle and execute custom code at specific moments. Event Listeners are callback functions registered to listen for specific events and perform actions accordingly.
+> `Symfony Event component` allow developers to hook into the application's lifecycle and execute custom code at specific moments. `Event Listeners` are callback functions registered to listen for specific events and perform actions accordingly.
 
 ### How do you handle events and listeners in Symfony?
 

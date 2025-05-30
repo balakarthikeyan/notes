@@ -72,3 +72,100 @@ XML-RPC attacks are critical to address because they can lead to brute force att
 `Content Security Policy (CSP)` is a security feature that helps prevent cross-site scripting (XSS) and other code injection attacks. In WordPress, you can implement CSP by adding HTTP headers specifying which sources of content are allowed to be loaded and executed on your site. This is done in your site's server configuration or through security plugins.
 
 CSP is crucial as it reduces the risk of XSS attacks by controlling what can be executed in the user's browser. It can block malicious scripts from running and enhance the overall security of your WordPress site by limiting potential attack vectors.
+
+## What is REST API?
+REST API (Representational State Transfer Application Programming Interface) is a newer and lightweight mode using which the developers enjoy the convenience of connecting WordPress with other applications.
+
+## WordPress major vulnerability issues ?
+
+- Authenticated File Delete.
+- Authenticated Post Type Bypass.
+- PHP Object Injection via Metadata.
+- Authenticated Cross-Site Scripting (XSS).
+- Cross-Site Scripting (XSS) that could affect plugins.
+- User Activation Screen Search Engine Indexing.
+- File Upload to XSS on Apache Web Servers.
+
+## When a typical AJAX request to admin-ajax.php is made, it loads a few other core WordPress files to make sure the core functions are loaded.
+
+- `/wp-load.php`
+- `/wp-config.php`
+- `/wp-settings.php` (loads most core files, all active plugins and themes, and the REST API)
+- `/wp-admin/includes/admin.php`
+- `/wp-admin/includes/ajax-actions.php`
+After loading these files, WordPress calls the `admin_init` hook
+
+## New core functions are registered on this hook in WordPress 6.3:
+
+- handle_legacy_widget_preview_iframe
+- wp_admin_headers
+- default_password_nag_handler
+- WP_Privacy_Policy_Content::text_change_check
+- WP_Privacy_Policy_Content::add_suggested_content
+- register_setting
+- add_privacy_policy_content
+- send_frame_options_header
+- register_admin_color_schemes
+- _wp_check_for_scheduled_split_terms
+- _wp_check_for_scheduled_update_comment_type
+- _wp_admin_bar_init
+- wp_schedule_update_network_counts
+- _maybe_update_core
+- _maybe_update_plugins
+- _maybe_update_themes
+
+## How REST endpoints are handled ?
+
+REST endpoints are handled by the WordPress Rewrite API, the request is passed to /index.php, which then loads the rest of WordPress normally.
+
+- /index.php
+- /wp-blog-header.php
+- /wp-load.php
+- /wp-config.php
+- /wp-settings.php (loads most core files, all active plugins and themes, and the REST API)
+
+## What are Hooks?
+Hooks, are basically placeholders developers, to insert their own custom code for processing as a page is loading.
+
+`Filter hooks`, let you intercept and modify data as it's being processed. Basically, filters let you manipulate data coming out of the database before going to the browser, or coming from the browser before going into the database
+
+`Action hooks`, lets you add extra functionality at specific points in the processing and loading of a page.
+
+## What is Noodp & Noydir ?
+
+* `Noodp` : No Open Directory Project
+* `Noydir` : No Yahoo Directory
+
+The Open Directory Project and Yahoo Directory used to be massive online directories that contained links to websites along with their titles and descriptions.
+
+Noodp and Noydir are meta tags that are added to the html code of pages.
+
+Meta robots tags are code that is hidden from your site's visitors but provides some instructions to search engine bots.
+
+Noodp looks like this: `<meta name="robots" content="noodp" />`
+Noydir looks like this: `<meta name="robots" content="noydir" />`
+
+## Composer With WordPress?
+
+`Improved Organization:` By declaring all your dependencies (plugins, themes, libraries) in a central location (composer.json file), you keep your project clean and well-documented. This makes it easier for you and your team to understand what the project relies on.
+`Simplified Updates:` Updating plugins and libraries can be a risky business – incompatible versions can break your site. Composer allows you to easily update all dependencies while ensuring they remain compatible with each other and your WordPress core version.
+`Version Control and Consistency:` Composer lets you specify the exact version of each dependency needed for your project. This ensures everyone working on the project uses the same codebase, preventing unexpected bugs or functionality issues that might arise from version discrepancies.
+`Reduced Repository Size:` Composer eliminates the entire codebase of plugins and themes within their project repository, by simply referencing the required libraries, keeping your repository lean and efficient.
+
+## Introduction To Composer And Packagist
+To import and manage own and third-party components into our PHP projects, we can rely on the PHP-dependency manager Composer which by default retrieves packages from the PHP package repository Packagist 
+
+## Introduction To WPackagist 
+WPackagist is a PHP package repository. It contains all the themes and plugins hosted on the WordPress plugin and theme directories, making them available to be managed through Composer.
+
+## What is a child theme?
+The extension of a parent theme is a child theme. In case you make changes to the parent theme, then any update will undo the changes. When working on a child theme, the customizations are preserved on an update.
+
+## What is usermeta function in Wordpress?
+The usermeta function is used to retrieve the metadata of users. It can return a single value or an array of metadata.
+
+Syntax: `get_user_meta( int $user_id, string $key = '', bool $single = false )`
+
+- `$user_id` is the required user id parameter
+- `$key` is the optional parameter which is the meta key to retrieve. By default, it returns data for all key values.
+- `$single` is an optional parameter that tells whether the single value will return. By default, it is false.

@@ -210,3 +210,48 @@ ssh-copy-id -p 2222 vagrant@127.0.0.1
 cat <username>/.ssh/id_rsa.pub | ssh vagrant@12.0.0.1 "mkdir <username>/.ssh/; cat >> <username>/.ssh/authorized_keys"
 vagrant ssh-config > vagrant-ssh; ssh -F vagrant-ssh default
 ```
+
+
+What is Webpack?
+
+Webpack is a popular JavaScript module bundler that is used to build and compile complex web applications. It is a powerful tool that can transform, bundle, and optimize the assets of your application, including JavaScript, CSS, images, and more.
+
+key features of webpack:
+
+Module Bundling: Webpack takes your application’s source code, which may contain many different files, and combines them into a single file or set of files, known as a bundle. This makes it easier to manage your code and reduces the number of requests required to load your application.
+Code Splitting: Webpack allows you to split your code into smaller chunks that can be loaded on demand. This can improve the performance of your application, as only the code that is required for a particular page or feature is loaded.
+Loader System: Webpack has a flexible and extensible loader system that allows you to process different types of files, such as images, CSS, or even TypeScript. This makes it easy to integrate a variety of assets into your application.
+Plugins: Webpack has a rich ecosystem of plugins that provide additional functionality and optimizations, such as code minification, tree shaking, and more.
+Dev Server: Webpack comes with a built-in development server that makes it easy to get started with your application. The dev server provides hot reloading, which means that you can see the changes you make to your code in real-time, without having to manually refresh the page.
+
+To get started with Webpack, you’ll need to install it using npm:
+
+npm install webpack webpack-cli --save-dev
+
+need to create a “webpack.config.js” file that will configure how Webpack should behave:
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/dist',
+  },
+};
+
+Webpack-bundle-analyzer scans the bundle and builds a visualization of packages inside it
+
+npm install —-save-dev webpack-bundle-analyzer
+In our package.json we can add commands:
+
+"profile": "webpack --config webpack.client.js --profile --json > stats.json"
+"analyzer": "webpack-bundle-analyzer ./stats.json ./path/to/your/bundle -h 0.0.0.0"
+
+Profiling needs a lot of memory and cpu, so we should add more resources for our docker ( Docker -> Preferences -> Resources — CPU min 4 Cores and Memory 2Gb )
+
+Next we could run profiling:
+
+docker-compose run your-service-image-name npm run profile
+After finished profiling:
+
+docker-compose run -p 8888:8888 your-service-image-name npm run analyzer
+In your browser on localhost:8888

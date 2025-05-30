@@ -63,7 +63,7 @@ wp_list_categories('title_li=&orderby;=id'); // Displays the categories
 
 - `Super Admin:` The profile that has access to the entire website, including network administrative features.
 - `Administrator:` The profile(s) that has all administrative privileges.
-- `Editor:` The profile(s) that can create, edit, publish theirs, and other users’ posts.
+- `Editor:` The profile(s) that can create, edit, publish theirs, and other users' posts.
 - `Author:` The profile(s) that can create, edit, publish their posts only.
 - `Contributor:` The profile(s) that can create, edit their posts but cannot publish them.
 - `Subscriber:` The profile(s) that can only manage their profiles.
@@ -278,7 +278,7 @@ you can also use WP-Cli
 `*/10 * * * * cd /var/www/example.com/htdocs; wp cron event run --due-now > /dev/null 2>&1`
 
 ## WordPress Transients
-Transients are similar in all but one property; they have an expiration time. This makes them uniquely suited to act as a cache for appropriate data. In addition to reducing the number of queries our website utilizes, they can be further sped up by caching plugins which may make WordPress store transients in fast memory (like Memcached) instead of the database.
+Transients are similar in all but one property; they have an expiration time. This makes them uniquely suited to act as a cache for appropriate data. In addition to reducing the number of queries our website utilizes, they can be further speed up by caching plugins which may make WordPress store transients in fast memory (like Memcached) instead of the database.
 
 ```php
 set_transient( 'my_mood', 'Pretty Awesome', 28800 ); // Site Transient
@@ -291,117 +291,384 @@ delete_transient( 'my_mood' ); // Site Transient
 delete_site_transient( 'my_mood' ); // Multisite Transient
 ```
 
-What is a child theme?
+## Sanitization Function
+
+- `absint();` // - converts value to positive integer, useful for numbers, IDs, etc.
+- `esc_url_raw();` // - for inserting URL in database safely
+- `sanitize_email();` // - strips out all characters that are not allowable in an email address
+- `sanitize_file_name();` // - removes special characters that are illegal in filenames on certain operating system
+- `sanitize_hex_color();` // - returns 3 or 6 digit hex color with #, or nothing
+- `sanitize_hex_color_no_hash();` // - the same as above but without a #
+- `sanitize_html_class();` // - sanitizes an HTML classname to ensure it only contains valid characters
+- `sanitize_key();` // - lowercase alphanumeric characters, dashes and underscores are allowed
+- `sanitize_mime_type();` // - useful to save mime type in DB, e.g. uploaded file's type
+- `sanitize_option();` // - sanitizes values like update_option() and add_option() does for various option types.
+- `sanitize_sql_orderby();` // - ensures a string is a valid SQL order by clause
+- `sanitize_text_field();` // - removes all HTML markup, as well as extra whitespace, leaves nothing but plain text
+- `sanitize_title();` // - returned value intented to be suitable for use in a URL
+- `sanitize_title_for_query();` // - used for querying the database for a value from URL
+- `sanitize_title_with_dashes();` // - same as above but it does not replace special accented characters
+- `sanitize_user();` // - sanitize username stripping out unsafe characters
+- `wp_filter_post_kses();` wp_kses_post(); // - it keeps only HTML tags which are allowed in post content as well
+- `wp_kses();` // - allows only HTML tags and attributes that you specify
+- `wp_kses_data();` // - sanitize content with allowed HTML Kses rules
+- `wp_rel_nofollow();` // - adds rel nofollow string to all HTML A elements in content
+
+
+composer create-project roots/bedrock
+git add composer.json composer.lock
+ 
+git commit -m "Update WordPress core, themes, and plugins"
+
+To use WPackagist, our composer.json file must include the following information:
+```json
+{
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ]
+}
+```
+
+Hooks are piece of code to interact/modify another piece of code
+
+`What Are WordPress Hooks?`
+WordPress hooks allow users to manipulate WordPress without modifying its core. Learning about hooks is essential for any WordPress user as it helps them edit the default settings of themes or plugins and, ultimately, create new functions.
+
+Hooks are divided into two categories:
+
+- `Action` – allows users to add data or change how their websites work. An action hook will run at a specific time when the WordPress core, plugins, and themes are executing.
+- `Filter` – can change data during WordPress core, plugins, and theme execution.
+
+The WordPress Plugin API powers the functionality of WordPress hooks. You use hooks by calling certain WordPress functions called Hook Functions at specific instances during the WordPress runtime.
+
+## What Is an Action Hook?
+Actions are used to do something in the process of WordPress runtime. An action will modify the default behavior of a specific function. Actions provides a way for running your custom code at a particular point in the execution of WordPress Core, plugins, or themes.
+
+These built-in functions are most frequently used with actions:
+
+`add_action` attaches a certain callback function to a certain hook or hook name (as in the example in the paragraph above).
+`Syntax: add_action( $hook, $function_to_add, priority, accepted_args );`
+`remove_action` detaches the callback function that has been attached to the hook earlier with add_action.
+`Syntax: remove_action( $hook, $function_to_remove, priority );`
+`do_action` is used for creating custom action hooks; it calls the callback function added to the matching action hook.
+`Syntax: do_action( $hook_name, $arg )`
+
+```php
+// Add some text after the header
+add_action('__after_header', 'add_promotional_text');
+function add_promotional_text()
+{
+	// If we're not on the home page, do nothing
+	if (!is_front_page())
+		return;
+	// Echo the html
+	echo "<div>Special offer! June only: Free chocolate for everyone!</div>";
+}
+//Add in header.php
+do_action ( '__after_header' );
+```
+The default value of `$priority` is 10. the callback function with the lowest priority number will run first and the one with the highest number will run last.
+`$accepted_args` is responsible for defining the number of arguments the function accepts. By default, the system will set it as 1.
+`add_action()` tells WordPress to do something when it arrives at the specified `do_action()` hook.
+
+## Custom action hooks
+```php
+add_action( 'my_website_link', 'my_link_echo', 10, 1 );
+function my_link_echo( $url ){
+    echo "Look, this is my favorite URL -- <a href= {'$url'}>$url</a>";
+}
+```
+
+## Unhooking Actions and Filters
+If you want to disable a command from add_action() or add_filter() in your WordPress code, use remove_action() and remove_filter().
+
+```php
+remove_action( 'wp_print_footer_scripts', 'hostinger_custom_footer_scripts');
+add_action( 'wp_print_footer_scripts', 'hostinger_custom_footer_scripts_theme');
+
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
+remove_action( 'admin_print_styles', 'print_emoji_styles' );
+remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+add_action( 'init', 'disable_emojis' );
+```
+
+## What is a Filter Hook?
+A filter will modify the default behavior of a specific function. It does this by manipulating the data it receives and returning that data to WordPress before it is displayed in the browser. Filter hooks always return something: because filters are literally filtering and modifying content, they should return filtered/modified content.
+
+These built-in functions are most frequently used with filters:
+
+`add_filter` hooks a callback function to the certain filter hook.
+`Syntax: add_filter( $hook_name, $callback, priority, accepted_args );`
+`remove_filter` detaches a callback function from the certain hook.
+`Syntax: remove_filter( $hook_name, $callback, priority );`
+`apply_filters` calls a callback attached to the filter hook. 
+`Syntax: apply_filters( $hook_name, $value_to_be_filtered, $args ).`
+
+Creating a Filter Hook
+You can create a filter hook by utilizing the add_filter() function. The filter hook modifies, filters, or replaces a value with a new one. Similar to an action hook, it filters a value with the associated filter hook functions like apply_filter.
+
+```
+function wpb_custom_excerpt( $output ) {
+  if ( has_excerpt() && ! is_attachment() ) {
+    $output .= wpb_continue_reading_link();
+  }
+  return $output;
+}
+add_filter( 'get_the_excerpt', 'wpb_custom_excerpt' );
+```
+
+
+creating a plugin. create a new folder in your /wp-content/plugins/ directory. you can name it anything you want. As per WordPress guidelines, you need to create a PHP file with the same name inside your plugin directory.
+```
+/*
+Plugin Name:  MyPlugin
+Version    :  1.0
+Description:  Demonstrating WordPress Hooks (Actions and Filters) with multiple examples.
+Author     :  Balakarthikeyan
+Author URI :  https://www.example.com/
+License    :  GPLv2 or later
+License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:  myplugin
+*/
+
+//=================================================
+// Security: Abort if this file is called directly
+//=================================================
+if ( !defined('ABSPATH') ) { 
+    die;
+}
+```
+Save this file and then activate the plugin in your WordPress dashboard
+
+
+WordPress includes a built-in action called `admin_init`. It fires while the admin screen is being initialized, while the `init` action fires only after WordPress has finished loading and authenticated the user, but before any headers are sent.
+
+
+How WordPress Core wp_head action?
+WordPress Core itself uses many of its built-in actions to perform various functions.
+
+Take the wp_head action for example. It’s fired when WordPress is outputting the header section of the webpages (the code that goes between <head> and </head>).
+
+```php
+add_action( 'wp_head', 'rest_output_link_wp_head', 10, 0 );
+add_action( 'wp_head', '_wp_render_title_tag', 1 );
+add_action( 'wp_head', 'wp_enqueue_scripts', 1 );
+add_action( 'wp_head', 'wp_resource_hints', 2 );
+add_action( 'wp_head', 'feed_links', 2 );
+add_action( 'wp_head', 'feed_links_extra', 3 );
+add_action( 'wp_head', 'rsd_link' );
+add_action( 'wp_head', 'wlwmanifest_link' );
+add_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
+add_action( 'wp_head', 'locale_stylesheet' );
+add_action( 'wp_head', 'noindex', 1 );
+add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+add_action( 'wp_head', 'wp_print_styles', 8 );
+add_action( 'wp_head', 'wp_print_head_scripts', 9 );
+add_action( 'wp_head', 'wp_generator' );
+add_action( 'wp_head', 'rel_canonical' );
+add_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+add_action( 'wp_head', 'wp_custom_css_cb', 101 );
+add_action( 'wp_head', 'wp_site_icon', 99 );
+add_action( 'wp_head', 'wp_no_robots' );
+```
+
+has_action() function checks whether an action has been hooked. It accepts two parameters. has_action( 'action_name', 'function_to_check' );
+
+did_action() function to count the number of times any action is fired, to run a callback function only the first time an action is run and never again. did_action( 'action_name' );
+
+doing_action()
+This action function checks whether the specified action is being run or not. It returns a boolean value (true or false).
+
+
+Show a Maintenance Message to Your Site Visitors
+add_action( 'get_header', 'maintenance_message' );
+function maintenance_message() {
+    if (current_user_can( 'edit_posts' )) return;
+    wp_die( '<h1>Stay Pawsitive!</h1><br>Sorry, we\'re temporarily down for maintenance right meow.' );
+}
+
+Hide Dashboard Menu Items from Non-Admin Users
+add_action( 'admin_menu', 'hide_admin_menus' );
+function hide_admin_menus() {
+    if (current_user_can( 'create_users' )) return;
+    if (wp_get_current_user()->display_name == "Bala") return; 
+    remove_menu_page( 'plugins.php' ); 
+    remove_menu_page( 'themes.php' ); 
+    remove_menu_page( 'tools.php' ); 
+    remove_menu_page( 'users.php' ); 
+    remove_menu_page( 'edit.php?post_type=page' ); 
+    remove_menu_page( 'options-general.php' );
+}
+
+
+add_filter( 'the_content', 'do_blocks', 9 );
+add_filter( 'the_content', 'wptexturize' );
+add_filter( 'the_content', 'convert_smilies', 20 );
+add_filter( 'the_content', 'wpautop' );
+add_filter( 'the_content', 'shortcode_unautop' );
+add_filter( 'the_content', 'prepend_attachment' );
+add_filter( 'the_content', 'wp_make_content_images_responsive' );
+add_filter( 'the_content', 'do_shortcode', 11 ); // AFTER wpautop(). 
+
+
+// hook into the 'comment_text' filter with the callback function
+add_filter( 'comment_text', 'the_profanity_filter' );
+
+// define a callback function to filter profanities in comments 
+function the_profanity_filter( $comment_text ) {
+    // define an array of profane words and count how many are there 
+    $profaneWords = array('fudge', 'darn', 'pickles', 'blows', 'dangit');
+    $profaneWordsCount = sizeof($profaneWords);
+    
+    // loop through the profanities in $comment_text and replace them with '*'
+    for($i=0; $i < $profaneWordsCount; $i++) {
+        $comment_text = str_ireplace( $profaneWords[$i], str_repeat('*', strlen( $profaneWords[$i]) ), $comment_text );
+    } 
+    
+    return $comment_text;
+}
+
+
+A WordPress child theme is a theme that works parent theme from which it inherits all the functionality and styling.
+
+## What is a child theme?
 The extension of a parent theme is a child theme. In case you make changes to the parent theme, then any update will undo the changes. When working on a child theme, the customizations are preserved on an update.
 
-What is usermeta function in Wordpress?
-The usermeta function is used to retrieve the metadata of users. It can return a single value or an array of metadata.
+Development best practices recommend using child themes to edit, update, or customize exiting WordPress themes as a safe way to maintain their design and code.
 
-Syntax: get_user_meta( int $user_id, string $key = '', bool $single = false )
+Every WordPress child theme must have two files as a minimum: a stylesheet and a functions file.
 
-$user_id is the required user id parameter
-$key is the optional parameter which is the meta key to retrieve. By default, it returns data for all key values.
-$single is an optional parameter that tells whether the single value will return. By default, it is false.
+Your child theme doesn’t have to include any other files. if a template file doesn’t exist in the child theme, WordPress will use the file from the parent theme.
 
+Template files to override the same file from the parent theme, such as page.php when you want to customize the display of static pages.
+Template parts such as header.php or footer.php when you want to customize these parts of the site design.
 
-/////////////////////////////////////////////
-//LIST OF WORDPRESS SANITIZATION FUNCTIONS //
-/////////////////////////////////////////////
+When To Use a Child Theme in WordPress 
+Edit one or more of the template files.
+Add extra functions that are related to display and not functionality.
+Override one or more functions from the parent theme.
+Add extra template file(s).
+Easy extending and customization: 
+Hassle-free updates:
 
-- absint(); // - converts value to positive integer, useful for numbers, IDs, etc.
-- esc_url_raw(); // - for inserting URL in database safely
-- sanitize_email(); // - strips out all characters that are not allowable in an email address
-- sanitize_file_name(); // - removes special characters that are illegal in filenames on certain operating system
-- sanitize_hex_color(); // - returns 3 or 6 digit hex color with #, or nothing
-- sanitize_hex_color_no_hash(); // - the same as above but without a #
-- sanitize_html_class(); // - sanitizes an HTML classname to ensure it only contains valid characters
-- sanitize_key(); // - lowercase alphanumeric characters, dashes and underscores are allowed
-- sanitize_mime_type(); // - useful to save mime type in DB, e.g. uploaded file's type
-- sanitize_option(); // - sanitizes values like update_option() and add_option() does for various option types. Here is the list of - avaliable options: https://codex.wordpress.org/Function_Reference/sanitize_option#Notes
-- sanitize_sql_orderby(); // - ensures a string is a valid SQL order by clause
-- sanitize_text_field(); // - removes all HTML markup, as well as extra whitespace, leaves nothing but plain text
-- sanitize_title(); // - returned value intented to be suitable for use in a URL
-- sanitize_title_for_query(); // - used for querying the database for a value from URL
-- sanitize_title_with_dashes(); // - same as above but it does not replace special accented characters
-- sanitize_user(); // - sanitize username stripping out unsafe characters
-- wp_filter_post_kses(); wp_kses_post(); // - it keeps only HTML tags which are allowed in post content as well
-- wp_kses(); // - allows only HTML tags and attributes that you specify
-- wp_kses_data(); // - sanitize content with allowed HTML Kses rules
-- wp_rel_nofollow(); // - adds rel nofollow string to all HTML A elements in content
+How to Create a WordPress Child Theme
+Before you create your file, you need to create a folder to hold your theme. This goes in the wp-content/themes file of your WordPress installation.
+```php
+/*
+Theme Name:  My Child Theme. Child for Twenty Nineteen.
+Theme URI:  https://example.com
+Description:  Theme to support tutsplus tutorial. Child theme for the Twenty Nineteen theme.
+Author:  Balakarthikeyan
+Textdomain:  mychildtheme
+Author URI:  https://example.com/
+Template:  twentynineteen
+Version:  1.0
+License:  GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html                 
+*/
+```
 
-What is REST API?
-REST API (Representational State Transfer Application Programming Interface) is a newer and lightweight mode using which the developers enjoy the convenience of connecting WordPress with other applications.
+Theme Name: The unique name for the theme.
+Theme URI: Where users can find the code or documentation for the theme.
+Description: Descriptive text to help users understand what the theme does..
+Author: your name
+Textdomain: this is used for internationalization. Use the text domain as the second parameter in any internationalization functions.
+Author URI: The author’s website.
+Template: The folder where the parent theme is stored. Use the folder name and not the theme name. Without this line, your theme won’t work as a child theme.
+Version: The version number
+License: The license, which must be GNU. [link]
+License URI: The link to information on the license.
 
-WordPress has come across various vulnerability issues such as –
+The Functions File
+The next step is to add a functions file to your child theme. You need this so that you can enqueue the stylesheet from the parent theme
 
-- Authenticated File Delete.
-- Authenticated Post Type Bypass.
-- PHP Object Injection via Metadata.
-- Authenticated Cross-Site Scripting (XSS).
-- Cross-Site Scripting (XSS) that could affect plugins.
-- User Activation Screen Search Engine Indexing.
-- File Upload to XSS on Apache Web Servers.
-
-
-When a typical AJAX request to admin-ajax.php is made, it loads a few other core WordPress files to make sure the core functions are loaded.
-
-- /wp-load.php
-- /wp-config.php
-- /wp-settings.php (loads most core files, all active plugins and themes, and the REST API)
-- /wp-admin/includes/admin.php
-- /wp-admin/includes/ajax-actions.php
-After loading these files, WordPress calls the admin_init hook
-
-The below core functions are registered on this hook in WordPress 6.3:
-
-- handle_legacy_widget_preview_iframe
-- wp_admin_headers
-- default_password_nag_handler
-- WP_Privacy_Policy_Content::text_change_check
-- WP_Privacy_Policy_Content::add_suggested_content
-- register_setting
-- add_privacy_policy_content
-- send_frame_options_header
-- register_admin_color_schemes
-- _wp_check_for_scheduled_split_terms
-- _wp_check_for_scheduled_update_comment_type
-- _wp_admin_bar_init
-- wp_schedule_update_network_counts
-- _maybe_update_core
-- _maybe_update_plugins
-- _maybe_update_themes
-
-
-REST endpoints are handled by the WordPress Rewrite API, the request is passed to /index.php, which then loads the rest of WordPress normally.
-
-- /index.php
-- /wp-blog-header.php
-- /wp-load.php
-- /wp-config.php
-- /wp-settings.php (loads most core files, all active plugins and themes, and the REST API)
-
-Hooks, which are basically placeholders developers, to insert their own custom code for processing as a page is loading.
-
-Filter hooks, let you intercept and modify data as it’s being processed. Basically, filters let you manipulate data coming out of the database before going to the browser, or coming from the browser before going into the database
-
-Action hooks, lets you add extra functionality at specific points in the processing and loading of a page.
-
-A function is a piece of custom code that specifies how something will happen
+/* enqueue script for parent theme stylesheeet */        
+function childtheme_parent_styles() {
+ 
+ // enqueue style
+ wp_enqueue_style( 'parent', get_template_directory_uri().'/style.css' );                       
+}
+add_action( 'wp_enqueue_scripts', 'childtheme_parent_styles');
+WordPress will know to use the files from the parent theme unless you add new files to the child theme that override them
 
 
 
-Noodp = No Open Directory Project
-Noydir = No Yahoo Directory
+What is the wp_options table?
+The wp_options table contains all sorts of data for your WordPress site such as:
 
-The Open Directory Project and Yahoo Directory used to be massive online directories that contained links to websites along with their titles and descriptions.
+- Site URL, home URL, admin email, default category, posts per page, time format, etc
+- Settings for plugins, themes, widgets
+- Temporarily cached data
 
-Noodp and noydir are meta tags that are added to the html code of pages.
+the wp_options table is the autoload field. This contains a yes or a no value (flag). This essentially controls whether or not it is loaded by the wp_load_alloptions() function.
 
-Meta robots tags are code that is hidden from your site’s visitors but provides some instructions to search engine bots.
+Autoloaded data is data that is loaded on every page of your WordPress site. 
 
-Noodp looks like this:
+SELECT SUM(LENGTH(option_value)) as autoload_size FROM wp_options WHERE autoload='yes';
 
-<meta name="robots" content="noodp" />
-Noydir looks like this:
 
-<meta name="robots" content="noydir" />
+SELECT 'autoloaded data in KiB' as name, ROUND(SUM(LENGTH(option_value))/ 1024) as value FROM wp_options WHERE autoload='yes'
+UNION
+SELECT 'autoloaded data count', count(*) FROM wp_options WHERE autoload='yes'
+UNION
+(SELECT option_name, length(option_value) FROM wp_options WHERE autoload='yes' ORDER BY length(option_value) DESC LIMIT 10)
+
+SELECT option_name, length(option_value) AS option_value_length FROM wp_options WHERE autoload='yes' ORDER BY option_value_length DESC LIMIT 10;
+
+Clean up Transients
+Unless you’re using an object cache, WordPress stores transient records in the wp_options table.
+SELECT * 
+FROM `wp_options` 
+WHERE `autoload` = 'yes'
+AND `option_name` LIKE '%transient%'
+
+SELECT * 
+FROM `wp_options` 
+WHERE `option_name` LIKE '_wp_session_%'
+
+Add an Index to Autoload
+
+
+
+we can go a step further and add or remove plugins programmatically by taking advantage of the option_active_plugins filter. 
+
+$request_uri = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
+
+$is_admin = strpos( $request_uri, '/wp-admin/' );
+
+if( false === $is_admin ){
+	add_filter( 'option_active_plugins', function( $plugins ){
+
+		global $request_uri;
+
+		$is_contact_page = strpos( $request_uri, '/contact/' );
+
+		$myplugins = array( 
+			"contact-form-7/wp-contact-form-7.php", 
+			"code-snippets/code-snippets.php",
+			"query-monitor/query-monitor.php",
+			"autoptimize/autoptimize.php" 
+		);
+
+		<!-- $k = array_search( $myplugin, $plugins );
+
+		if( false !== $k && false === $is_contact_page ){
+			unset( $plugins[$k] );
+		} -->
+
+		if( false === $is_contact_page ){
+			$plugins = array_diff( $plugins, $myplugins );
+		}
+
+		return $plugins;
+
+	} );
+}

@@ -63,7 +63,7 @@ Laravel Socialite is an OAuth authentication package that simplifies the process
 In Laravel, file uploads are handled using the built-in Request object, which provides methods for retrieving uploaded files and storing them in the filesystem or cloud storage services like Amazon S3. Laravel's validation and security features ensure safe and secure file uploads.
 
 ### Q22. What are Laravel Collections?
-Laravel Collections are a set of powerful array manipulation methods provided by Laravel's Illuminate\Support\Collection class. They offer a fluent API for filtering, mapping, sorting, and aggregating array data, making it easy to work with collections of objects or database query results.
+Laravel Collections are a set of powerful array manipulation methods provided by Laravel's `Illuminate\Support\Collection` class. They offer a fluent API for filtering, mapping, sorting, and aggregating array data, making it easy to work with collections of objects or database query results.
 
 ### Q23. How do you handle sessions in Laravel?
 Laravel's session management system allows developers to store and retrieve user session data across multiple requests. Session data can be stored in various drivers such as file, database, or Redis, providing flexibility and scalability for session management.
@@ -92,7 +92,7 @@ Eloquent is a good solution for processing a single entity in CRUD manner — th
 - You can use methods, scopes, accessors, modifiers etc. inside of a model, which is a maintainable pattern.
 
 ### Q28. What is Query Builder ?
-Laravel’s Query Builder is a powerful and flexible tool for interacting with your database, which provides a convenient, fluent interface for creating and running database queries.
+Laravel's Query Builder is a powerful and flexible tool for interacting with your database, which provides a convenient, fluent interface for creating and running database queries.
 
 The Laravel query builder uses PDO parameter binding to protect your application against SQL injection attacks. There is no need to clean or sanitize strings passed to the query builder as query bindings.
 
@@ -100,7 +100,7 @@ The Laravel query builder uses PDO parameter binding to protect your application
 A primary key is a fundamental concept in database design. It is a unique identifier that is assigned to each record in a database table. The primary key serves as a means to uniquely identify and distinguish individual rows or records within a table.
 
 ### Q30. What is Laravel Breeze ?
-Laravel Breeze is a minimal, simple implementation of all of Laravel’s authentication features, including login, registration, password reset, email verification, and password confirmation and profile. 
+Laravel Breeze is a minimal, simple implementation of all of Laravel's authentication features, including login, registration, password reset, email verification, and password confirmation and profile. 
 
 ### Q31. What is the principal diferences between Doctrine and Eloquent?
 `Data Source Architectural Patterns :` Active Record, Data Mapper
@@ -118,16 +118,16 @@ A layer of mappers that moves data between objects and a database while keeping 
 ### Q32. Explain Events in laravel ?
 An event is an action or occurrence recognized by a program that may be handled by the program or code. Laravel events provides a simple observer implementation, that allowing you to subscribe and listen for various events/actions that occur in your application.
 
-All Event classes are generally stored in the app/Events directory, while their listeners are stored in app/Listeners of your application.
+All Event classes are generally stored in the `app/Events` directory, while their listeners are stored in `app/Listeners` of your application.
 
 ### Q33. Explain validations in laravel?
-Laravel provides several different ways to validate your application incoming data.By default Laravel's base controller class uses a ValidatesRequests trait which provides a convenient method to validate all incoming HTTP requests coming from client.You can also validate data in laravel by creating Form Request.
+Laravel provides several different ways to validate your application incoming data. By default Laravel's base controller class uses a `ValidatesRequests trait` which provides a convenient method to validate all incoming HTTP requests coming from client.You can also validate data in laravel by creating Form Request.
 ```php
 $validatedData = $request->validate([
-        'name' => 'required|max:255',
-        'username' => 'required|alpha_num',
-        'age' => 'required|numeric',
-    ]);
+    'name' => 'required|max:255',
+    'username' => 'required|alpha_num',
+    'age' => 'required|numeric',
+]);
 ```
 
 ### Q34. How to install laravel ?
@@ -189,15 +189,11 @@ Use below commands to create migration data via artisan.
 php artisan make:migration create_users_table
 ```
 
-### Q38. What is composer ?
-Composer is a tool for managing dependency in PHP. It allows you to declare the libraries on which your project depends on and will manage (install/update) them for you. Laravel utilizes Composer to manage its dependencies.
-
 ### Q39. What are Laravel Contract's ?
 Laravel's Contracts are nothing but a set of interfaces that define the core services provided by the Laravel framework.
-Read more about laravel Contract's
 
 ### Q40. Explain Facades in Laravel ?
-Laravel Facades provides a static like an interface to classes that are available in the application's service container. Laravel self-ships with many facades which provide access to almost all features of Laravel 's. Laravel facades serve as “static proxies” to underlying classes in the service container and provide benefits of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods of classes. All of Laravel's facades are defined in the Illuminate\Support\Facades namespace. You can easily access a facade like so:
+Laravel Facades provides a static like an interface to classes that are available in the application's service '. Laravel self-ships with many facades which provide access to almost all features of Laravel's. Laravel facades serve as "static proxies" to underlying classes in the service ' and provide benefits of a terse, expressive syntax while maintaining more testability and flexibility than traditional static methods of classes. All of Laravel's facades are defined in the `Illuminate\Support\Facades` namespace. You can easily access a facade like so:
 ```php
 use Illuminate\Support\Facades\Cache;
 
@@ -207,7 +203,7 @@ Route::get('/cache', function () {
 ```
 
 ### Q41. What are Laravel eloquent ORM?
-Laravel's Eloquent ORM is simple Active Record implementation for working with your database. Laravel provide many different ways to interact with your database, Eloquent is most notable of them. Each database table has a corresponding “Model” which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
+Laravel's Eloquent ORM is simple Active Record implementation for working with your database. Laravel provide many different ways to interact with your database, Eloquent is most notable of them. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in your tables, as well as insert new records into the table.
 ```php
 // Querying or finding records from products table where tag is 'new'
 $products= Product::where('tag','new');
@@ -239,16 +235,16 @@ To turn off CRSF protection in Laravel add following codes in `app/Http/Middlewa
 private $exceptUrls = ['controller/route1', 'controller/route2'];
 //modify this function
 public function handle($request, Closure $next) {
-    //add this condition foreach($this->exceptUrls as $route) {
-    if ($request->is($route)) {
-        return $next($request);
+    //add this condition 
+    foreach($this->exceptUrls as $route) {
+        if ($request->is($route)) return $next($request);
     }
     return parent::handle($request, $next);
 }
 ```
 
 ### Q45. What are traits in Laravel?
-PHP Traits are simply a group of methods that you want include within another class. A Trait, like an abstract class cannot be instantiated by itself.Trait are created to reduce the limitations of single inheritance in PHP by enabling a developer to reuse sets of methods freely in several independent classes living in different class hierarchies.
+PHP Traits are simply a group of methods that you want include within another class. A Trait, like an abstract class cannot be instantiated by itself. Trait are created to reduce the limitations of single inheritance in PHP by enabling a developer to reuse sets of methods freely in several independent classes living in different class hierarchies.
 
 Here is an example of trait.
 ```php
@@ -326,7 +322,7 @@ public function saveData(Request $request)
 ```
 
 ### Q53. What is Laravel Vapor?
-It is a serverless deployment platform that is powered by AWS.Laravel Vapor provides on-demand auto-scaling with zero server maintenance.
+It is a serverless deployment platform that is powered by AWS. Laravel Vapor provides on-demand auto-scaling with zero server maintenance.
 
 ### Q54. What is the Laravel Cursor?
 The cursor method in the Laravel is used to iterate the database records using a cursor. It will only execute a single query through the records. This method is used to reduce the memory usage when processing through a large amount of data.
@@ -339,7 +335,7 @@ foreach (Product::where('name', 'Bob')->cursor() as $fname) {
 In Laravel, dd() is a helper function used to dump a variable's contents to the browser and stop the further script execution. It stands for Dump and Die. It is used to dump the variable/object and then die the script execution. You can also isolate this function in a reusable functions file or a Class.
 
 ### Q56. What is yield in Laravel?
-In Laravel, @yield is principally used to define a section in a layout and is constantly used to get content from a child page unto a master page. So, when the Laravel performs blade file, it first verifies if you have extended a master layout, if you have extended one, then it moves to the master layout and commences getting the @sections.
+In Laravel, `@yield` is principally used to define a section in a layout and is constantly used to get content from a child page unto a master page. So, when the Laravel performs blade file, it first verifies if you have extended a master layout, if you have extended one, then it moves to the master layout and commences getting the @sections.
 
 ### Q57. How to clear Cache in Laravel?
 You can use `php artisan cache:clear` commnad to clear Cache in Laravel.
@@ -363,12 +359,12 @@ You can see controller files under `app/Http/Controllers` directory.
 `Route::get('url', [HomeController::class, 'method_name'])->name('routename');`
 
 ### Q61. How to Redirect a Request with Session Data
-This very easy to redirect a request with session data. You also have to use “Illuminate\Http\Request” in the file.
+This very easy to redirect a request with session data. You also have to use `"Illuminate\Http\Request"` in the file.
 
 `$request->session()->flash('status', 'Task was successful!');`
 
 ### Q62. How to Return A JSON Response In Laravel
-if you do use this JSON method in Laravel it automatically set the header “content-type” and and given array in JSON form.
+if you do use this JSON method in Laravel it automatically set the header "content-type" and and given array in JSON form.
 ```php
 return response()->json([
     'name' => 'fist',
@@ -385,23 +381,24 @@ Creating a Component in Laravel is very easy when we have artisan structure.
 You can see newly created component under `app/View/Components` directory.
 
 ### Q65. Why we use @once Directive In Laravel Blade
-@Once as name defines, used for pushing any single piece of code at once when script rendered in first time.
+`@Once` as name defines, used for pushing any single piece of code at once when script rendered in first time.
 
 ### Q66. How to Delete, Retrieve and Store Data With Session In Laravel
-Store data in a session:
+```php
+/* Store data in a session: */
 `$request->session()->put('key', 'value');`
 
-Delete data from the session:
-```php
+/* Delete data from the session: */
+
 // delete a single key...
 $request->session()->forget('name');
  
 // delete multiple keys...
 $request->session()->forget(['name', 'status']);
-```
-Retrieve data from the session:
-`$request->session()->get('key');`
 
+// Retrieve data from the session:
+$request->session()->get('key');
+```
 ### Q67. What are the available route methods in Laravel?
 
 Routes help us to land on any HTTP verb and also help us to communicate with any kind of controller or model. In Laravel, we can find common routes in `routes/web.php` file

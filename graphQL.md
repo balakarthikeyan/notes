@@ -26,7 +26,7 @@ GraphQL excels in efficient data loading. 𝗚𝗿𝗮𝗽𝗵𝗤𝗟 is best f
 
 Interface Definition Language (IDL) or Schema Definition Language (SDL) is the most concise way to specify a GraphQL Schema. The syntax is well-defined and will be adopted in the official GraphQL Specification.
 
-```
+```graphql
 schema {
     query: QueryType
 }
@@ -51,5 +51,26 @@ type Email {
     email: String!
     default: Int! @default(value: 0)
     user: User @relation(name: "Emails")
+}
+
+query NewQuery {
+  posts {
+    nodes {
+      id
+      slug
+      uri
+      title
+      status
+      date
+      content
+      author {
+        node {
+          email
+          id
+          name
+        }
+      }
+    }
+  }
 }
 ```

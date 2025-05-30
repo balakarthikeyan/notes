@@ -8,14 +8,14 @@
 `node-sass input.scss output.css`
 
 ## Using package.json
-```
+```json
 "scripts": {
   "sass:compile": "node-sass --include-path sass INPUT_FILE.scss OUTPUT_FILE.css",
 }
 npm run sass:compile
 ```
 ## 1.  Variables
-```
+```scss
   $title-font: normal 24px/1.5 'Open Sans', sans-serif;
   $cool-red: #F44336;
   $box-shadow-bottom-only: 0 2px 1px 0 rgba(0, 0, 0, 0.2);
@@ -27,7 +27,7 @@ npm run sass:compile
   }
 ```
 > to
-```
+```scss
   h1.title {
     font: normal 24px/1.5 "Open Sans", sans-serif;
     color: #F44336;
@@ -35,7 +35,7 @@ npm run sass:compile
   }
 ```
 ## 1.1 Scopes and Global
-```
+```scss
   $primaryColor: #eeccff;
 
   body {
@@ -47,7 +47,7 @@ npm run sass:compile
   }
 ```
 > to
-```
+```scss
   body {
     background: #ccc;
   }
@@ -57,7 +57,7 @@ npm run sass:compile
   }
 ```
 ## 2.  Mixins
-```
+```scss
   @mixin square($size, $color) {
     width: $size;
     height: $size;
@@ -90,7 +90,7 @@ npm run sass:compile
   }
 ```
 ## 3.  Extend
-```
+```scss
   .dialog-button {
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
   }
@@ -100,7 +100,7 @@ npm run sass:compile
   }
 ```
 > to
-```
+```scss
   .dialog-button, .confirm {
     box-sizing: border-box;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
@@ -110,7 +110,7 @@ npm run sass:compile
   }
 ```
 ## 4.  Nesting
-```
+```scss
   ul {
     list-style: none;
     li {
@@ -119,7 +119,7 @@ npm run sass:compile
   }
 ```
 > to
-```
+```scss
   ul {
     list-style: none; 
   }
@@ -129,7 +129,7 @@ npm run sass:compile
   }
 ```
 ## 5.  Operations
-```
+```scss
 $container-width: 100%;
 $column-count: 4;
 $margin: 1%;
@@ -144,7 +144,7 @@ $margin: 1%;
 }
 ```
 ## 6.  Functions
-```
+```scss
   $awesome-blue: #2196F3;
 
   a {
@@ -170,7 +170,7 @@ $margin: 1%;
 ```
 ## 7. Theme Development
 > Example 1
-```
+```scss
 $settings: (
     maxWidth: 800px,
     columns: 12,
@@ -224,7 +224,7 @@ $settings: (
 @include renderGridStyles($settings);
 ```
 > Example 2
-```
+```scss
 @mixin themable($theme-name, $container-bg, $left-bg, $right-bg, $innertext, $button-bg) {
    .#{$theme-name} {
        .wrapper {

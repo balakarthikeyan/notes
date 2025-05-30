@@ -26,6 +26,12 @@
 - Names arguments after unpacking
 - Octal literal notation
 
+# PHP 8.2+
+- First-class callable syntax
+- Readonly classes
+- DNF (Disjunctive Normal Form) types
+- Better performance optimizations
+
 ## Examples:
 
 ```php

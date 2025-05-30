@@ -98,3 +98,6 @@ State design pattern is a behavioral design pattern that enables an object to ch
 13. The `Service Layer pattern`, involves creating a service layer that encapsulates the business logic of an application. This layer serves as an intermediary between the controller and the data access layer, ensuring that each layer remains distinct and focused on its responsibilities.
 
 14. The `Repository pattern` allows using objects without having to know how these objects are persisted. It is an abstraction of the data layer. It means that our business logic no need to know how data is retrieved. The business logic relies on the repository to get the correct data. Basically it is used to decouple the data access layers and business logic in our application.
+
+### What is Singleton design pattern?
+Singleton design pattern is a creational pattern that is used whenever only one instance an object is needed to be created. In this pattern, you can't initialize the class. Any attempts to duplicate, or to instantiate additional instances of the class should fail.
