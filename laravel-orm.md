@@ -1,5 +1,5 @@
 ## Eloquent
-Laravel has an object-relational mapper (ORM) named “Eloquent” which allows you to work with your database. Eloquent is a new technique to work with the database queries using the model in Laravel. Eloquent provides simple and beautiful syntax to gain complex queries in a few seconds without writing long queries.
+Laravel has an object-relational mapper (ORM) named "Eloquent" which allows you to work with your database. Eloquent is a new technique to work with the database queries using the model in Laravel. Eloquent provides simple and beautiful syntax to gain complex queries in a few seconds without writing long queries.
 
 ## COMMON ORM
 

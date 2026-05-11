@@ -19,11 +19,11 @@ OOPS stands for Object Oriented Programming system. It is a programming techniqu
 
 ## What is Class and Objects in OOPS?
 
-Class
+`Class`
 In Object-Oriented Programming, a class is a blueprint that defines the functions and variables which are common to objects of a certain kind.
 
-Object
-In OOPS an object is a specimen of the class. It is nothing but a component that consists of methods and properties which make the data useful and help users to determine the behavior of the class.
+`Object`
+In Object-Oriented Programming, an object is a specimen of the class. It is nothing but a component that consists of methods and properties which make the data useful and help users to determine the behavior of the class.
 
 ```php
 class Person{
@@ -58,18 +58,18 @@ It is an attribute of an object, and it contains all data which is hidden. That 
 ```php
 class Account {
 
-    private int account_number;
-    private int account_balance;
+    private int $account_number;
+    private int $account_balance;
 
     public show_summary() : void {
         //..
     }
 
-    public deposit(int a) : void {
-        if (a < 0) {
+    public deposit(int $$$a) : void {
+        if ($a < 0) {
             //show error
         } else {
-            account_balance = account_balance + a;
+            $account_balance = $account_balance + $a;
         }
     }
 }
@@ -125,9 +125,9 @@ PHP have three access modifiers such as public, private and protected.
 
 ## What are the Final class and Final methods?
 
-`Final Class` - A class that can’t be extended and inherited further is known as Final Class. This class is declared with the keyword final and should be declared.
+`Final Class` - A class that can't be extended and inherited further is known as Final Class. This class is declared with the keyword final and should be declared.
 
-`Final Method` - Methods in the final class are implicitly final and if a user uses the final keyword that means methods can’t be overridden by subclasses.
+`Final Method` - Methods in the final class are implicitly final and if a user uses the final keyword that means methods can't be overridden by subclasses.
 
 ## What is static keyword ?
 

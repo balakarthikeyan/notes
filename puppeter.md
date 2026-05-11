@@ -41,7 +41,7 @@ RUN chmod -R 777 /home/app
 USER app
 
 # Define the command to run your application
-CMD [“node”, “server.js”]
+CMD ["node", "server.js"]
 
 
 # server.js

@@ -8,11 +8,13 @@ docker run -d --name keycloak -p 8020:8020 -e KEYCLOAK_USER=admin -e KEYCLOAK_PA
 start --auto-build --db=dev-mem --hostname localhost:8080 --http-enabled true --hostname-strict-https false
 
 # Production
+```bash
 start --auto-build --hostname=hexadefence.com --db=postgres --features=token-exchange --db-url=<JDBC-URL> --db-username=<DB-USER> --db-password=<DB-PASSWORD> --https-key-store-file=<file> --https-key-store-password=<password>
-
 ```
+
+```bash
 Open http://localhost:8080/auth/
-Click on the “Administration Console” link.
+Click on the "Administration Console" link.
 Log in using admin for both username and password.
 
 docker build --build-arg KEYCLOAK_VERSION=21.1.1 -t keycloak --progress=plain --no-cache .

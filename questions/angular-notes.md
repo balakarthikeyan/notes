@@ -1,6 +1,7 @@
 # What is Angular ?
 Angular is a powerful front-end framework that is widely used for building dynamic web applications. It is open-source and maintained by Google. One of the key features of Angular is its use of TypeScript, a typed superset of JavaScript that makes code easier to read, maintain, and debug.
 
+```
 my-workspace/
 ├── ... #workspace-wide configuration files
 ├── src
@@ -15,28 +16,29 @@ my-workspace/
 │   ├── index.html #main HTML page, where the component will be rendered
 ├── angular.json #provides workspace-wide and project-specific configuration defaults
 └── tsconfig.json #provides the base TypeScript configuration for projects in the workspace
+```
 
 # Angular 15:
 - `Standalone Components:` Angular 15 introduced fully standalone components, allowing developers to create components without needing NgModules, simplifying the structure and dependencies of applications.
 - `Directive Composition API:` This feature enables the reuse of directives by composing them together.
 - `ESBuild Integration:` Improved build performance using ESBuild, making the build process faster and more efficient.
-- `Router Improvements:` New routerLinkActiveOptions provides more control over link activation.
+- `Router Improvements:` New `routerLinkActiveOptions` provides more control over link activation.
 - `Forms Enhancements:` Improved handling of form controls, including new APIs for adding and removing form controls dynamically.
 
 # Angular 16:
 - `Non-Destructive Hydration:` Enhances server-side rendering by retaining server-rendered content and making it interactive without re-rendering it, improving performance and reducing flickering during page load​.
-- `Signals:` Signals offer a new reactivity model for managing state changes, inspired by Solid.js. This helps in reducing the overhead of change detection and makes Zone.js optional​.
+- `Signals:` Signals offer a new reactivity model for managing state changes, inspired by `Solid.js`. This helps in reducing the overhead of change detection and makes `Zone.js` optional​.
 - `Language Service:` Enhanced Angular Language Service. 
 - `Improved Developer Tools:` Angular DevTools for better debugging and code navigation.
-- `Component Input Binding:` Allows route data to be directly bound to component inputs without needing to inject the ActivatedRoute service​
+- `Component Input Binding:` Allows route data to be directly bound to component inputs without needing to inject the `ActivatedRoute` service​
 - `DestroyRef:` A new provider to register destroy callbacks for cleanup logic, improving memory management​
-- `Caching:` Default caching with the ability to control the cache location via the ng cache command​
+- `Caching:` Default caching with the ability to control the cache location via the `ng cache` command​
 - `Angular Material Updates:` Introduction of a new date range picker and other enhancements to improve accessibility and performance.
 
 # Angular 17:
-- `ESLint Integration:` Angular 17 replaces TSLint with ESLint as the default linter, aligning with the broader TypeScript ecosystem.
-- `Optional NgModules:` Angular 17 further simplifies app structures by making NgModules completely optional for more parts of the application.
-- `Signals and Effects:` Angular 17 introduces a stable API for signals and effects, streamlining state management.
+- `ESLint Integration:` It replaces TSLint with ESLint as the default linter, aligning with the broader TypeScript ecosystem.
+- `Optional NgModules:` It further simplifies app structures by making `NgModules` completely optional for more parts of the application.
+- `Signals and Effects:` It introduces a stable API for signals and effects, streamlining state management.
 - `Router Enhancements:` Improved lazy loading and enhanced error handling in routing configurations.
 - `Performance Improvements:` Ongoing performance enhancements, especially in build times and application startup, leveraging Webpack 5 and other optimizations.
 

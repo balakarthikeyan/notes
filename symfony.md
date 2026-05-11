@@ -5,7 +5,7 @@ Symfony is a PHP framework used to develop web application, APIs, microservices 
 # Folder Structure:
 - `bin`: Contains the executable files
 - `config`: Contains all the configuration defined for any environment
-- `public`: This is the document root. It holds all publicly accessible files, such as index.php, stylesheets, JavaScript files, and images. The index.php file is also called “front controller”.
+- `public`: This is the document root. It holds all publicly accessible files, such as index.php, stylesheets, JavaScript files, and images. The index.php file is also called "front controller".
 - `src`: Contains all the Symfony-specific code (controllers and forms), your domain code (e.g., Doctrine classes) and all your business logic
 - `templates`: Contains all the template files for the application
 - `tests`: This houses the files for functional or unit test

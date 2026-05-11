@@ -6,8 +6,6 @@ SOLID is an acronym that represents five design principles for writing maintaina
 ### Single Responsibility Principle (SRP)
 The SRP states that a class should have only one reason to change. In other words, a class should have only one responsibility.
 
-A class should have one and only one reason to change, meaning that a class should have only one job.
-
 ### Open/Closed Principle (OCP)
 The OCP suggests that a class should be open for extension but closed for modification. This means that you can add new functionality without altering existing code.
 

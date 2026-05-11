@@ -1,10 +1,10 @@
-MySQL is a popular open-source relational database system renowned for its efficiency in handling complex queries. It’s widely used for managing large volumes of data, and its capabilities are unparalleled. We can confidently manage even the most intricate data sets with the proper understanding.
+MySQL is a popular open-source relational database system renowned for its efficiency in handling complex queries. It's widely used for managing large volumes of data, and its capabilities are unparalleled. We can confidently manage even the most intricate data sets with the proper understanding.
 
 ## What are DDL, DML, and DCL?
 
-These specific MySQL interview questions and answers for experienced candidates can be helpful. DDL stands for Data Definition Language in MySQL, and it is used in database schemas and descriptions to determine how data should be stored in the database.
+DDL stands for Data Definition Language in MySQL, and it is used in database schemas and descriptions to determine how data should be stored in the database.
 
-DDL Queries:
+`DDL Queries:`
 
 - CREATE
 - ALTER
@@ -15,7 +15,7 @@ DDL Queries:
 
 DML stands for Data Manipulation Language and is used to manipulate data in databases. It largely consists of standard SQL commands for storing, modifying, retrieving, deleting, and updating data.
 
-DML Queries are:
+`DML Queries:`
 
 - SELECT
 - INSERT
@@ -28,7 +28,7 @@ DML Queries are:
 
 DCL stands for Data Control Language and encompasses instructions that deal with user rights, permissions, and other database system controls.
 
-List of queries for DCL:
+`DCL Queries:`
 
 - GRANT
 - REVOKE
@@ -78,11 +78,11 @@ Query caching can significantly improve performance for repetitive queries, but 
 Denormalization is a technique for strategically introducing controlled redundancy in your database schema. Denormalization involves duplicating certain data points across multiple tables to avoid complex joins.
 
 ### Upgrading Hardware:
-While optimizing your queries is essential, the underlying hardware also affects performance. Upgrading your database server’s RAM, storage, and CPU can significantly boost performance, especially for large datasets or complex queries.
+While optimizing your queries is essential, the underlying hardware also affects performance. Upgrading your database server's RAM, storage, and CPU can significantly boost performance, especially for large datasets or complex queries.
 
 ## What is Database Replication?
 
-Database replication is a technique used to create and maintain copies of a database in different locations or on different servers and keep them in sync in real-time. Its main purpose is to ensure data availability and improve fault tolerance. Replication involves copying, or mirroring, a database’s data to one or more destination databases, which can be situated on separate servers, often in different geographic locations. These copies can serve various purposes, such as load balancing, disaster recovery, or real-time data distribution.
+Database replication is a technique used to create and maintain copies of a database in different locations or on different servers and keep them in sync in real-time. Its main purpose is to ensure data availability and improve fault tolerance. Replication involves copying, or mirroring, a database's data to one or more destination databases, which can be situated on separate servers, often in different geographic locations. These copies can serve various purposes, such as load balancing, disaster recovery, or real-time data distribution.
 
 ## What Is Synchronous Replication?
 
@@ -107,13 +107,13 @@ Semi-synchronous replication is a compromise between synchronous and asynchronou
 
 ## What is the timing of the replication?
 
-- Synchronous replicates the data as it’s written to primary storage.
+- Synchronous replicates the data as it's written to primary storage.
 - Asynchronous replicates it afterward.
 
 ## What are the type of data storage?
 
 - `Asynchronous replication` is more widely supported by array-based, network-based, and host-based replication products. 
-- `Asynchronous replication`, is mainly used for data backups. 
+- `Asynchronous replication` is mainly used for data backups. 
 - `Synchronous replication` typically uses higher-end, block-based storage arrays. 
 - `Synchronous replication` is mainly used for high-end transactional applications that require instant failover if the primary node fails. 
 
@@ -141,26 +141,6 @@ The SQL standard defines two types of triggers: row-level triggers and statement
 
 A `row-level trigger` is activated for each row that is inserted, updated, or deleted.
 A `statement-level trigger` is executed once for each transaction regardless of how many rows are inserted, updated, or deleted.
-
-## What is MySQL Storage Engines ?
-
-In MySQL, a storage engine is a software component responsible for managing how data is stored, retrieved, and manipulated within tables. A storage engine also determines the underlying structure and features of the tables.
- 
-## Describe BLOB in MySQL?
-
-BLOB or Binary Large Object can be used to store binary data in MySQL. Sometimes binary data like images need to be stored in SQL databases.
-
-There are four BLOB types including TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB can hold up to 255 bytes, 65,535 bytes, 16,777,215 bytes and 4,294,967,295 bytes respectively.
-
-## How are VARCHAR and CHAR different?
-
-Both `CHAR` and `VARCHAR` data types store characters up to specified length.
-
-- `CHAR` stores characters of fixed length while `VARCHAR` can store characters of variable length.
-Storage and retrieval of data is different in `CHAR` and `VARCHAR`.
-- `CHAR` internally takes fixed space, and if stored character length is small, it is padded by trailing space characters. `VARCHAR` has 1 or 2 byte prefix along with stored characters.
-- `CHAR` has slightly better performance.
-- `CHAR` has memory allocation equivalent to the maximum size specified while `VARCHAR` has variable length memory allocation.
 
 ## What is self referencing foreign key?
 
@@ -193,37 +173,13 @@ FOREIGN KEY (`manager_id`) REFERENCES employee(`employee_id`) ON DELETE CASCADE
 Both `TIMESTAMP` and `DATETIME` store date time in YYYY-MM-DD HH:MM:SS format. 
 While `DATETIME` stores provided date time, `TIMESTAMP` first converts provided time to UTC while storing and then again converts it back to server time zone upon retrieval. So if you need to serve different users in different countries using same time data, TIMESTAMP facilitates it. DATETIME simply stores provided date time without making any time zone related conversion.
 
-## Explain GRANT command in MySQL?
+## What is difference between BLOB and TEXT in MySQL?
 
-When a new MySQL user is created, he requires certain privileges to perform various database operations. GRANT command grants certain privileges to the user.
+- `BLOB` data types are designed to store binary data like picture or video in database.
+- `TEXT` data types are designed to store large text data.
+- `BLOB` stores binary byte string while TEXT stores character string. 
+- `TEXT` data types support sorting and comparison around text which is not supported by BLOB.
 
-`GRANT SELECT, INSERT ON customertable TO 'username'@'localhost'`
-
-## Explain the use of FEDERATED tables in MySQL?
-
-`FEDERATED` tables are tables through which MySQL provides a way to access database tables located in remote database servers. Actual physical data resides in remote machine but the table can be accessed like a local table. To use a federated table `ENGINE=FEDERATED` and a connection string containing user, remote hostname, port, schema and table name are provided in CREATE TABLE command.
-
-```sql
-CREATE TABLE table_fed (
- ... 
-)
-ENGINE=FEDERATED
-CONNECTION='mysql://user@remote_hostname:port/federated_schema/table';
-```
-
-## How can ENUM be used in MySQL?
-
-ENUM can be used to set a column as enum type. ENUM in MySQL is string object which can take one of the permitted value.
-```sql
-CREATE TABLE `Student`(
-`rollnumber` INT NOT NULL, 
-`name` VARCHAR(25) NOT NULL, 
-`country` ENUM('USA', 'UK', 'Australia'), 
-PRIMARY KEY(`rollnumber`));
-
-INSERT INTO `Student` values('6', 'John', 'USA');
-```
- 
 ## What are different TEXT data types in MySQL. ## What is difference between TEXT and VARCHAR?
 
 Different text data types in MySQL include: TINYTEXT, TEXT, MEDIUMTEXT and LONGTEXT.
@@ -238,6 +194,41 @@ These data types have different maximum size.
 `VARCHAR` is also a variable text data type with some difference. 
 `VARCHAR` is stored inline in the database table while `TEXT` data types are stored elsewhere in storage with its pointer stored in the table. A prefix length is must for creating index on TEXT data types. 
 `TEXT` columns do not support default values unlike `VARCHAR`.
+
+## Describe BLOB in MySQL?
+
+BLOB or Binary Large Object can be used to store binary data in MySQL. Sometimes binary data like images need to be stored in SQL databases.
+
+There are four BLOB types including TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB can hold up to 255 bytes, 65,535 bytes, 16,777,215 bytes and 4,294,967,295 bytes respectively.
+
+## How are VARCHAR and CHAR different?
+
+Both `CHAR` and `VARCHAR` data types store characters up to specified length.
+
+- `CHAR` stores characters of fixed length while `VARCHAR` can store characters of variable length.
+Storage and retrieval of data is different in `CHAR` and `VARCHAR`.
+- `CHAR` internally takes fixed space, and if stored character length is small, it is padded by trailing space characters. `VARCHAR` has 1 or 2 byte prefix along with stored characters.
+- `CHAR` has slightly better performance.
+- `CHAR` has memory allocation equivalent to the maximum size specified while `VARCHAR` has variable length memory allocation.
+
+## Explain GRANT command in MySQL?
+
+When a new MySQL user is created, he requires certain privileges to perform various database operations. GRANT command grants certain privileges to the user.
+
+`GRANT SELECT, INSERT ON customertable TO 'username'@'localhost'`
+
+## How can ENUM be used in MySQL?
+
+ENUM can be used to set a column as enum type. ENUM in MySQL is string object which can take one of the permitted value.
+```sql
+CREATE TABLE `Student`(
+`rollnumber` INT NOT NULL, 
+`name` VARCHAR(25) NOT NULL, 
+`country` ENUM('USA', 'UK', 'Australia'), 
+PRIMARY KEY(`rollnumber`));
+
+INSERT INTO `Student` values('6', 'John', 'USA');
+```
  
 ## What different stored objects are supported in MySQL?
 
@@ -264,13 +255,6 @@ CREATE TABLE `Student`(
 PRIMARY KEY(`studentid`));
 ```
  
-## What is difference between BLOB and TEXT in MySQL?
-
-- `BLOB` data types are designed to store binary data like picture or video in database.
-- `TEXT` data types are designed to store large text data.
-- `BLOB` stores binary byte string while TEXT stores character string. 
-- `TEXT` data types support sorting and comparison around text which is not supported by BLOB.
- 
 ## What is the use of DELIMETER command in MySQL?
 
 `DELIMITER` command can be used to change delimiter in MySQL from ; to something else. It is used while writing trigger and stored procedures in MySQL. MySQL workbench or MySQL client use ; as delimiter to separate different statements. 
@@ -281,6 +265,26 @@ DELIMITER //
 DELIMITER ;
 ```
  
+## Example of UPSERT logic using MySQL?
+Multiple column index works on left most prefix of the indexed columns. 
+
+Use `ON DUPLICATE KEY UPDATE` to run a command which can do an `INSERT` and `UPDATE` if needed in a single statement.
+```sql
+INSERT INTO `User` (`userid`, `name`, `mobilenumber`) 
+VALUES('11112227', 'Alice', '876876876') 
+ON DUPLICATE KEY UPDATE name='Alice', mobilenumber='876876876';
+```
+
+## What are the most common functions in MySQL Server?
+
+The most used functions in MySQL servers are String functions, Numeric functions, Date and time functions, Aggregate functions, and Other functions. 
+
+- `String functions` consist of `CONCAT(), LEFT(), RIGHT() & SUBSTRING() LEN(), LTRIM(), RTRIM() & TRIM(), REPLACE(), LOWER() and UPPER()`.
+- `Numeric functions` contain `ABS(), and ROUND()`. 
+- `Data and time functions` consist of `DATEDIFF(), CURRENT_TIMESTAMP(), DATEADD(), DAY(), MONTH(), YEAR()`. 
+- `Aggregate functions` consist of `COUNT(), SUM(), AVG(), MIN(), and MAX()`. 
+- `Other functions` consist of `CAST() & CONVERT(), COALESCE(), ISNULL(), and NULLIF()`.
+
 ## Compare MySQL and PostgreSQL ?
 
 MySQL is a RDBMS (relational database) while PostgreSQL is an ORDBMS (object relational database) which means apart from relational database, it also supports some object oriented language features like table inheritance and functional overloading.
@@ -293,29 +297,7 @@ MySQL is a RDBMS (relational database) while PostgreSQL is an ORDBMS (object rel
 - `PostgreSQL` supports data types such as numeric, character, date and time, spatial, and JSON.
 - `MySQL` supports enumerated, network addresses, arrays, ranges, XML, hstore, composite, and MySQL data types.
 - `PostgreSQL` supports multiple indexes. MySQL supports B-tree and R-tree indexes.
- 
-## Example of UPSERT logic using MySQL?
-Multiple column index works on left most prefix of the indexed columns. 
 
-Use `ON DUPLICATE KEY UPDATE` to run a command which can do an `INSERT` and `UPDATE` if needed in a single statement.
-```sql
-INSERT INTO `User` (`userid`, `name`, `mobilenumber`) 
-VALUES('11112227', 'Alice', '876876876') 
-ON DUPLICATE KEY UPDATE name='Alice', mobilenumber='876876876';
-```
- 
-## What are differences between MyISAM and InnoDB database engines commonly used in MySQL?
-
-Row level locking, foreign key support and transacation support are main features which differentiate InnoDB from MyISAM.
-
-- `MyISAM` was default storage engine before 5.5 while InnoDB is default storage engine from 5.5 and later versions.
-- `InnoDB` is ACID compliant ensuring data integrity while MyISAM is not ACID compliant.
-- `COMMIT` and `ROLLBACK` are supported by `InnoDB`.
-- `InnoDB` has row level locking, which makes it faster in highly concurrent cases.
-- `MyISAM` which has locking at table level.
-- Foreign key constraint is supported only in `InnoDB` and not `MyISAM`. 
-- `InnoDB` is appropriate engine for payment related applications where transaction support becomes important.
- 
 ## Comparison between MySQL and Oracle database?
 
 - `MySQL` is open source and free. 
@@ -333,21 +315,48 @@ Row level locking, foreign key support and transacation support are main feature
 
 A database table can be defragmented over the time. OPTIMIZE TABLE command can be executed to reorganize table data and index. OPTIMIZE TABLE command might be useful for tables which are frequently updated. It can help improve performance of I/O operations.
  
+## What is MySQL Storage Engines ?
+
+In MySQL, a storage engine is a software component responsible for managing how data is stored, retrieved, and manipulated within tables. A storage engine also determines the underlying structure and features of the tables.
+
 ## What is database engine or storage engine?
 
 Database engines or storage engines are software programs which perform database operations like create, read, update and delete. Major storage engines supported by MySQL are InnoDB and MyISAM.
 
-- `InnoDB storage engine` - default MySQL storage engine from version 5.5 and later. InnoDB is ACID compliant, provides transaction support and foreign key support.
-- `MyISAM storage engine` - default storage engine before 5.5. It is non-transactional.
-- `MEMORY storage engine` - it creates temporary database tables in memory.
-- `CSV storage engine` - it uses csv file for storing data.
-- `FEDERATED storage engine` - helps access data physically located in remote database server using a query to local database server.
-- `MERGE storage engine` - can be used to merge more than one table with identical column data into one table.
-- `ARCHIVE storage engine` - uses zlib compression to store archived data using less space, does not support indexing.
-- `BLACKHOLE storage engine` - acts like a black hole, accepts data to store, does not store it and always returns empty. It can be used in performance testing.
- 
+- `InnoDB` - default MySQL storage engine from version 5.5 and later. InnoDB is ACID compliant, provides transaction support and foreign key support.
+- `MyISAM` - default storage engine before 5.5. It is non-transactional.
+- `MEMORY` - it creates temporary database tables in memory.
+- `CSV` - it uses csv file for storing data.
+- `FEDERATED` - helps access data physically located in remote database server using a query to local database server.
+- `MERGE` - can be used to merge more than one table with identical column data into one table.
+- `ARCHIVE` - uses zlib compression to store archived data using less space, does not support indexing.
+- `BLACKHOLE` - acts like a black hole, accepts data to store, does not store it and always returns empty. It can be used in performance testing.
+
+## What are differences between MyISAM and InnoDB database engines commonly used in MySQL?
+
+Row level locking, foreign key support and transacation support are main features which differentiate InnoDB from MyISAM.
+
+- `MyISAM` was default storage engine before 5.5 while InnoDB is default storage engine from 5.5 and later versions.
+- `InnoDB` is ACID compliant ensuring data integrity while MyISAM is not ACID compliant. `COMMIT` and `ROLLBACK` are supported by `InnoDB`.
+- `InnoDB` has row level locking, which makes it faster in highly concurrent cases.
+- `MyISAM` which has locking at table level.
+- Foreign key constraint is supported only in `InnoDB` and not `MyISAM`. 
+- `InnoDB` is appropriate engine for payment related applications where transaction support becomes important.
+
+## Explain the use of FEDERATED tables in MySQL?
+
+`FEDERATED` tables are tables through which MySQL provides a way to access database tables located in remote database servers. Actual physical data resides in remote machine but the table can be accessed like a local table. To use a federated table `ENGINE=FEDERATED` and a connection string containing user, remote hostname, port, schema and table name are provided in CREATE TABLE command.
+
+```sql
+CREATE TABLE table_fed (
+ ... 
+)
+ENGINE=FEDERATED
+CONNECTION='mysql://user@remote_hostname:port/federated_schema/table';
+```
+
 ## What is autocommit in MySQL? 
-In MySQL, if `autocommit` is `disabled`, any command you run will not be committed automatically, which means changes made through these commands will become permanent only if COMMIT is called. 
+In MySQL, if `autocommit` is `disabled`, any command you run will not be committed automatically, which means changes made through these commands will become permanent only if `COMMIT` is called. 
 
 If by default `autocommit` is `enabled`, which means any change we make is part of a single transaction, commit is done automatically and it can not be rolled back.
 
@@ -388,16 +397,6 @@ And current transaction can be rolled back to desired saved save point location 
 
 `ROLLBACK TO savepointName;`
 Unlike ROLLBACK or COMMIT commands which end currently running transaction, ROLLBACK TO savepointName does not end current transaction.
-
-## What are the most common functions in MySQL Server?
-
-The most used functions in MySQL servers are String functions, Numeric functions, Date and time functions, Aggregate functions, and Other functions. 
-
-- `String functions` consist of `CONCAT(), LEFT(), RIGHT() & SUBSTRING() LEN(), LTRIM(), RTRIM() & TRIM(), REPLACE(), LOWER() and UPPER()`.
-- `Numeric functions` contain `ABS(), and ROUND()`. 
-- `Data and time functions` consist of `DATEDIFF(), CURRENT_TIMESTAMP(), DATEADD(), DAY(), MONTH(), YEAR()`. 
-- `Aggregate functions` consist of `COUNT(), SUM(), AVG(), MIN(), and MAX()`. 
-- `Other functions` consist of `CAST() & CONVERT(), COALESCE(), ISNULL(), and NULLIF()`.
 
 ## What do ROLLUP, GROUPING SETS, and CUBE Do in T-SQL?​
 
@@ -483,7 +482,7 @@ The Query Cache is a technique that caches the results of SELECT queries so that
 
 ## What is MySQL clustering?
 
-MySQL clustering, also known as MySQL Cluster or MySQL NDB Cluster, is a high-availability, scalable, and distributed database architecture that ensures fault tolerance and automatic data partitioning across multiple nodes. It combines the MySQL server with the NDB (Network DataBase) storage engine and provides real-time, in-memory storage with support for disk-based data as well.
+MySQL clustering, also known as MySQL Cluster or MySQL NDB Cluster, is a high-availability, scalable, and distributed database architecture that ensures fault tolerance and automatic data partitioning across multiple nodes. It combines the MySQL server with the `NDB (Network DataBase)` storage engine and provides real-time, in-memory storage with support for disk-based data as well.
 
 The main components of MySQL Cluster are:
 - `Data Nodes (NDB storage engine):` These store the actual data in a partitioned and replicated manner, ensuring data availability and redundancy. Each data node operates in parallel, which improves performance and resilience.
@@ -496,7 +495,13 @@ The main components of MySQL Cluster are:
 
 Normalization is the process of organizing a relational database's structure to reduce data redundancy, improve data integrity, and optimize its performance. The primary goal of normalization is to eliminate anomalies in the data and create a better database design by dividing large tables into smaller, related ones and defining relationships between them.
 
-Normalization involves organizing data into multiple tables, ensuring that each table serves a single purpose and contains minimal redundant data. The process is carried out through a series of normalization forms called normal forms, including First Normal Form (1NF), Second Normal Form (2NF), Third Normal Form (3NF), Boyce-Codd Normal Form (BCNF), Fourth Normal Form (4NF), and Fifth Normal Form (5NF). 
+Normalization involves organizing data into multiple tables, ensuring that each table serves a single purpose and contains minimal redundant data. The process is carried out through a series of normalization forms called normal forms, including 
+- First Normal Form (1NF)
+- Second Normal Form (2NF)
+- Third Normal Form (3NF)
+- Boyce-Codd Normal Form (BCNF)
+- Fourth Normal Form (4NF)
+- Fifth Normal Form (5NF)
 
 ## What is a pivot table, and how do you create one in MySQL?
 

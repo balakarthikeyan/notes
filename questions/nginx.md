@@ -68,11 +68,11 @@ make install
 ### What is a directive in Nginx?
 - **Ans:** A directive in Nginx is a command that specifies the behaviour and parameters of the server. A directive consists of a name and a value, separated by a space, and ends with a semicolon
 
-### What is the advantage of using a “reverse proxy server”?
+### What is the advantage of using a "reverse proxy server"?
 - **Ans:** The reverse proxy server can hide the presence and characteristics of the origin server. It acts as an intermediate between internet cloud and web server. It is good for security reason especially when you are using web hosting services.
 
 ### Explain how you can start Nginx through a different port other than 80?
-- **Ans:** To start Nginx through a different port, you have to go to /etc/Nginx/sites-enabled/ and if this is the default file, then you have to open file called “default.” Edit the file and put the port you want
+- **Ans:** To start Nginx through a different port, you have to go to /etc/Nginx/sites-enabled/ and if this is the default file, then you have to open file called "default." Edit the file and put the port you want
 
 ```server { listen 81; }```
 

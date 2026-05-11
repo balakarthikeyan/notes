@@ -228,7 +228,7 @@ To get started with Webpack, you’ll need to install it using npm:
 
 npm install webpack webpack-cli --save-dev
 
-need to create a “webpack.config.js” file that will configure how Webpack should behave:
+need to create a "webpack.config.js" file that will configure how Webpack should behave:
 
 module.exports = {
   entry: './src/index.js',

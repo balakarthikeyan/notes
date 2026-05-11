@@ -85,7 +85,7 @@ Closes the HTML form tag after using form_start.
 An XHTML compliant label tag 
 Returns with the specified parameter. 
 
-An XHTML compliant input tag with type=“checkbox”.
+An XHTML compliant input tag with type="checkbox".
 ```php
 echo checkbox_tag('choice[]', 1);
 echo checkbox_tag('choice[]', 2);
@@ -93,22 +93,22 @@ echo checkbox_tag('choice[]', 3);
 echo checkbox_tag('choice[]', 4);
 ```
 
-An XHTML compliant input tag with type = “password”.
+An XHTML compliant input tag with type = "password".
 ```php
 echo input_password_tag('password');
 echo input_password_tag('password_confirm'); 
 ```
 
-An XHTML compliant input tag with type = “text”.
+An XHTML compliant input tag with type = "text".
 `echo input_tag('name');`
 
-An XHTML compliant input tag with type = “radio”. 
+An XHTML compliant input tag with type = "radio". 
 ```
 echo ' Yes '.radiobutton_tag(‘true’, 1);
 echo ' No '.radiobutton_tag(‘false’, 0);
 ```
 
-An XHTML compliant input tag with type = “reset”.
+An XHTML compliant input tag with type = "reset".
 `echo reset_tag('Start Over');`
 
 A select tag populated with all the countries in the world. 
@@ -117,7 +117,7 @@ A select tag populated with all the countries in the world.
 An XHTML compliant textarea tag
 Returns a textarea tag wrapped with an inline rich-text JavaScript editor. 
 
-An XHTML input tag with type = “submit”.
+An XHTML input tag with type = "submit".
 `echo submit_tag('Update Next Record'); `
 
 ### Describe the method used to handle an Ajax request?
