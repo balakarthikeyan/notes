@@ -35,44 +35,41 @@ Some of the features and advantages of Node.js are:
 - Third Party Modules
 
 The following are the key areas where Node.js is widely used:
-
-    I/O-bound applications
-    Data streaming applications
-    Data-intensive real-time applications (DIRT)
-    JSON API-based applications
-    Single-page applications
-    • ExpressJS Framework (HTTP Requests, Middleware)
-    • Good understanding of Asynchronous Programming with NodeJS (Callback, Call Stack and Event Loop)
-    • Knowledge of Micro-services Architecture / Resilient Micro-Services
-    • RabbitMQ / AMQP Messaging
-    • Debugging NodeJS Programs and Error Handling
-    • OData v4 (Sorting, Pagination, Filtering)
-    • Static code analysis tools like ESLint/etc.
+-  I/O-bound applications
+-  Data streaming applications
+-  Data-intensive real-time applications (DIRT)
+-  JSON API-based applications
+-  Single-page applications
+    - ExpressJS Framework (HTTP Requests, Middleware)
+    - Good understanding of Asynchronous Programming with NodeJS (Callback, Call Stack and Event Loop)
+    - Knowledge of Micro-services Architecture / Resilient Micro-Services
+    - RabbitMQ / AMQP Messaging
+    - Debugging NodeJS Programs and Error Handling
+    - OData v4 (Sorting, Pagination, Filtering)
+    - Static code analysis tools like ESLint/etc.
 
 ### Popular NPM
-```
-webpack: Builds static assets like browser JavaScript, CSS and even images. It allows to use node modules in the browser.
-babel: Allows to code in the latest versions of JavaScript/ECMAScript without having to worry about your runtime by converting the new code to the code compatible with older versions of ECMAScript
-axios: Makes HTTP requests
-express: the most popular Node web framework
-mongoose: MongoDB object-document mapper library
-socket.io: Real-time library with support of Web Sockets and others.
-cheerio: jQuery syntax for working with HTML-like data on the server
-node-oauth: Low-level but very mature and tested library to roll out any OAuth integration
-passport: OAuth library to quickly integrate with major services
-mocha: Testing framework
-async: Controls flow by running function concurrently, sequentially or any way you want
-concurrently: Allows to execute CLI tools (local) as multiple processes all at the same time, e.g., webpack and node-static.
-sequelize: PostgreSQL object-relational mapper library
-node-dev: Monitor and restart your Node app automatically on any file change within the current folder
-node-static: Serve files over HTTP web server
-node-inspector: Debug Node code in a familiar interface of DevTools
-docker: Build and run Docker containers to isolate app environment, speed up deployment and eliminate conflicts between dev and prod (or any other) environments
-curl: Make HTTP(S) requests to test your web apps (default for POSIX but can get for Windows too)
-nvm: Change Node versions without having to install and re-install them each time
-wintersmith: Build static website using Node templates and Markdown
-pm2: Process manager to vertically scale Node processes and ensure fail-tolerance and 0-time reload.
-```
+- `webpack`: Builds static assets like browser JavaScript, CSS and even images. It allows to use node modules in the browser.
+- `babel`: Allows to code in the latest versions of JavaScript/ECMAScript, at runtime by converting the new code to the code compatible with older versions of ECMAScript
+- `axios`: Makes HTTP requests
+- `express`: the most popular Node web framework
+- `mongoose`: MongoDB object-document mapper library
+- `socket.io`: Real-time library with support of Web Sockets and others.
+- `cheerio`: jQuery syntax for working with HTML-like data on the server
+- `node-oauth`: Low-level but very mature and tested library to roll out any OAuth integration
+- `passport`: OAuth library to quickly integrate with major services
+- `mocha`: Testing framework
+- `async`: Controls flow by running function concurrently, sequentially or any way you want
+- `concurrently`: Allows to execute CLI tools (local) as multiple processes all at the same time.
+- `sequelize`: PostgreSQL object-relational mapper library
+- `node-dev`: Monitor and restart your Node app automatically on any file change within the current folder
+- `node-static`: Serve files over HTTP web server
+- `node-inspector`: Debug Node code in a familiar interface of DevTools
+- `docker`: Build and run Docker containers to isolate app environment, speed up deployment and eliminate conflicts between dev and prod environments
+- `curl`: Make HTTP(S) requests to test your web apps (default for POSIX but can get for Windows too)
+- `nvm`: Change Node versions without having to install and re-install them each time
+- `wintersmith`: Build static website using Node templates and Markdown
+- `pm2`: Process manager to vertically scale Node processes and ensure fail-tolerance and 0-time reload.
 
 ### To link Local Node module
 ```

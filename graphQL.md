@@ -74,3 +74,89 @@ query NewQuery {
   }
 }
 ```
+
+# **REST vs GraphQL**
+
+---
+
+# 🔹 REST (Representational State Transfer)
+
+- **Style:** Resource‑based, uses HTTP verbs (`GET`, `POST`, `PUT`, `DELETE`).
+- **Data Fetching:** Each endpoint returns a fixed structure.
+- **Pros:** Simple, cache‑friendly, widely adopted.
+- **Cons:** Overfetching (too much data) or underfetching (not enough data) can happen.
+
+**Example: REST API for Products (Express.js)**
+```js
+// GET product by ID
+app.get('/api/products/:id', (req, res) => {
+  const product = { id: req.params.id, name: 'Laptop', price: 1200 }
+  res.json(product)
+})
+
+// POST create product
+app.post('/api/products', (req, res) => {
+  res.status(201).json({ message: 'Product created' })
+})
+```
+
+👉 If you call `/api/products/123`, you always get the full product object, even if you only need the name.
+
+---
+
+# 🔹 GraphQL
+
+- **Style:** Query language for APIs.
+- **Data Fetching:** Client specifies exactly what fields it needs.
+- **Pros:** No overfetching/underfetching, single endpoint, flexible queries.
+- **Cons:** More complex setup, caching is trickier.
+
+**Example: GraphQL Schema + Resolver**
+```js
+// schema.graphql
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+}
+
+type Query {
+  product(id: ID!): Product
+}
+
+// resolver.js
+const resolvers = {
+  Query: {
+    product: (_, { id }) => ({ id, name: "Laptop", price: 1200 })
+  }
+}
+```
+
+**Client Query (Next.js using graphql-request):**
+```js
+import { request, gql } from 'graphql-request'
+
+const query = gql`
+  query GetProduct($id: ID!) {
+    product(id: $id) {
+      name
+    }
+  }
+`
+
+const data = await request('/graphql', query, { id: "123" })
+console.log(data.product.name) // Only "Laptop"
+```
+
+---
+
+# 🔹 REST vs GraphQL Comparison
+
+| Feature            | REST                          | GraphQL                        |
+|--------------------|-------------------------------|--------------------------------|
+| **Endpoints**      | Multiple (`/users`, `/orders`) | Single (`/graphql`)            |
+| **Data Fetching**  | Fixed response per endpoint   | Client specifies fields        |
+| **Overfetching**   | Common                        | Avoided                        |
+| **Caching**        | Easy (HTTP cache)             | More complex                   |
+| **Learning Curve** | Lower                         | Higher                         |
+| **Best Use Case**  | Simple APIs, CRUD services    | Complex apps, multiple clients |

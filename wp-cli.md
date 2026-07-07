@@ -1,7 +1,7 @@
 # What Is WP-CLI? 
 WP-CLI is the WordPress Command Line Interface, and you can use it to install a WordPress site, add new plugins or themes, create and modify users… and so much more.
 
-### Download
+## Create website using CLI Command
 ```bash
 $ wp core download --path=DIRECTORY_NAME
 $ export PATH=$PATH:/Applications/MAMP/Library/bin/
@@ -24,7 +24,7 @@ This one-line command will install and activate the `Pantheon Advanced Page Cach
 
 `wp plugin deactivate plugin-name`
 
-You can also deactivate a plugin—a great way to recover a site when a plugin or theme has brought your dashboard down. Just disable the plugin using WP-CLI, and you're back in business. 
+You can also deactivate a plugin great way to recover a site when a plugin or theme has brought your dashboard down. Just disable the plugin using WP-CLI, and you're back in business. 
 
 ### Change User Passwords
 
@@ -36,7 +36,7 @@ You can also create new users, modify user roles, and more.
 
 `wp plugin list --update=available`
 
-This command will show you a list of all plugins on your site—and with the addition of the `--update=available` flag, you'll get only the plugins waiting to be updated. 
+This command will show you a list of all plugins on your site and with the addition of the `--update=available` flag, you'll get only the plugins waiting to be updated. 
 
 ### Search and Replace
 

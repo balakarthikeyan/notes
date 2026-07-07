@@ -103,3 +103,133 @@ php bin/console route:cache
 php bin/console view:clear
 php bin/console migrate --force
 ```
+
+# 🚀 Symfony Deployment Runbook
+Here’s a **structured deployment runbook** you can use for Symfony applications. It’s organized step‑by‑step so your team can follow it during each release:
+
+---
+
+# 🚀 Symfony Deployment Runbook
+
+## 1. Pre‑Deployment Checks
+- ✅ Ensure **all code merged** into `main`/`master` branch.
+- ✅ Run **unit and integration tests** locally and in CI.
+- ✅ Confirm **environment variables** are set correctly (`APP_ENV=prod`, `APP_DEBUG=0`).
+- ✅ Audit dependencies:  
+  ```bash
+  composer install --no-dev --optimize-autoloader
+  composer audit
+  ```
+
+## 2. Security & Configuration
+- 🔒 Remove dev front‑controllers (`app_dev.php`, `config_dev.yml`).
+- 🔒 Update **production credentials** (DB, mailer, API keys).
+- 🔒 Rotate **JWT tokens, security tokens, API keys**.
+- 🔒 Verify **php.ini** settings:  
+  - `date.timezone`  
+  - `upload_max_filesize`  
+  - `post_max_size`
+
+## 3. File System & Assets
+- 📂 Configure **shared directories** (Capistrano: `var/log`, `var/sessions`, `public/uploads`).
+- 📂 Ensure **logs and cache directories** are writable by web server.
+- 🎨 Build and optimize assets:  
+  ```bash
+  yarn install --frozen-lockfile
+  yarn encore production
+  ```
+- 🎨 Minify and compress CSS/JS/images.
+
+## 4. Database
+- 🗄 Backup database before migration.
+- 🗄 Run migrations:  
+  ```bash
+  php bin/console doctrine:migrations:migrate --no-interaction
+  ```
+
+## 5. Application Setup
+- ⚡ Warm up cache:  
+  ```bash
+  php bin/console cache:clear --env=prod --no-debug
+  php bin/console cache:warmup
+  ```
+- ⚡ Disable unnecessary bundles in `config/bundles.php`.
+- ⚡ Add custom **404 and 500 error pages**.
+- ⚡ Add custom favicon.
+
+## 6. Cron Jobs (if applicable)
+- ⏱ Install cron scripts for scheduled tasks.
+- ⏱ Verify they run under correct user and environment.
+
+## 7. Security & Compliance
+- 🛡 Run **OWASP top 10 tests**.
+- 🛡 Enforce HTTPS with HSTS headers.
+- 🛡 Configure rate limiting/throttling if applicable.
+
+## 8. Monitoring & Logging
+- 📊 Configure **Sentry** or other error tracking.
+- 📊 Set up **log rotation**.
+- 📊 Verify alerts/notifications are working.
+
+## 9. Final QA
+- 📱 Run **RWD tests** on Browserstack.
+- 📱 Verify custom error pages and favicon display.
+- 📱 Confirm application works correctly via HTTPS.
+
+## 10. Post‑Deployment
+- 📝 Document release notes.
+- 📝 Monitor logs and Sentry for first 24 hours.
+- 📝 Rollback plan ready in case of failure.
+
+## 11. OWASP Top 10 Testing Section
+
+#### 1. Injection
+- 🔍 Test for SQL injection, command injection, and template injection.
+- ✅ Use automated scanners (e.g., OWASP ZAP) and manual payloads (`' OR 1=1 --`).
+- ✅ Verify prepared statements and parameterized queries are enforced.
+
+#### 2. Broken Authentication
+- 🔍 Attempt brute force and credential stuffing attacks.
+- ✅ Ensure strong password policies, MFA, and rate limiting.
+- ✅ Verify session tokens are invalidated on logout.
+
+#### 3. Sensitive Data Exposure
+- 🔍 Inspect traffic with a proxy (Burp/ZAP).
+- ✅ Confirm HTTPS everywhere with HSTS enabled.
+- ✅ Check encryption of sensitive data at rest (DB, logs).
+
+#### 4. XML External Entities (XXE)
+- 🔍 Test XML parsers with malicious payloads.
+- ✅ Ensure external entity resolution is disabled.
+- ✅ Use safe libraries for XML parsing.
+
+#### 5. Broken Access Control
+- 🔍 Try accessing restricted endpoints without proper roles.
+- ✅ Verify role-based access control (RBAC) is enforced.
+- ✅ Confirm “deny by default” policy in controllers.
+
+#### 6. Security Misconfiguration
+- 🔍 Scan for open ports, default credentials, and verbose error messages.
+- ✅ Ensure Symfony debug mode is off (`APP_DEBUG=0`).
+- ✅ Harden server configs (Apache/Nginx, PHP).
+
+#### 7. Cross-Site Scripting (XSS)
+- 🔍 Inject `<script>alert(1)</script>` into forms and URLs.
+- ✅ Verify output escaping with Twig (`{{ variable }}`).
+- ✅ Use CSP headers to mitigate script injection.
+
+#### 8. Insecure Deserialization
+- 🔍 Test endpoints that accept serialized objects.
+- ✅ Ensure only trusted formats (JSON) are used.
+- ✅ Validate and sanitize all input before deserialization.
+
+#### 9. Using Components with Known Vulnerabilities
+- 🔍 Run `composer audit` and dependency scanners.
+- ✅ Keep Symfony and bundles updated.
+- ✅ Monitor CVE feeds for PHP libraries.
+
+#### 10. Insufficient Logging & Monitoring
+- 🔍 Trigger failed logins, permission errors, and suspicious requests.
+- ✅ Confirm logs capture these events.
+- ✅ Ensure alerts are sent to Sentry/monitoring tools.
+---

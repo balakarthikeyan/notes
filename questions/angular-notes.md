@@ -1,9 +1,8 @@
 # What is Angular ?
 Angular is a powerful front-end framework that is widely used for building dynamic web applications. It is open-source and maintained by Google. One of the key features of Angular is its use of TypeScript, a typed superset of JavaScript that makes code easier to read, maintain, and debug.
 
-```
+```bash
 my-workspace/
-├── ... #workspace-wide configuration files
 ├── src
 │   ├── app
 │   │   ├── app.module.ts #defines the root module, that tells Angular how to assemble the application
@@ -19,7 +18,7 @@ my-workspace/
 ```
 
 # Angular 15:
-- `Standalone Components:` Angular 15 introduced fully standalone components, allowing developers to create components without needing NgModules, simplifying the structure and dependencies of applications.
+- `Standalone Components:` Angular 15 introduced fully standalone components, allowing developers to create components without needing `NgModule`, simplifying the structure and dependencies of applications.
 - `Directive Composition API:` This feature enables the reuse of directives by composing them together.
 - `ESBuild Integration:` Improved build performance using ESBuild, making the build process faster and more efficient.
 - `Router Improvements:` New `routerLinkActiveOptions` provides more control over link activation.
@@ -56,13 +55,12 @@ my-workspace/
 - `Security Updates:` Patches for known vulnerabilities and improved security practices.
 - `Better Compatibility:` Improved support for modern web standards and third-party libraries.
 
-## What is shadow DOM ?
+## What is Shadow DOM ?
 Shadow DOM is a web standard that allows for encapsulation of DOM elements within a host element. It provides a way to create a scoped subtree of DOM elements with its own styling and behavior. The encapsulated elements are isolated from the rest of the document, preventing styles and structure from leaking out or being affected by the surrounding page.
 
+
 ## What is view encapsulation ?
-View encapsulation in Angular refers to how styles and templates are confined to a particular component's view.
-View encapsulation is a concept ensures that the styles and structure of a component are encapsulated and scoped to that component.
-It ensures that the styles and templates defined within a component do not affect other components in the application.
+In Angular, view encapsulation controls how CSS styles defined in a component affect the DOM. It ensures that component styles are scoped properly, preventing unintended leakage across the application. Angular offers three modes: Emulated (default), ShadowDom, and None. It ensures that the styles and templates defined within a component do not affect other components in the application.
 
 There are three types of view encapsulation in Angular:
 
@@ -132,7 +130,7 @@ The main.js file is generated during the Angular build process. It includes the 
 The runtime.js file is another crucial component of an Angular application. It provides the runtime environment necessary for the execution of your application. The file contains the core Angular runtime code, which enables Angular-specific functionalities such as change detection, dependency injection, and routing.
 
 ## What is zone js in angular?
-Zone.js is a JavaScript library used in Angular to provide execution context and hooks into asynchronous operations. It allows Angular to track and manage the execution of asynchronous tasks, such as event handling, timers, promises, and XHR requests. Zone.js enables Angular to perform change detection and update the UI when asynchronous operations complete. Zone.js provides Angular with a way to seamlessly integrate asynchronous operations into the change detection mechanism, enabling efficient updating of the UI when asynchronous tasks finish
+Zone.js is a JavaScript library used in Angular to provide execution context and hooks into asynchronous operations. It allows Angular to track and manage the execution of asynchronous tasks, such as event handling, timers, promises, and XHR requests. Zone.js enables Angular to perform change detection and update the UI when asynchronous operations complete. Zone.js provides Angular with a way to seamlessly integrate asynchronous operations into the change detection mechanism, enabling efficient updating of the UI when asynchronous tasks finish.
 
 ## What is the difference between AOT and JIT?
 
