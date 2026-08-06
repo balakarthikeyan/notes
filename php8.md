@@ -164,3 +164,69 @@ class SampleClass {
 $obj = new SampleClass('Bala', 'karthikeyan', 33, 'balakarthikeya');
 
 ```
+
+What is APCu? (Alternative PHP Cache User Cache) extension
+
+APCu is an in-memory user data cache for PHP.
+
+It allows your PHP application to store variables, arrays, objects, query results, etc., directly in RAM instead of recalculating or reloading them.
+
+Think of it as:
+
+Without APCu
+
+Request
+   │
+   ▼
+PHP
+   │
+   ▼
+Database/File/System
+   │
+   ▼
+Return Result
+
+
+With APCu
+
+Request
+   │
+   ▼
+PHP
+   │
+   ├── Cache Hit ──► Return immediately
+   │
+   └── Cache Miss
+          │
+          ▼
+Database/File/System
+          │
+          ▼
+Store in APCu
+          │
+          ▼
+Return Result
+What is APCu used for?
+
+It caches application data, not PHP bytecode.
+
+Examples:
+
+apcu_store('countries', $countries);
+
+$countries = apcu_fetch('countries');
+
+Instead of querying the database every request.
+
+WordPress commonly uses
+
+Redis
+Memcached
+Object Cache
+Transients
+OPcache
+APCu (optional).
+
+OPcache
+
+Caches compiled PHP bytecode, Built into PHP, Makes PHP execute faster, Recommended

@@ -40,5 +40,4 @@ Example:
 Strict-Transport-Security: max-age=<expire-time>; includeSubdomains
 ```
 
-Cross-Site Scripting (XSS)
-Cross-Site Scripting (XSS) is a type of attack where malicious JavaScript code is injected into a displayed variable.
+`Cross-Site Scripting (XSS):` It is a type of attack where malicious JavaScript code is injected into a displayed variable.

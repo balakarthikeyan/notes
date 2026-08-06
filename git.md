@@ -80,10 +80,10 @@ git checkout -b <branch> //Instead of running two commands you can run only one
 
 ## Reset Revert Rebase Commands
 ```bash
-git reset sha-value
-git revert HEAD
-git checkout feature
-git rebase master
+git revert <commmit_id>
+git reset --hard origin/master 
+git pull --rebase origin preview
+git push --force origin <branch-name>
 ```
 
 ## gitignore File
@@ -95,14 +95,6 @@ npm-debug.log
 /bower_components
 /node_modules
 /vendor
-```
-
-## Reset, Revert and Rebase Commands
-```bash
-git revert <commmit_id>
-git reset --hard origin/master 
-git pull --rebase origin preview
-git push --force origin <branch-name>
 ```
 
 ## Commit git with the previous date?
@@ -122,7 +114,7 @@ git reset --hard
 
 ## Change remote URL
 ```bash
-git remote set-url origin git_url
+git remote set-url origin <git_url>
 git remote set-url origin https://username:your-token@github.com/username/repository.git
 ```
 

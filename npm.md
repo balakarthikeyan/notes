@@ -2,6 +2,7 @@
 npm config set strict-ssl false
 npm config set registry "http://registry.npmjs.org/"
 npm --proxy http://username:password@proxy:port install express
+npm --proxy http://webproxy.website.com:8080 install express
 
 npx create-react-app my-app
 cd my-app
@@ -23,7 +24,3 @@ npm run serve
 npm install grunt nodemon --save-dev
 grunt
 ```
-npm config set strict-ssl false
-npm config set registry "http://registry.npmjs.org/"
-npm --proxy http://username:password@proxy:port install express
-npm --proxy http://webproxy.website.com:8080 install express
