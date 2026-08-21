@@ -698,3 +698,523 @@ checkInventory('Laptop')
 * **piping**: The mechanism of connecting the raw readable data stream output directly into a writeable target stream destination (e.g., `readable.pipe(writable)`).
 * **filebase**: File system operations handled via the built-in `fs` or `fs/promises` internal modules.
 * **promises**: A proxy object representing the ultimate completion or failure of an asynchronous operation, bypassing deep callback structures.
+
+---
+
+## 1. Node.js Core Architecture & Scalability
+
+### Event Loop
+
+Node.js uses a single-threaded, event-driven architecture powered by **libuv**. The Event Loop offloads I/O tasks to the system kernel or background thread pool.
+
+```
+   ┌───────────────────────────┐
+┌─>│           Timers          │  (setTimeout, setInterval)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │     Pending Callbacks     │  (I/O callbacks deferred from previous loop)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │      Idle, Prepare        │  (Internal Node.js usage)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           Poll            │  (Retrieve new I/O events; execute I/O callbacks)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │           Check           │  (setImmediate callbacks)
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │      Close Callbacks      │  (e.g., socket.on('close', ...))
+└────────────────┴─────────────┘
+
+```
+
+### Event Loop Execution & Microtasks
+
+* **`process.nextTick()`**: Executes callbacks **immediately** after the current synchronous operation finishes, before the Event Loop proceeds to the next phase or process microtasks (`Promise.then`). Overusing `process.nextTick` can starve the Event Loop of I/O.
+* **`setImmediate()`**: Queues callbacks to run in the **Check phase** of the Event Loop (after I/O polling).
+
+### Event Queueing & Handling Heavy Processing
+
+Node.js processes I/O asynchronously, but synchronous or CPU-heavy tasks block the single main thread.
+
+#### Processing Large Operations (e.g., Sending Emails to Millions)
+
+1. **Message Queues**: Offload job payloads to persistent queue systems like **RabbitMQ** or **BullMQ (Redis)**.
+2. **Worker Processes**: Use worker pools or background workers to fetch and process batches from the queue outside the main HTTP server process.
+3. **Chunking & Rate Limiting**: Stream or paginate large database queries; execute emails in rate-limited batches to prevent memory exhaustion and API throttling.
+
+### Scaling Node.js Applications
+
+* **Vertical Scaling**:
+* **Cluster Module**: Fork multiple instances of the Node process across CPU cores sharing a single server port.
+* **Worker Threads (`worker_threads`)**: Run CPU-heavy tasks (e.g., encryption, image processing) on dedicated threads sharing memory within the same process.
+
+
+* **Horizontal Scaling**:
+* Deploy multiple application nodes behind a Load Balancer (e.g., NGINX, AWS ALB).
+* Maintain stateless API layers and delegate session state to Redis.
+
+
+* **Microservices Architecture**: Split monolithic applications into independent services connected via REST, gRPC, or message brokers.
+
+### Child Process Module
+
+Spawns subprocesses to execute system commands or external scripts without blocking the main event thread:
+
+* **`spawn()`**: Streams data chunks (`stdout`/`stderr`). Best for long-running tasks or large data streams.
+* **`exec()`**: Buffers full output in memory. Best for short tasks with small output.
+* **`execFile()`**: Directly executes an executable file.
+* **`fork()`**: Special instance of `spawn()` that opens an IPC (Inter-Process Communication) channel between master and child Node.js processes.
+
+### Cron Jobs
+
+Scheduled background tasks triggered at defined time intervals. In Node.js, libraries like `node-cron` or system-level crontabs schedule periodic routines (e.g., nightly database cleanups or report generators).
+
+### *Missed Core Concepts to Include*
+
+* **Streams (`stream`)**: Read/write large files in chunks without filling RAM memory (`Readable`, `Writable`, `Transform`, `Duplex`).
+* **Buffers (`Buffer`)**: Allocate raw memory outside the V8 heap to handle binary data.
+* **EventEmitter (`events`)**: Native pattern enabling pub/sub event-driven logic inside modules.
+
+---
+
+## 2. JavaScript Core & Asynchronous Mechanics
+
+### Scopes & Declarations
+
+| Feature | `var` | `let` / `const` |
+| --- | --- | --- |
+| **Scope** | Function scope | Block scope (`{ ... }`) |
+| **Hoisting** | Hoisted with `undefined` | Hoisted into Temporal Dead Zone (TDZ) |
+| **Re-declaration** | Allowed | Syntax Error |
+
+### JavaScript Inheritance
+
+#### Prototypal Inheritance (ES5)
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+Person.prototype.greet = function() {
+  return `Hello, I am ${this.name}`;
+};
+
+function Employee(name, title) {
+  Person.call(this, name);
+  this.title = title;
+}
+Employee.prototype = Object.create(Person.prototype);
+Employee.prototype.constructor = Employee;
+
+```
+
+#### Class Syntax (ES6+)
+
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    return `Hello, I am ${this.name}`;
+  }
+}
+
+class Employee extends Person {
+  constructor(name, title) {
+    super(name);
+    this.title = title;
+  }
+}
+
+```
+
+### Object Merging & Cloning
+
+#### Object Merging
+
+```javascript
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+
+// ES6 Spread
+const merged = { ...obj1, ...obj2 };
+
+// Object.assign
+const mergedAssign = Object.assign({}, obj1, obj2);
+
+```
+
+#### Object Cloning
+
+* **Shallow Copy**: `const clone = { ...original };` or `Object.assign({}, original);`
+* **Deep Copy**: `const clone = structuredClone(original);` or `JSON.parse(JSON.stringify(original));`
+
+### Callbacks, Callback Hell, Promises, & Async/Await
+
+* **Callback**: Function passed into another function to execute when an async operation finishes.
+* **Callback Hell**: Nested callbacks leading to pyramid-shaped, unmaintainable code.
+
+```javascript
+// Callback Hell Avoidance using Promises & Async/Await
+async function executeTask() {
+  try {
+    const res1 = await asyncFunc1();
+    const res2 = await asyncFunc2(res1);
+    return res2;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+```
+
+#### Executing Promises in Parallel
+
+`Promise.all` executes an array of promises concurrently and rejects if any single promise fails.
+
+```javascript
+const fetchData = async () => {
+  const [user, posts] = await Promise.all([
+    fetch('/api/user').then(r => r.json()),
+    fetch('/api/posts').then(r => r.json())
+  ]);
+  return { user, posts };
+};
+
+```
+
+---
+
+## 3. Express, Hapi, & Web Frameworks
+
+### Express Middleware & Execution Chain
+
+Middlewares are functions that access the request (`req`), response (`res`), and the `next` function in the application's request-response cycle.
+
+```javascript
+// Implementation of a Custom Middleware Chain
+const app = express();
+
+const logger = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next(); // Pass control to the next middleware
+};
+
+app.use(logger);
+
+```
+
+### Hapi Server Endpoint
+
+```javascript
+const Hapi = require('@hapi/hapi');
+
+const init = async () => {
+  const server = Hapi.server({ port: 3000, host: 'localhost' });
+
+  server.route({
+    method: 'GET',
+    path: '/time',
+    handler: (request, h) => {
+      return { currentTime: new Date().toISOString() };
+    }
+  });
+
+  await server.start();
+  console.log('Server running on %s', server.info.uri);
+};
+
+init();
+
+```
+
+---
+
+## 4. Frontend & Web Infrastructure (Angular Fundamentals)
+
+### TypeScript Scope Modifiers
+
+* **`public`**: Accessible anywhere.
+* **`private`**: Accessible only within the defining class.
+* **`protected`**: Accessible within the defining class and its subclasses.
+
+### Observables vs. Promises
+
+* **Promise**: Single async response, non-cancellable, eager execution.
+* **Observable**: Stream of multiple values over time, cancellable via `Unsubscription`, lazy execution (runs only when subscribed).
+* **Cancelling an Observable**: Use `takeUntil` or unsubscribe when a user navigates away or type-ahead search updates before the prior request completes.
+
+### Services, Dependency Injection, & Providers
+
+* **Services**: Modular singletons that handle business logic, state, or HTTP calls.
+* **Dependency Injection (DI)**: Design pattern where components request dependencies rather than instantiating them manually.
+* **Providers**: Tell Angular's DI framework how to resolve a dependency token (e.g., `providedIn: 'root'`).
+
+### Web Infrastructure Concepts
+
+* **`event.stopPropagation()`**: Stops the event from bubbling up the DOM tree.
+* **`event.preventDefault()`**: Prevents default browser actions for an event (e.g., submitting a form, navigating a link).
+* **CORS (Cross-Origin Resource Sharing)**: HTTP-header-based mechanism that allows a server to explicitly list origins allowed to load resources in browsers.
+* **Virtual DOM vs Angular Change Detection**:
+* **Virtual DOM (React)**: In-memory representation of real DOM; reconciles structural changes via diffing algorithm.
+* **Angular Zone.js / Change Detection**: Tracks async operations and traverses component property trees to update DOM nodes directly.
+
+
+
+---
+
+## 5. Output Prediction Corrections
+
+### Question 1: Execution Order with `setTimeout`
+
+```javascript
+console.log('Good Morning');
+setTimeout(function() {
+  console.log("Hello, World!");
+}, 0);
+console.log('Good Afternoon');
+
+```
+
+**Output**:
+
+```
+Good Morning
+Good Afternoon
+Hello, World!
+
+```
+
+*Explanation*: `setTimeout` transfers the callback to the Timers API/Queue. Main synchronous code executes first.
+
+### Question 2: Hoisting Error Correction
+
+```javascript
+a();
+b();
+
+function a() {
+  console.log('This is function a');
+}
+
+var b = function() {
+  console.log('This is function b');
+};
+
+```
+
+**Actual Output**:
+
+```
+This is function a
+Uncaught TypeError: b is not a function
+
+```
+
+*Correction*: Function declaration `a` is fully hoisted. Variable declaration `var b` is hoisted as `undefined`. Calling `b()` prior to initialization throws a runtime `TypeError`.
+
+### Question 3: Matrix Right Diagonal Output
+
+```javascript
+function rightDiagonal(a, row, column) {
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < column; j++) {
+      if (i + j === column - 1) {
+        console.log(a[i][j]);
+      }
+    }
+  }
+}
+
+const matrix = [
+  [1, 2, 4],
+  [5, 7, 8],
+  [10, 11, 13]
+];
+rightDiagonal(matrix, 3, 3);
+
+```
+
+**Output**:
+
+```
+4
+7
+10
+
+```
+
+---
+
+## 6. Algorithmic Solutions
+
+### 1. Find Unique Number in Pair Array
+
+```javascript
+// O(n) Time | O(1) Space using Bitwise XOR
+function findUnique(arr) {
+  return arr.reduce((acc, curr) => acc ^ curr, 0);
+}
+console.log(findUnique([2, 2, 1, 3, 3, 4, 4, 5, 5])); // 1
+
+```
+
+### 2. Recursive Cost and Discount Calculator
+
+```javascript
+const obj = {
+  id1: { name: "adf", cost: 10, disc: 20 },
+  id2: {
+    name: "lkfd", cost: 20, disc: 10,
+    items: {
+      id3: { name: "sfd", cost: 10, disc: 20 }
+    }
+  }
+};
+
+function calculateTotals(data) {
+  let totals = { cost: 0, disc: 0 };
+  for (const key in data) {
+    const node = data[key];
+    if (node.cost) totals.cost += node.cost;
+    if (node.disc) totals.disc += node.disc;
+    if (node.items) {
+      const nested = calculateTotals(node.items);
+      totals.cost += nested.cost;
+      totals.disc += nested.disc;
+    }
+  }
+  return totals;
+}
+console.log(calculateTotals(obj)); // { cost: 40, disc: 50 }
+
+```
+
+### 3. Alternate Element In-Place Reversal
+
+```javascript
+function reverseAlternates(arr) {
+  let indices = [];
+  let values = [];
+
+  for (let i = 0; i < arr.length; i += 2) {
+    indices.push(i);
+    values.push(arr[i]);
+  }
+
+  values.reverse();
+
+  for (let i = 0; i < indices.length; i++) {
+    arr[indices[i]] = values[i];
+  }
+  return arr;
+}
+console.log(reverseAlternates([3, 1, 5, 2, 7])); // [7, 1, 5, 2, 3]
+
+```
+
+### 4. Sort 0s, 1s, 2s (Dutch National Flag Algorithm in Single Loop)
+
+```javascript
+function sort012(arr) {
+  let low = 0, mid = 0, high = arr.length - 1;
+  while (mid <= high) {
+    if (arr[mid] === 0) {
+      [arr[low], arr[mid]] = [arr[mid], arr[low]];
+      low++;
+      mid++;
+    } else if (arr[mid] === 1) {
+      mid++;
+    } else {
+      [arr[mid], arr[high]] = [arr[high], arr[mid]];
+      high--;
+    }
+  }
+  return arr;
+}
+console.log(sort012([2, 1, 1, 0, 2, 0, 1, 0])); // [0, 0, 0, 1, 1, 1, 2, 2]
+
+```
+
+### 5. Format Seconds into `HH:mm:ss`
+
+```javascript
+function formatTime(seconds) {
+  const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+  const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+  const secs = (seconds % 60).toString().padStart(2, '0');
+  return `${hrs}:${mins}:${secs}`;
+}
+console.log(formatTime(302)); // "00:05:02"
+
+```
+
+### 6. Replace Every Element with Maximum Element to its Right
+
+```javascript
+function replaceWithMax(arr) {
+  const n = arr.length;
+  if (n === 0) return arr;
+  
+  let maxFromRight = arr[n - 1];
+  for (let i = n - 2; i >= 0; i--) {
+    let current = arr[i];
+    arr[i] = maxFromRight;
+    if (current > maxFromRight) {
+      maxFromRight = current;
+    }
+  }
+  return arr;
+}
+console.log(replaceWithMax([12, 15, 8, 7, 9])); // [15, 15, 9, 9, 9]
+
+```
+
+### 7. Move Unique Elements to Front (Sorted Array)
+
+```javascript
+function removeDuplicates(arr) {
+  if (arr.length === 0) return 0;
+  let writeIndex = 1;
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] !== arr[i - 1]) {
+      arr[writeIndex] = arr[i];
+      writeIndex++;
+    }
+  }
+  return arr.slice(0, writeIndex);
+}
+console.log(removeDuplicates([1, 2, 2, 3, 4, 4, 4, 4, 5, 6, 6])); // [1, 2, 3, 4, 5, 6]
+
+```
+
+### 8. Anagram Checker
+
+```javascript
+function isAnagram(str1, str2) {
+  const normalize = str => str.toLowerCase().replace(/[^a-z0-9]/g, '').split('').sort().join('');
+  return normalize(str1) === normalize(str2);
+}
+console.log(isAnagram("listen", "silent")); // true
+
+```
+
+### 9. Two Sum Target Check
+
+```javascript
+function hasTwoSum(arr, target) {
+  const seen = new Set();
+  for (const num of arr) {
+    const diff = target - num;
+    if (seen.has(diff)) return true;
+    seen.add(num);
+  }
+  return false;
+}
+console.log(hasTwoSum([4, 5, 6, 3], 7)); // true (4+3)
+
+```

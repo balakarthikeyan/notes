@@ -697,7 +697,8 @@ Modern applications use a standardized `src/` layout, layout combined with a con
 enterprise_project/
 ├── .gitignore
 ├── README.md
-├── pyproject.toml              # Unified/Universal configuration of metadata and dependency definitions, replacing setup.py/requirements.txt 
+├── pyproject.toml              # Unified/Universal configuration of metadata and dependency definitions, replacing setup.py
+├── requirements.txt 
 ├── src/                        # Encapsulates codebase source folder protecting imports from path pollution
 │   └── my_app/
 │       ├── __init__.py         # Defines the directory as an importable module package

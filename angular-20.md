@@ -1,181 +1,208 @@
-# What is Angular 20? 
+# What is Angular 20?
 
-Angular 20 is the newest version of Google’s web framework that helps you build websites and apps. It’s officially released on 29th May, 2025 and has some big changes that make your apps run better and faster. 
+Angular 20 is the newest version of Google’s web framework that helps you build websites and apps. It was officially released on May 29, 2025, and introduces key architectural improvements to enhance performance and developer experience:
 
-- Control flow syntax (@if, @for) is stable
-- Standalone components are now the default (finally!)
-- zone.js is now optional, with better dev ergonomics
-- Signals are getting real framework-level support
-- SSR is faster, lighter, and less confusing
-- Forms now support better type inference
-- Angular CLI + dev server got faster and smarter
-- Replaces TestBed.get() with TestBed.inject().
-- Updates ngIf, ngFor, and ngSwitch to a new control flow syntax.
+* Control flow syntax (`@if`, `@for`, `@switch`) is stable.
+* Standalone components are now the default.
+* `zone.js` is optional, offering better developer ergonomics.
+* Signals receive framework-level support.
+* Server-Side Rendering (SSR) is faster, lighter, and streamlined.
+* Forms support enhanced type inference.
+* Angular CLI and dev server offer improved performance.
+* Replaces `TestBed.get()` with `TestBed.inject()`.
+* Updates `*ngIf`, `*ngFor`, and `*ngSwitch` to modern built-in control flow syntax.
+
+---
 
 ## Why did Angular drop Karma?
-The default build package changes from `@angular-devkit/build-angular` to the new `@angular/build`. This new package no longer includes the Karma plugin used by legacy test setups. The web ecosystem has moved on to faster test runners like Vitest and Jest that use modern tools like Vite and esbuild.
 
-## What the new world looks like (Vitest/Jest)
-Angular's experimental test runner, now powered by Vitest, is the future. Migrating means your unit tests will run in a fast, modern Node.js-based environment. To reinstall the old compiler with Karma support:
+The default build package changes from `@angular-devkit/build-angular` to `@angular/build`. This package excludes the Karma plugin used by legacy test setups. The ecosystem has shifted to faster, modern Node.js-based test runners like Vitest and Jest that leverage Vite and esbuild.
+
+---
+
+## What the New World Looks Like (Vitest/Jest)
+
+Angular's test runner powered by Vitest provides a fast, modern testing environment. If you need to legacy-support Karma during migration, reinstall the legacy build package:
 
 ```bash
 npm install @angular-devkit/build-angular --save-dev
 ```
 
-This command forces the CLI to fall back to the old compiler that still supports Karma.
+---
 
 ## Prerequisites
-- Node.js v20: Angular 20 no longer supports Node 18. Verify with `node -v`.
-- TypeScript 5.8: Update by running `npm install typescript@5.8`.
 
-- `Step 1.` Update Angular CLI
+* **Node.js v20+**: Angular 20 drops support for Node 18. Check your version with `node -v`.
+* **TypeScript 5.8+**: Upgrade TypeScript via npm:
+
+```bash
+npm install typescript@5.8 --save-dev
+```
+
+---
+
+## Step-by-Step Upgrade Guide
+
+### Step 1. Update Angular CLI
 
 ```bash
 npm uninstall -g @angular/cli
 npm install -g @angular/cli@20
 ```
 
-- `Step 2.` Upgrade Project Dependencies
+### Step 2. Upgrade Project Dependencies
 
 ```bash
 npm run ng update @angular/cli@20 @angular/core@20
-# For the latest version
+
+# Upgrade to the latest prerelease/next version if required
 ng update @angular/cli @angular/core --next
-# Update other packages
+
+# Update specific package dependencies
 npm run ng update @angular/material 
 npm run ng update @angular/forms @angular/router
 npm run ng update @angular/common@20 @angular/material@20 @angular/animations@20 @angular/platform-browser@20
 npm install @ng-bootstrap/ng-bootstrap@17.0.0 --legacy-peer-deps
 ```
 
-- `Step 3.` Control Flow:
+### Step 3. Migrate Control Flow Syntax
 
-Migrating ngIf, ngFor, and ngSwitch to the new control flow syntax.
+Migrate template directives (`*ngIf`, `*ngFor`, `*ngSwitch`) to the built-in control flow blocks.
 
-Example Migration: 
+**Conditionals (`*ngIf` vs `@if`):**
+
 ```html
-<!-- Before -->   
-<div *ngIf="user">{{ user.name }}</div>   
- 
-<!-- After -->   
-@if (user) {   
-  <div>{{ user.name }}</div>   
+<!-- Legacy syntax -->
+<div *ngIf="user">{{ user.name }}</div>
+
+<!-- Modern syntax -->
+@if (user) {
+  <div>{{ user.name }}</div>
 }
 ```
 
-@for replaces *ngFor and is a major improvement.
+**Loops (`*ngFor` vs `@for`):**
 
 ```html
-<!-- Old syntax -->  
+<!-- Legacy syntax -->
 <div *ngFor="let item of items; trackBy: trackItemById">{{ item.name }}</div>
 
-<!-- New syntax -->  
+<!-- Modern syntax -->
 @for (item of items; track item.id) {
   <div>{{ item.name }}</div>
 } @empty {
   <div>No items to display.</div>
 }
 ```
-- `track` is mandatory and encourages best practices.
-- `@empty` improves DX by removing the need for separate @if.
 
-Better Templates 
+* `track` is mandatory in modern syntax to enforce rendering performance.
+* `@empty` handles empty collection states natively without nested checks.
 
-String templates you can mix text with, power math symbols, checking if things exist, and empty operations. 
+**Switch Statement (`*ngSwitch` vs `@switch`):**
 
 ```html
-<!-- Old way --> 
-<p>Hello {{ name }} from {{ city }}</p> 
- 
-<!-- New way with template strings --> 
-<p>{{ `Hello ${name} from ${city}` }}</p> 
+<!-- Legacy syntax -->
+<div [ngSwitch]="role">
+  <div *ngSwitchCase="'admin'">Admin Panel</div>
+  <div *ngSwitchDefault>User Panel</div>
+</div>
+
+<!-- Modern syntax -->
+@switch (role) {
+  @case ('admin') {
+    <div>Admin Panel</div>
+  }
+  @default {
+    <div>User Panel</div>
+  }
+}
 ```
 
-- `Step 3.` TestBed.get() Removal 
+**Enhanced String Templates:**
 
-Replacing TestBed.get() with TestBed.inject()
+Mix strings, evaluation operations, and template expressions seamlessly inside templates:
 
-```ts
-// Before
-const service = TestBed.get(UserService);   
+```html
+<!-- Legacy evaluation -->
+<p>Hello {{ name }} from {{ city }}</p>
 
-// After
-const service = TestBed.inject(UserService);  
+<!-- Modern template strings -->
+<p>{{ `Hello ${name} from ${city}` }}</p>
 ```
 
-- `Step 4.` Forms API Updates 
+### Step 4. Replace `TestBed.get()` with `TestBed.inject()`
 
-New methods like markAllAsDirty() are available: 
+`TestBed.get()` is fully removed in favor of the type-safe `TestBed.inject()` API.
 
-```ts
-this.userForm.markAllAsDirty();   
+```typescript
+// Legacy
+const service = TestBed.get(UserService);
+
+// Modern
+const service = TestBed.inject(UserService);
 ```
 
-- `Step 5.` Enable Experimental Features (Optional) 
+### Step 5. Update Forms API
 
-Zoneless is no longer experimental, but not yet stable. It is now in developer preview. Zoneless Change Detection, Add to app.config.ts: 
+Utilize modern Form group helper methods such as `markAllAsDirty()`:
 
-  - Faster to load 
-  - Use less memory 
-  - Have smaller file sizes 
-  - Work better overall
-
-```ts
-import { provideZonelessChangeDetection } from '@angular/core';   
- 
-export const appConfig: ApplicationConfig = {   
-  providers: [provideZonelessChangeDetection()]   
-};  
+```typescript
+this.userForm.markAllAsDirty();
 ```
 
-Note: Manual change detection may be required for third-party libraries.
+### Step 6. Enable Zoneless Change Detection
 
-- `Step 6.` Signals:
+Zoneless mode is in Developer Preview in Angular 20. It optimizes performance by reducing overhead:
 
-Signals help your app know when things change and update the right parts automatically.
+* Faster app load times
+* Reduced memory usage
+* Smaller bundle size
+* Improved runtime stability
 
-```ts
-const name = signal('');   
-const isValid = computed(() => name().length > 2);   
+Configure `app.config.ts`:
+
+```typescript
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZonelessChangeDetection()
+  ]
+};
 ```
 
-- `Step 7.` Update Browserslist Configuration 
+*Note: Manual change detection triggers may be required for legacy third-party libraries.*
 
-Angular 20 targets browsers released in the last 30 months. Update `.browserslistrc:` 
+### Step 7. Integrate Signals
 
-Chrome >= 107   
-Firefox >= 104   
-Safari >= 16   
+Signals provide granular, reactive state management across your application:
 
-- `Step 8.` Test and Optimize 
+```typescript
+import { signal, computed } from '@angular/core';
 
-  - `Run Tests:` Angular 20 deprecates Karma. Migrate to Web Test Runner or Vitest.
-  - `Check Bundle Size:` Use `ng build --stats-json` to analyze with `webpack-bundle-analyzer`. 
-  - `Verify SSR:` Test server-side rendering with `ng serve --ssr`. 
-
-Post-Upgrade Checklist 
-Update Angular Material/Material UI if used. 
-Ensure third-party libraries (e.g., NgRx, RxJS) are compatible. 
-
-Enable stricter TypeScript checks in tsconfig.json: 
-
-```json
-{   
-  "compilerOptions": {   
-    "strict": true   
-  }   
-}   
+const name = signal('');
+const isValid = computed(() => name().length > 2);
 ```
 
-- `Step 9.` Automated migration and performance:
+### Step 8. Update Browserslist Configuration
 
-Use the CLI to automatically refactor templates to the new control flow syntax:
+Angular 20 officially drops support for Opera. Angular 20 targets modern browsers released within the last 30 months. Update `.browserslistrc`:
+
+```text
+Chrome >= 107
+Firefox >= 104
+Safari >= 16
+```
+
+### Step 9. Automated Migrations and Schematics
+
+Execute built-in CLI schematics to automate modern pattern conversions across your codebase:
 
 ```bash
+# Convert template directives to modern control flow (@if, @for, @switch)
 ng generate @angular/core:control-flow
 
-# General Best Practices and Further Migrations
-
+# Additional framework schematics
 ng generate @angular/core:standalone
 ng generate @angular/core:inject
 ng generate @angular/core:route-lazy-loading
@@ -184,74 +211,82 @@ ng generate @angular/core:signal-queries-migration
 ng generate @angular/core:output-migration
 ```
 
-These commands allow for a comprehensive update of an Angular app to leverage the latest patterns.
+### Step 10. Direct State Updates in Zoneless Mode
 
-- `Step 10.` Zoneless: Escaping the "Magic" of Change Detection
+In a zoneless application, UI state changes occur via direct Signal updates without relying on zone-based digest cycles:
 
-In a zone-less world, the UI only updates when you explicitly Signals.
-
-```ts
+```typescript
 mySignal.set(newValue);
 ```
 
-This directly tells Angular to update only the DOM parts that use that signal. It's a surgical, predictable, and high-performance approach.
+This targets DOM updates specifically where the signal is read, enabling high-performance rendering.
 
-- `Step 11.` Error Checking for Component Events 
+### Step 11. Component Event Error Checking
 
-Angular 20 now checks your component event code for mistakes. When you write `@HostBinding` or `@HostListener` code, Angular will tell you if something looks wrong. This catches errors before your app runs, which saves you time debugging. 
+Angular 20 introduces strict compile-time checking for component events and decorators like `@HostBinding` and `@HostListener`, identifying invalid signatures prior to execution.
 
-- `Step 12.` Important Detail: browserslist and Browser Support
+### Step 12. Test and Optimize
 
-Angular 20 no longer supports Opera officially. If you list Opera in your browserslist, you may need to remove it.
+* **Run Tests:** Angular 20 deprecates Karma. Migrate test suites from Karma to Vitest or Web Test Runner.
+* **Check Bundle Size:** Generate stats with `ng build --stats-json` and evaluate output using `webpack-bundle-analyzer`.
+* **Verify SSR:** Validate server-side rendering functionality using `ng serve --ssr`.
+* **TypeScript Settings:** Enable strict type checking in `tsconfig.json`:
 
-- `Step 13.` Troubleshooting Common Issues 
-
-  - `Node 18` and `TypeScript` versions below 5.8 has been dropped.
-  - The old `*ngIf` and `*ngFor` ways still work but are deprecated. Start using the new `@if` and `@for` syntax instead. 
-  - "Cannot find module" Errors: Delete `node_modules` and` package-lock.json`, then run `npm install`. 
-  - `Zone.js` Warnings: Add `ngZone: 'noop'` to `provideZonelessChangeDetection()` if using zoneless mode.
-  - Legacy Browser Support: Adjust `.browserslistrc` if targeting older browsers (may increase bundle size). 
-  - `InjectFlags` way of doing things that was marked as outdated.
-
-### Standalone by Default: A Fundamental Architectural Shift
-
-By explicitly listing dependencies using the imports array at the component level, each component becomes self-contained. 
-- Clarifies your architecture
-- Improves tree-shaking
-- Results in smaller bundles
-
-### New Naming Convention:
-
-Angular 20 introduces a new official naming convention that drops traditional suffixes.
-
-Old naming
-
-```bash
-user-profile.component.ts;
-auth.service.ts;
-highlight.directive.ts;
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
 ```
 
-New naming
+### Step 13. Troubleshooting Common Issues
+
+* **Node.js / TypeScript Compatibility:** Verify Node.js is v20+ and TypeScript is version 5.8 or higher.
+* **Deprecated Syntax:** While legacy directives (`*ngIf`, `*ngFor`) may function temporarily in transitional builds, migrate to `@if` and `@for`.
+* **"Cannot find module" Errors:** Clean workspace artifacts and reinstall dependencies:
 
 ```bash
-user-profile.ts; // UI component
-auth-store.ts; // state
-highlight.ts; // directive
+rm -rf node_modules package-lock.json
+npm install
 ```
 
-Focus on intent instead of type
+* **Zone.js Warnings:** If using zoneless mode, pass `ngZone: 'noop'` to `provideZonelessChangeDetection()` configuration where applicable.
+* **Legacy Browser Requirements:** Extending target options in `.browserslistrc` to legacy browsers will increase output bundle sizes.
+* **Deprecated APIs:** Update usages of `InjectFlags` to the functional `inject()` options object API.
 
-```bash
-user-api.ts; // HTTP requests
-auth-store.ts; // reactive state
-movie-card.ts; // UI component
-movie-details.ts; // UI component
-```
+---
 
-Feature-based folder structure
+## Architecture & Naming Conventions
 
-```bash
+### Standalone Components by Default
+
+Modules are optional. Components explicitly declare dependencies using the `imports` array:
+
+* Clearer module boundaries and architecture
+* Improved tree-shaking capabilities
+* Reduced final application bundle sizes
+
+### Modern File Naming Conventions
+
+Angular 20 updates official file naming standards by dropping structural suffixes from filenames.
+
+**Legacy Naming Pattern:**
+
+* `user-profile.component.ts`
+* `auth.service.ts`
+* `highlight.directive.ts`
+
+**Modern Naming Pattern:**
+
+* `user-api.ts` (API/HTTP requests)
+* `user-profile.ts` (UI Component)
+* `auth-store.ts` (State management)
+* `highlight.ts` (Directive)
+
+**Feature-Based Directory Structure:**
+
+```text
 src/
 ├── core/
 │   └── auth/
@@ -265,18 +300,23 @@ src/
 │       └── user-settings.ts
 ```
 
-### After upgrading, test these things: 
+---
 
-- All pages load correctly 
-- Forms work properly 
-- User login/logout works 
-- Data saves and loads 
-- Mobile version works 
-- Performance is good 
+## Post-Upgrade Verification Checklist
 
-Run your automated tests too: 
+Verify the following functional areas after completion of the upgrade:
+
+* Ensure third-party libraries (e.g., NgRx, RxJS) are compatible. 
+* All application routes and pages load without errors.
+* Form state management and validation logic operate correctly.
+* User authentication state (login/logout) functions as expected.
+* Data persistence operations run cleanly.
+* Responsive viewports and mobile features render properly.
+* Performance baseline meets targets.
+
+Run automated execution suites:
 
 ```bash
-ng test 
+ng test
 ng e2e
 ```

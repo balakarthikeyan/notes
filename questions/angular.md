@@ -1,395 +1,619 @@
-## What are Angular features ?
-- Interpolation
-- Template Statements
-- Event Binding
-- Built-in Directives
-- Pipes
-- Property Binding
-- Attribute, Class and Style Bindings
+## What are Angular Features?
 
-## Data binding
+* Interpolation
+* Template Statements
+* Event Binding
+* Built-in Directives
+* Pipes
+* Property Binding
+* Attribute, Class, and Style Bindings
+
+---
+
+## Data Binding
+
 Binding refers to the process of communication between a component and its corresponding view. It is utilized for transferring data to and from the Angular framework. Data can be passed through various means, such as through events, interpolation, properties, or through the two-way binding mechanism. Moreover, data can also be shared between related components (parent-child relation) and between two unrelated components using the Service feature.
 
-We can classify binding by data flow:
+Data binding flow classification:
 
-- `Data source to view target` (includes interpolation, properties, attributes, classes and styles); can be applied by using [] or {{}} in template;
-- `View target to data source (includes events);` can be applied by using () in template;
-- `Two-Way;` can be applied by using [()] in template.
+* **Data source to view target**: Includes interpolation, properties, attributes, classes, and styles. Applied using `[]` or `{{}}` in templates.
+* **View target to data source**: Includes events. Applied using `()` in templates.
+* **Two-Way**: Applied using `[()]` in templates.
 
-Binding can be called on properties, events, and attributes, as well as on any public member of a source directive:
+Target member classifications:
 
-- `Property` - element property, component property, directive property	`<img [alt]="hero.name" [src]="heroImageUrl" />`
-- `Event`	- element event, component event, directive event	`<button type="button" (click)="onSave()" />`
-- `Two-way`	- event and property	`<input [(ngModel)]="name" />`
-- `Attribute`	- attribute property	`<button type="button" [attr.aria-label]="help" />`
-- `Class`	- class property	`<div [class.special]="isSpecial">Special</div>`
-- `Style`	- style property	`<button type="button" [style.color]="isSpecial ? 'red' : 'green'" />`
+* **Property**: Element property, component property, directive property. Example: `<img [alt]="hero.name" [src]="heroImageUrl" />`
+* **Event**: Element event, component event, directive event. Example: `<button type="button" (click)="onSave()">Save</button>`
+* **Two-way**: Event and property. Example: `<input [(ngModel)]="name" />`
+* **Attribute**: Attribute property. Example: `<button type="button" [attr.aria-label]="help">Help</button>`
+* **Class**: Class property. Example: `<div [class.special]="isSpecial">Special</div>`
+* **Style**: Style property. Example: `<button type="button" [style.color]="isSpecial ? 'red' : 'green'">Color</button>`
+### One-Way Binding (Interpolation)
 
-> One Way Binding(Interpolation):
+Interpolation is a way to bind dynamic values directly into the text content of HTML elements.
 
-Interpolation is way to bind dynamic values directly into the text content of HTML elements.
-`<h1>{{ pageTitle }}</h1>`
-
-> Two way binding:
-
-Two way binding is a feature in Angular that synchronizes the Model(data) and the View(UI). This means the changes in the View automatically updates the Model, and the changes in the View are reflected back to the Model.
-
-The `[(ngModel)]` directive is a shorthand for binding the value property of the `<input>` element to the field property of the component and listening for input events to update the field property.
 ```html
+<h1>{{ pageTitle }}</h1>
+```
+
+### Two-Way Binding
+
+Two-way binding synchronizes the Model (data) and the View (UI). Changes in the View automatically update the Model, and changes in the Model are reflected back to the View.
+
+*Legacy Syntax (`ngModel` / Property + Event):*
+
+```html
+<!-- Shorthand using ngModel -->
 <input [(ngModel)]="username">
+
+<!-- Expanded syntax equivalent -->
 <input [value]="username" (input)="username = $event.target.value">
 ```
 
-> Property binding:
+*Modern Syntax (Angular 17+ Signal Model Inputs):*
 
-Helps you set values for properties of HTML elements and directives
+```typescript
+// Component definition
+username = model('');
+```
+
+```html
+<!-- Component template -->
+<input [(ngModel)]="username">
+```
+
+### Property Binding
+
+Helps set values for properties of HTML elements and directives.
+
 ```html
 <img [src]="imageUrl" alt="Image">
 <td [colSpan]="1 + 1" style="background-color: yellow;">2 cols</td>
 ```
 
-> Attribute, Class and Style Bindings:
+### Attribute, Class, and Style Bindings
+
 ```html
 <td [attr.colspan]="1 + 1" style="background-color: yellow;">2 cols</td>
 <p [style.color]="green ? 'green' : 'red'">hello world</p>
 <p [class.green]="green" [class.red]="!green">hello world</p>
 ```
 
-> Event binding:
+### Event Binding
 
 Allows you to respond to user events (such as clicks, keypresses, etc.) by triggering methods in the component.
+
 ```html
 <button (click)="onClick()">Click me</button>
 <input (input)="onInputChange($event)">
 ```
 
-## What is a Pipe ?
-Pipes are simple functions to use in template expressions to accept an input value and return a transformed value. 
+---
 
-By default, pipes are "pure," the pipe will be called when the input values they depend on change. 
-pipes are "impure" by setting the pure property to false. the pipe will be called in every change detection cycle, regardless of whether the input values have changed or not. 
+## What is a Pipe?
 
-### What is Template expression ?
-Template expression typically produces a value within the double curly braces that Angular executes and binds to the property of a target being an HTML element, component or directive.
+Pipes are simple functions to use in template expressions to accept an input value and return a transformed value.
 
-### What are Angular built-in pipes ?
-Angular provides built-in pipes for typical data transformations, including transformations for internationalization (i18n), which use locale information to format data. 
+* **Pure Pipes**: By default, pipes are "pure." The pipe will be called when the input values they depend on change.
+* **Impure Pipes**: Set `pure: false` in metadata. The pipe will be called in every change detection cycle, regardless of whether the input values have changed or not.
 
-- `DatePipeFormats` a date value according to locale rules.
+### What is a Template Expression?
 
-- `UpperCasePipeTransforms` text to all upper case.
+A template expression produces a value within double curly braces that Angular executes and binds to the property of a target, such as an HTML element, component, or directive.
 
-- `LowerCasePipeTransforms` text to all lower case.
+### What are Angular Built-in Pipes?
 
-- `CurrencyPipeTransforms` a number to a currency string, formatted according to locale rules.
+Angular provides built-in pipes for typical data transformations, including internationalization (i18n) formatting:
 
-- `DecimalPipeTransforms` a number into a string with a decimal point, formatted according to locale rules.
+* `DatePipe`: Formats a date value according to locale rules.
+* `UpperCasePipe`: Transforms text to all upper case.
+* `LowerCasePipe`: Transforms text to all lower case.
+* `CurrencyPipe`: Transforms a number to a currency string, formatted according to locale rules.
+* `DecimalPipe`: Transforms a number into a string with a decimal point, formatted according to locale rules.
+* `PercentPipe`: Transforms a number to a percentage string, formatted according to locale rules.
 
-- `PercentPipeTransforms` a number to a percentage string, formatted according to locale rules.
+---
 
-## What is a Dependency Injection
-This reduces the coupling between classes and their dependencies, making the code more maintainable, testable, and reusable.
+## What is Dependency Injection?
+
+Dependency Injection (DI) reduces coupling between classes and their dependencies, making code more maintainable, testable, and reusable.
+
+*Legacy Syntax (Constructor Injection):*
+
 ```typescript
-export class AppComponent {
-  service = new RootService();
-}
+import { Component } from '@angular/core';
+import { RootService } from './root.service';
 
+@Component({ ... })
 export class AppComponent {
-  service = inject(RootService);
   constructor(private service: RootService) {}
 }
 ```
-It delegates this task to an external source, which is responsible for either returning an existing instance or creating a new instance of the requested service.
+
+*Modern Syntax (Angular 14+ `inject()` Function):*
+
 ```typescript
-export const inject = (searchClass: Class) => {
-  const dependance = find(searchClass)
-  if(dependance) {
-    return dependance;
+import { Component, inject } from '@angular/core';
+import { RootService } from './root.service';
+
+@Component({ ... })
+export class AppComponent {
+  service = inject(RootService);
+}
+```
+
+*Internal DI Mechanism (Conceptual Overview):*
+
+```typescript
+export const inject = (searchClass: any) => {
+  const dependence = find(searchClass);
+  if (dependence) {
+    return dependence;
   } else {
     return new searchClass();
   }
-}
+};
 ```
-The Injector stores information about all injectable classes, which includes anything with a decorator such as @Injectable, @Component, @Pipe, and @Directive
+
+The Injector stores information about all injectable classes, which includes anything marked with a decorator such as `@Injectable`, `@Component`, `@Pipe`, and `@Directive`.
 
 Angular has two categories of Injectors:
 
-- `EnvironmentInjector:` This category includes all global injectable classes provided through the router, modules, or using the `providedIn: 'root'` keyword.
-- `NodeInjector:` This category contains all local injectable classes found in each component or template.
+* **EnvironmentInjector**: Global injectable classes provided through the router, modules, or using `providedIn: 'root'`.
+* **NodeInjector**: Local injectable classes found in each component or directive template.
+
+---
 
 ## What Are Angular Signals?
-Angular Signals represent a new way to build reactive apps, built on top of reactive primitives that emit updates when their underlying values change.
 
-A signal is like a container that holds a value (like a number or a string) and tells other parts of your app when this value changes.
+Angular Signals represent a modern way to build reactive applications, built on top of reactive primitives that emit updates when their underlying values change. A signal is a container that holds a value and notifies subscribers when that value changes.
 
-The Signals API is a small and easy-to-use API, with three main reactive primitives,
+The Signals API is a small and easy-to-use API, Reactive primitives:
 
-- `Writable signals:` These are signals that you can change. For example, if you have a signal for a number, you can increase or decrease this number.
-- `Computed signals:` Their value depends on other signals. If the signal they depend on changes, they change too.
-- `Effects:` These are special functions that respond when signal values change.
+* **Writable signals**: Signals whose value can be directly updated.
+* **Computed signals**: Signals whose value depends on other signals.
+* **Effects**: Special functions that execute side-effects in response to signal changes.
 
-## What are RxJS Operators ?
-- `toSignal:` As httpClient returns an observable, a good approach is to use toSignal() to convert or transform the observables into a signal.
+*Modern Signals Example (Angular 16+):*
 
-- `Subject:` A Subject is a special type of Observable which shares a single execution path among observers and allows values to be multicast to many Observers. Their message (the subject) is being delivered to many (multicast) people (the observers) at once. This is the basis of multicasting. Subjects are like Event Emitters: they maintain a registry of many listeners.
+```typescript
+import { signal, computed, effect } from '@angular/core';
 
-- `interval:` An operator that returns an observable which emits numbers in sequence based on provided timeframe.
+// Writable Signal
+const count = signal(0);
+count.set(5);
+count.update(v => v + 1);
 
-- `takeUntil:` A filtering operator that emits values until provided observable emits.
+// Computed Signal
+const doubleCount = computed(() => count() * 2);
 
-- `take:` It emits provided number of values before completing. You can use it when you are interested in only the first emission, you want to use take. 
+// Effect
+effect(() => {
+  console.log(`Current value: ${count()}`);
+});
+```
 
-- `takeWhile:` It emits values until provided expression is false. You can use it when the optional inclusive parameter is set to true it will also emit the first item that didn't pass the predicate.
+---
 
-### What is ReplaySubject in angular ?
-It is a variant of the Subject class and allows you to multicast values to multiple subscribers.
+## What are RxJS Operators?
 
-A `ReplaySubject` remembers and replays a specific number of values to any subscriber that subscribes to it. When a new subscriber subscribes to a ReplaySubject, it will immediately receive the buffered values, up to a specified buffer size or timeframe.
+* `toSignal`: Converts/transforms Observables (e.g., HTTP responses) into Signals.
+* `Subject`: A special type of Observable that shares a single execution path among observers (multicast).
+* `interval`: Returns an Observable that emits numbers in sequence based on a specified time interval.
+* `takeUntil`: A filtering operator that emits values until a provided Observable emits.
+* `take`: Emits a specified number of values before completing.
+* `takeWhile`: Emits values until a specified predicate condition evaluates to false.
 
-The key features of a `ReplaySubject` are:
+### What is ReplaySubject in Angular?
 
-1. `Buffering`: A ReplaySubject keeps a buffer of values that it has emitted. You can specify the maximum number of values to buffer using the buffer size parameter when creating the ReplaySubject.
+`ReplaySubject` is a variant of `Subject` that replays a specified number of past emissions to new subscribers.
 
-2. `Subscription`: When a new subscriber subscribes to a ReplaySubject, it immediately receives the buffered values. If the buffer size is reached, older values are dropped from the buffer to accommodate new values.
+Key Features:
 
-3. `Timeframe`: In addition to the buffer size, you can also specify a timeframe for the ReplaySubject. With a timeframe, the ReplaySubject will only buffer values emitted within a specific time window.
+* **Buffering**: Maintains a buffer of emitted values based on a specified size parameter.
+* **Subscription**: New subscribers immediately receive buffered values upon subscribing.
+* **Timeframe**: Optional window time limit for buffering emitted values.
 
-### How to make multiple http calls in parallel in Angular ?
-Using `forkJoin`, this operator takes an array of observables and waits for all the source observables to complete. Once they all complete, it emits an array of the last emitted values from each observable. 
+### How to make multiple HTTP calls in parallel in Angular?
+
+Use `forkJoin`, which accepts an array or object of Observables, waits for all to complete, and emits their final values.
+
+```typescript
+import { forkJoin } from 'rxjs';
+
+forkJoin({
+  users: this.http.get('/api/users'),
+  posts: this.http.get('/api/posts')
+}).subscribe(({ users, posts }) => {
+  console.log(users, posts);
+});
+```
 
 ### How do you handle errors in RxJS observables?
-RxJS provides several operators for handling errors in Observables. The two main operators for error handling are `catchError` and `retry`.
 
-1. `catchError:` The `catchError` operator is used to catch errors that may occur in an Observable and handle them in a graceful way. It takes a function as an argument that returns another Observable or throws an error.
+RxJS provides several operators for handling errors in Observables.
 
-2. `retry:` The `retry` operator is used to automatically retry an Observable when it encounters an error. It takes an optional argument that specifies the maximum number of retries. The `retry()` operator is used in RxJS to resubscribe to an observable if an error occurs. 
+* `catchError`: Catches errors on an Observable stream and handles them gracefully by returning a new Observable or throwing a transformed error.
+* `retry`: Resubscribes to a source Observable when an error occurs, accepting an optional max retry attempt count.
 
 ### How do you implement backpressure in RxJS?
-`Backpressure` is a mechanism used in reactive programming to handle situations where an Observable is emitting data at a faster rate than it can be consumed. This can lead to issues such as high memory usage, slow processing, and even crashes. 
+
+`Backpressure` manages scenarios where an Observable emits data faster than a consumer can process it.
 RxJS provides several operators for implementing backpressure, including `buffer`, `throttle`, `debounce`, `sample`, and `switchMap`.
 
-1. buffer: The `buffer` operator collects emitted values from the source Observable into an array and emits the array when it reaches a specified size. It can be used to temporarily store emitted values until they can be processed.
+Operators for backpressure:
 
-2. throttle: The `throttle` operator throttles the emissions of the source Observable by discarding emissions that occur within a specified time window. It can be used to limit the rate of emissions from the source Observable.
+* `buffer`: Collects emissions into an array and emits the array when it reaches a set size.
+* `throttle`: Discards emissions within a specified time window.
+* `debounce`: Delays emissions until a specified timeframe elapses without new emissions.
+* `sample`: Emits the most recent value within periodic time intervals.
+* `switchMap`: Cancels pending inner emissions to limit concurrent processing.
 
-3. debounce: The `debounce` operator delays emissions from the source Observable until a specified time has elapsed since the last emission. It can be used to filter out rapid emissions and emit only the last value.
+### What is the purpose of using schedulers in RxJS?
 
-4. sample: The `sample` operator emits the most recent value from the source Observable at a specified time interval. It can be used to emit the most recent value at a regular interval, regardless of how many values are emitted.
+Schedulers control the timing and execution context of Observable emissions. The `observeOn()` operator specifies the target scheduler. Common schedulers: `async`, `queue`, `animationFrame`, `asap`.
 
-5. switchMap: The `switchMap` operator can be used to limit the number of concurrent emissions from the source Observable. 
+### What is a pipeable operator in RxJS?
 
-### What is the purpose of using schedulers in RxJS ?
-In RxJS, a scheduler is an object that provides a way to control the timing of when events are emitted by observables. Schedulers can be used to schedule tasks to be executed at a specific time, delay the execution of tasks, or specify on which thread the tasks should be executed.
+Pipeable operators are standalone functions passed into the `.pipe()` method. They take an Observable input and return a new transformed Observable.
 
-The `observeOn()` operator is used to specify the scheduler on which an observable should emit its values. Some common schedulers in RxJS include `async`, `queue`, `animationFrame` and `immediate`.
+### What is an async pipe?
 
-### What is pipeable operator in RxJS ? 
-Pipeable operators are imported as standalone functions and chaining them together with the `pipe()` function. Pipeable operators are pure functions that take an observable as their input and return a new observable as their output, allowing multiple operators to be composed together to form a pipeline.
+The `async` pipe automatically subscribes to an Observable or Promise in Angular templates, returns latest values, marks components for change detection, and unsubscribes when destroyed.
 
-### What is async pipe ? 
-The `async` pipe subscribes to an Observable or Promise and returns the latest value it has emitted. When a new value is emitted, the `async` pipe marks the component to be checked for changes. When the component gets destroyed, the `async` pipe unsubscribes automatically to avoid potential memory leaks.
+### What is a patch operator in RxJS?
 
-### What is patch operator in RxJS ?
-Patch operators are imported as methods on the `Observable` class and are then used by calling them directly on an observable. Patch operators modify the behavior of the observable instance they are called on, and cannot be composed together in the same way as pipeable operators.
+*(Legacy RxJS 4/5)* Patch operators were attached directly to the `Observable.prototype` rather than composed via pure function pipelines.
 
-### What is reduce operator in RxJS ?
-The `reduce` operator is used to apply an accumulation function to the values emitted by an observable sequence and emit a single accumulated result. It is similar to the Array.prototype.reduce() function in JavaScript. The reduce operator is useful when you want to obtain a single accumulated result from a sequence of values.
+### What is the reduce operator in RxJS?
+
+Applies an accumulator function over source emissions and emits a single final accumulated result upon stream completion.
 
 ### What is a BehaviorSubject?
-BehaviorSubject is a type of Observable provided by the RxJS library. Unlike traditional Observables that emit values only upon specific events, BehaviorSubject maintains the latest value it has emitted and immediately dispatches it to new subscribers upon subscription.
 
-## What is HttpClient:
-`HttpClient` is a tool provided by Angular that helps us communicate with servers over the internet. We use it to fetch data from servers or send data to servers.
+A variant of `Subject` that holds an initial/current value and immediately emits its current value to new subscribers.
 
-Configuring features of HttpClient
+---
 
-- `withFetch`:
-This feature switches HttpClient to use the fetch API instead of the default XMLHttpRequest API.
+## What is HttpClient?
 
-- `withInterceptors`:
-Configures a set of interceptor functions to process requests made through HttpClient.
+`HttpClient` handles HTTP requests to communicate with remote servers.
 
-- `withInterceptorsFromDi`:
-Includes the older style of class-based interceptors in the HttpClient configuration.
+*Modern Standalone Setup (Angular 15+):*
 
-- `withRequestsMadeViaParent`:
-Passes requests up to the HttpClient instance in the parent injector after passing through interceptors at the current level.
+```typescript
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
-- `withJsonpSupport`:
-Enables the .jsonp() method on HttpClient for cross-domain loading of data using JSONP convention.
+export const appConfig = {
+  providers: [
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor])
+    )
+  ]
+};
+```
 
-- `withXsrfConfiguration`:
-Allows customization of HttpClient’s built-in XSRF security functionality.
+*Legacy Module Setup:*
 
-- `withNoXsrfProtection`:
-Disables HttpClient’s built-in XSRF security functionality.
+```typescript
+import { HttpClientModule } from '@angular/common/http';
 
-### Explain the HTTPClientModule ?
-In Angular, the `HttpClientModule` is a built-in module that helps in making HTTP requests to remote servers or APIs. It is part of the `@angular/common/http` package and is used for handling asynchronous HTTP requests and responses. The HttpClientModule provides the `HttpClient` service, which is used to make HTTP requests. It supports various HTTP methods such as GET, POST, PUT, DELETE, etc.
+@NgModule({
+  imports: [HttpClientModule]
+})
+export class AppModule {}
+```
 
-## What Is TestBed ?
-TestBed is an Angular testing class that makes it easy to configure and initialize the environment for unit tests in Angular. It acts as a sandbox where you can configure and set up the components, directives, services and pipes that are going to be tested.
+Configuring `HttpClient` Features:
 
-TestBed makes it easy to create and work with Angular components and their dependencies in a testing scenario. By using TestBed, we can configure testing modules similar to how you would set up an Angular app with specified declarations, imports, providers and more. This helps in mocking or faking the runtime environment of an Angular application.
+* `withFetch`: Switches request transport from `XMLHttpRequest` to the native `fetch` API.
+* `withInterceptors`: Configures functional interceptor functions.
+* `withInterceptorsFromDi`: Includes legacy class-based interceptors from DI.
+* `withRequestsMadeViaParent`: Routes requests up to a parent injector `HttpClient` instance.
+* `withJsonpSupport`: Enables JSONP cross-domain data fetching.
+* `withXsrfConfiguration`: Configures custom XSRF anti-forgery protection.
+* `withNoXsrfProtection`: Disables built-in XSRF protection.
+
+### Explain the HttpClientModule
+
+`HttpClientModule` is a built-in NgModule from `@angular/common/http` that provides the `HttpClient` service for handling asynchronous HTTP communication.
+
+---
+
+## What Is TestBed?
+
+`TestBed` is the primary Angular testing utility to configure and initialize unit test environments, mocking components, directives, services, and pipes.
+
+---
 
 ## What is the purpose of decorators in Angular?
-Decorators are used in Angular to add metadata and configuration to Angular elements like components, services, directives, pipes, etc., that state how these elements will be processed and constructed.
 
-There are four different types of decorators in Angular:
+Decorators add metadata and configuration instructions to classes and members.
 
-`Method decorator:` This decorator is applied to a method within a class and allows you to modify or enhance the behavior of that method. It can be used to add functionality around the method execution.
+Decorator Types:
 
-`Class decorator:` This decorator is used to enhance the behavior of a class.
+* **Method decorator**: Modifies or enhances class method behavior.
+* **Class decorator**: Configures top-level class behavior (e.g., `@Component`, `@Injectable`).
+* **Parameter decorator**: Applied to method or constructor parameters.
+* **Property decorator**: Modifies property bindings or accessors.
 
-`Parameter decorator:` This decorator is added to the parameters of a method.
+### What is @Input decorator?
 
-`Property decorator:` This decorator is applied to a particular property and can modify accessors, define bindings, or perform validation.
+Marks a property as an input target for receiving data from a parent component.
 
-### What is @Input decorator ?
-`@Input()` is an Angular decorator that marks a class property as an input property of the component.
+*Legacy Decorator:*
 
-The `@Input` decorator is used to pass data from a parent component to a child component.
+```typescript
+@Input() label: string = '';
+```
 
-### What is @Output decorator ?
-`@Output` decorator allows a child component to emit/trigger events and send data back to the parent component.
+*Modern Signal Input (Angular 17+):*
 
-The `@Output` decorator that marks a component property as an output of the component, it is associated with an EventEmitter.
+```typescript
+label = input<string>('');
+```
 
-When an EventEmitter emits an event, any parent component listening to that event through an event binding can respond to it accordingly.
+### What is @Output decorator?
 
-@Output({
-    alias?: string;
-}) propertyName = new EventEmitter<type>();
+Marks a property as an event output to send data to parent components via an `EventEmitter`.
 
-By using `HostAttributeToken`, you make your code compatible with elements like ng-container and ng-template, ensuring safer usage in server-side rendering (SSR) scenarios.
+*Legacy Decorator:*
 
-### What is the purpose of decorators @ViewChild?
-The purpose of the @ViewChild decorator in Angular allows users to access the properties, methods, and events of the particular selected child component or element within a parent component. 
+```typescript
+@Output() save = new EventEmitter<string>();
+```
 
-- `ngAfterViewInit`: Use `@ViewChild` decorator to access view elements.
+*Modern Signal Output (Angular 17+):*
+
+```typescript
+save = output<string>();
+```
+
+Using `HostAttributeToken` provides safe attribute reading for SSR and non-standard element rendering (`ng-container`, `ng-template`).
+
+### What is the purpose of @ViewChild decorator?
+
+Grants direct access to child components, directives, or DOM elements within the component template. Evaluated before `ngAfterViewInit`.
+
+*Legacy Decorator:*
+
+```typescript
+@ViewChild('myInput') inputRef!: ElementRef;
+```
+
+*Modern Signal Query (Angular 17.2+):*
+
+```typescript
+inputRef = viewChild<ElementRef>('myInput');
+```
 
 ### What is the purpose of @ContentChild decorator?
-The @ContentChild decorator in Angular is used to access the first occurrence of a directive or component within the content of a component. It allows users to get a reference of a specific element or component that is projected into the component's view. 
 
-- `ngAfterContentInit`: Use `@ContentChild` decorator to access projected content.
+Accesses projected content (content inserted via `<ng-content>`). Evaluated before `ngAfterContentInit`.
 
-### What are the properties of @Component decorator ?
+*Legacy Decorator:*
+
+```typescript
+@ContentChild(HeaderComponent) header!: HeaderComponent;
+```
+
+*Modern Signal Query (Angular 17.2+):*
+
+```typescript
+header = contentChild(HeaderComponent);
+```
+
+### What are the properties of @Component decorator?
+
 @Component() decorator which takes the following metadata:
-- `selector` that allows us to give the component a tag name that can be used to reference the component from other templates just like standard HTML tags.
-- `templateUrl` that points to the HTML template that renders the view of the component. You can also use an inline template with the template property instead.
-- `styleUrls` that allows us to associate one or multiple stylesheets to our component.
 
-### What are the properties inside @NgModule decorator ?
+* `selector`: Element selector string for referencing the component in templates.
+* `templateUrl` / `template`: Inline HTML string or path to an external template file.
+* `styleUrls` / `styles`: Inline CSS styles or paths to external stylesheets.
+* `standalone`: Specifies if the component manages its own dependencies without an `NgModule`.
+
+### What are the properties inside @NgModule decorator?
+
 The @NgModule decorator is used to define every module in Angular.
-- `providers?` The set of injectable objects that are available in the injector of this module.
 
-- `declarations?` | The set of components, directives, and pipes (declarables) that belong to this module.
+* `providers`: Injectable services available to the module's injector.
+* `declarations`: Components, directives, and pipes belonging to the module.
+* `imports`: Other NgModules whose exported components are needed.
+* `exports`: Declarables exported for use in importing modules.
+* `entryComponents`: Dynamically compiled component references.
+* `bootstrap`: Root components bootstrapped during app startup.
+* `schemas`: Allows custom HTML/custom element schemas.
+* `id`: Unique identifier for module registration.
+* `jit`: Ignores AOT compilation to use JIT compilation.
 
-- `imports?` | The set of NgModules whose exported declarables are available to templates in this module.
-
-- `exports?` | The set of components, directives, and pipes declared in this NgModule that can be used in the template of any component that is part of an NgModule that imports this NgModule. Exported declarations are the module's public API.
-
-- `entryComponents?` | The set of components to compile when this NgModule is defined, so that they can be dynamically loaded into the view.
-
-- `bootstrap?` | The set of components that are bootstrapped when this module is bootstrapped. The components listed here are automatically added to entryComponents.
-
-- `schemas?` | The set of schemas that declare elements to be allowed in the NgModule. Elements and properties that are neither Angular components nor directives must be declared in a schema.
-
-- `id?` | A name or path that uniquely identifies this NgModule in getModuleFactory If left undefined, the NgModule is not registered with getModuleFactory.
-
-- `jit?` | When present, this module is ignored by the AOT compiler. JIT compiler attempts to compile it at run time, in the browser. To ensure the correct behavior, the app must import @angular/compiler.
+---
 
 ## What is ngZone in Angular?
-In Angular, `NgZone` helps manage and control the execution of asynchronous tasks and change detection. It is responsible for triggering change detection and updating the view when changes occur.
 
-When code executes within this zone, Angular's change detection mechanism is triggered automatically, and the view is updated accordingly. 
-When code runs outside of the Angular zone, Angular may not be aware of the changes, leading to potential issues with the application state and view synchronization.
+`NgZone` manages execution contexts for tracking asynchronous events and triggering change detection.
 
-`NgZone` provides a way to explicitly run code inside or outside of the Angular zone. It offers two methods for executing code: `run()` and `runOutsideAngular()`.
+Methods:
 
-## Explain OnPush strategy ?
-The `OnPush` strategy only triggers change detection in a component when one of its input properties changes or when an event emitted by the component itself or its child components is received.
+* `run()`: Executes code inside Angular's change detection zone.
+* `runOutsideAngular()`: Executes code outside change detection, avoiding unnecessary render cycles.
 
-## Explain ngAfterContentInit hooks ?
-The `ngAfterContentInit` hook is a lifecycle hook in Angular that is called after Angular initializes the content projected into a component. This hook is useful when you want to perform some initialization or setup logic after the content has been projected into the component.
+---
 
-## Explain ngAfterViewInit hook ?
-The `ngAfterViewInit` hook is a lifecycle hook in Angular that is called after Angular initializes the component’s view and its child views. This hook is useful when you need to perform some logic or operations that require access to the component’s view or its child views.
+## Explain OnPush strategy?
 
-## Explain ngOnInit hook ?
-The `ngOnInit` is a lifecycle hook part of the Angular component lifecycle. The hook is invoked when a component is being initialized and is ready to perform any necessary setup tasks before being rendered. 
+`ChangeDetectionStrategy.OnPush` disables automatic change detection passes, re-evaluating components only when `@Input` reference changes, component events trigger, or explicit Observables emit.
 
-## What are custom directives ?
-Custom directives are a feature in Angular that allow developers to extend the functionality of HTML by creating their own custom HTML elements or attributes. With custom directives, developers can define their own behavior, such as adding event listeners, modifying the DOM, or manipulating data.
+---
+
+## Explain ngAfterContentInit hook?
+
+Lifecycle hook triggered once after Angular finishes projecting external content into the component's view (`<ng-content>`).
+
+---
+
+## Explain ngAfterViewInit hook?
+
+Lifecycle hook called after component views and child views are fully initialized.
+
+---
+
+## Explain ngOnInit hook?
+
+Lifecycle hook executed once after data-bound inputs are initialized, suitable for component setup and API invocation.
+
+---
+
+## What are custom directives?
+
+Custom directives extend HTML capabilities by applying custom behaviors, attributes, or structural modifications to DOM elements.
+
+---
 
 ## What are Angular guards?
-Guards are a feature in Angular that allows users to manage and control the application's routing. Angular Guards can protect routes, control access to certain routes based on user authentication, and perform pre-navigation checks or modifications.
 
-### What is canActivateChild route guard ?
-The `canActivateChild` route guard in Angular allows you to check if a user is allowed to activate child routes. It is used to protect child routes of a particular route from being activated if certain conditions are not met.
+Guards control router navigation paths based on conditional criteria (authentication, authorization, dirty checks).
+
+### What is canActivateChild route guard?
+
+Determines whether a user can navigate into child routes of a protected parent route.
+
+---
 
 ## What is a module in Angular?
-In Angular, a module is like a package that is used to organize and bundle related components, directives, services, and other features of an application.
+
+An `NgModule` is a logical container that bundles related components, directives, pipes, and services into functional application units.
+
+---
 
 ## What are templates in Angular?
-Angular templates allow you to define the UI of your applications. Angular-specific templates that are written in HTML contain Angular-specific elements and attributes.
+
+Templates define component user interfaces by combining standard HTML markup with Angular-specific binding syntax and directives.
+
+---
 
 ## What is NgRx in Angular?
-NgRx is a state management library in Angular that is based on Redux. NgRx helps in managing the state by separating it from the components, thus implementing a unidirectional data flow. It combines all events and defines a common state in the angular application.
 
-## What is RxJs in Angular?
-RxJs, or Reactive extensions for JavaScript, is a fundamental library in Angular that supports reactive programming with the help of observables. It handles asynchronous operations, callbacks, event handling, and data flow management.
+NgRx is a Redux-inspired state management framework for managing global/complex application state through unidirectional data flows, actions, reducers, and effects.
 
-## What is Angular interceptors ?
-Angular interceptors provide a way to intercept and modify HTTP requests and responses globally in an Angular application. Interceptors are implemented as classes that implement the HttpInterceptor interface. When an HTTP request is made, the interceptors in Angular are executed in a chain before the request reaches the server. 
+---
+
+## What is RxJS in Angular?
+
+RxJS is a reactive library providing `Observable` constructs for asynchronous data streams, event handling, and pipeline transformations across Angular apps.
+
+---
+
+## What are Angular interceptors?
+
+Interceptors process outgoing HTTP requests and incoming HTTP responses globally.
+
+*Legacy Class Interceptor:*
+
+```typescript
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req);
+  }
+}
+```
+
+*Modern Functional Interceptor (Angular 15+):*
+
+```typescript
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req);
+};
+```
+
+---
 
 ## Explain lazy loading in Angular?
-Lazy loading is a feature in Angular that allows developers to load modules and components as per their demand on the action of a specific route rather than loading everything in advance. The feature helps improve the loading time, thereby increasing the application's performance.
+
+Lazy loading dynamically imports feature modules or routes on demand when requested by routing, reducing initial application bundle size.
+
+---
 
 ## What are directives in Angular?
-Directives are attributes that allow the user to write new HTML syntax specific to the applications. These directives execute whenever the Angular compiler finds them in the DOM. Angular supports three types of built-in directives:
 
-`Component Directives:` These are the directives that come with a template and are the most common type of directives. 
- 
-`Attribute Directives:` These are the directives that can change the appearance of a component, page or even other directives.
+Directives add custom logic to template DOM elements.
 
-`Structural Directives:` These directives are responsible for changing the DOM layout either by adding or by removing the DOM elements. Every structural directive has a ‘*’ sign before them.
+* **Component Directives**: Directives with templates.
+* **Attribute Directives**: Directives that alter host element appearance or behavior.
+* **Structural Directives**: Directives that alter DOM layouts by adding/removing elements (`*`).
 
-### What is ngClass directive in Angular ?
-The `ngClass` directive in Angular is used to apply CSS classes to an HTML element based on certain expressions or conditions.
+### What is ngClass directive in Angular?
+
+Dynamically applies or removes CSS class sets based on expression evaluations.
 
 ### What is ngStyle in Angular?
-The `ngStyle` directive in Angular is used to apply inline CSS styles to HTML elements dynamically based on specific conditions.
 
-### What is BreakpointObserver service ?
-the BreakpointObserver service in Angular comes with predefined breakpoints and can be used to adjust the layout and style of the application based on different screen sizes without actually writing the CSS media queries. 
+Dynamically updates inline element styling based on expression maps.
 
-## What is AOT? 
-AOT stands for Ahead of time. It is a type of compilation that compiles your application at build time. For AOT compilation, we need to include the –aot option with the ng build or ng serve command. 
+### What is BreakpointObserver service?
+
+An Angular CDK service for matching media queries and building responsive layouts.
+
+---
+
+## What is AOT?
+
+Ahead-of-Time (AOT) compilation compiles Angular templates and TypeScript code into JavaScript during build time prior to deployment.
+
+```bash
+ng build --aot
+ng serve --aot
+
 ```
-ng build –aot
-ng serve –aot
+
+---
+
+## What is Server-side rendering?
+
+Server-side rendering (SSR) generates dynamic HTML pages directly on a Node server to deliver complete initial markup for faster rendering and improved SEO.
+
+---
+
+## What is spinner options?
+
+Configuration parameters for loading spinner displays:
+
+* `bdcolor`: Background overlay color
+* `size`: Spinner element dimensions
+* `color`: Spinner theme color
+* `type`: Animation visual type
+* `fullscreen`: Enables or disables full-page backdrop
+* `name`: Identifier for multiple concurrent spinners
+
+---
+
+## Explain ngFor directive?
+
+Renders a template block for each item in a collection.
+
+*Legacy Structural Syntax:*
+
+```html
+<div *ngFor="let photo of photos; trackBy: trackById"></div>
+
+<!-- Desugared structural element equivalent -->
+<ng-template ngFor let-photo [ngForOf]="photos" [ngForTrackBy]="trackById"></ng-template>
 ```
 
-## What is Server-side rendering:
-Server-side rendering (SSR) is a process that involves rendering pages on the server, resulting in initial HTML content which contains initial page state. Once the HTML content is delivered to a browser, Angular initializes the application and utilizes the data contained within the HTML.
+*Modern Control Flow Syntax (Angular 17+):*
 
-## What is spinner options ?
-`bdcolor` - to set the background color
-`size` - to set the size of the spinner
-`color` - to set the color of the spinner
-`type` - to set the type of the spinner
-`fullscreen` - to enable/disable full screen mode
-`name` - to set the name of the spinner if there are multiple instances of the spinners
+```html
+@for (photo of photos; track photo.id) {
+  <div></div>
+}
+```
 
-## Explain ngFor directive ?
+---
 
-`<div *ngFor="let photo of photos; trackById"></div>`
-simplification is:
-`<ng-template ngFor let-photo [ngForOf]="photos" ngForTrackById"></ng-template>`
+## What is Angular security model?
 
-## What is Angular security model ?
-Angular's design includes encoding or sanitization of all data by default, making it increasingly difficult to discover and exploit XSS vulnerabilities in Angular projects. There are 6 types of `SecurityContext`
+Angular automatically sanitizes untrusted values across standard `SecurityContext` points:
 
 - `None`;
 - `HTML` is used, when interpreting value as HTML;
@@ -398,24 +622,355 @@ Angular's design includes encoding or sanitization of all data by default, makin
 - `SCRIPT` is used for JavaScript code;
 - `RESOURCE_URL` as a URL that is loaded and executed as code, for example, in `<script src>`.
 
-## What are Bypass Security Trust Methods ?
-Angular introduces a list of methods to bypass its default sanitization process and to indicate that a value can be used safely in a specific context.
+---
 
-> Bypass Security Trust Methods
-- `bypassSecurityTrustUrl` is used to indicate the given value is a safe style URL
-- `bypassSecurityTrustResourceUrl` is used to indicate the given value is a safe resource URL
-- `bypassSecurityTrustHtml` is used to indicate the given value is safe HTML. 
-- `bypassSecurityTrustScript` is used to indicate the given value is safe JavaScript.
-- `BypassSecurityTrustStyle` is used to indicate the given value is safe CSS.
+## What are Bypass Security Trust Methods?
 
-> HTML Injection
+`DomSanitizer` methods to disable automatic sanitization for explicitly trusted inputs:
 
-This vulnerability occurs when user input is bound to any of these three properties: innerHTML, outerHTML, or iframe srcdoc. While binding to these attributes interprets HTML as it is, the input is sanitized using SecurityContext.HTML. Thus, HTML injection is possible, but cross-site scripting (XSS) is not.
+* `bypassSecurityTrustUrl`
+* `bypassSecurityTrustResourceUrl`
+* `bypassSecurityTrustHtml`
+* `bypassSecurityTrustScript`
+* `bypassSecurityTrustStyle`
 
-> Template Injection - Client-Side Rendering (CSR)
+### Injection Scenarios:
 
-Angular leverages templates to construct pages dynamically. This approach entails enclosing template expressions for Angular to evaluate within double curly brackets `({{}})`. 
+* **HTML Injection**: Occurs when binding raw user input to properties like `innerHTML`. Angular sanitizes string content into `SecurityContext.HTML` to allow markup while suppressing active script execution.
+* **Template Injection (CSR)**: Occurs when user string input contains evaluation brackets (`{{}}`), allowing dynamic evaluation during Client-Side Rendering.
+* **Server-Side Rendering (SSR)**: Universal applies sanitization mechanisms during server compilation to secure generated HTML.
 
-> Server-Side Rendering (SSR)
+---
 
-Unlike CSR, which occurs in the browser's DOM, Angular Universal is responsible for the SSR of template files. These files are then delivered to the user. Despite this distinction, Angular Universal applies the same sanitization mechanisms used in CSR to enhance SSR security. 
+## What is Shadow DOM?
+
+Shadow DOM provides DOM and style scoping encapsulation natively inside web platform elements.
+
+---
+
+## What is view encapsulation?
+
+Determines whether style definitions inside component metadata leak into global scope:
+
+* **Emulated**: Default behavior. Emulates Shadow DOM using generated scope attributes.
+* **ShadowDom**: Uses native browser Shadow DOM encapsulation.
+* **None**: Component CSS leaks globally into the document.
+
+---
+
+## What are the design patterns in Angular?
+
+1. **Singleton Pattern**: Injectable services configured with `providedIn: 'root'` or root modules share a single instance application-wide.
+2. **Dependency Injection Pattern**: Managed lookup mechanism for binding parameters and class dependencies dynamically.
+3. **Observer Pattern**: Event emission and subscription handling through `EventEmitter` and `RxJS` streams.
+4. **Strategy Pattern**: Dynamic interchange of algorithms or handlers through common interface patterns.
+5. **Decorator Pattern**: Meta-programming design enabling annotations like `@Component` to enrich class structures.
+6. **Facade Pattern**: Service implementations exposing simple interfaces while concealing complex underlying subsystem logic.
+7. **Composite Pattern**: Component tree hierarchies building UI components out of child components.
+8. **Factory Pattern**: Centralized dynamic instantiation logic.
+
+---
+
+## What Is Linting?
+
+Static inspection process executing rules over target source code to flag potential style, syntax, and structural errors.
+
+---
+
+## What Is Static Analysis?
+
+Analysis of application source code executed without actually running the program.
+
+### Code Improvements Provided by Static Analysis:
+
+1. Formatting and Styling Code
+2. Detecting Bugs and Errors
+3. Enforcing Best Practices
+4. Measuring Complexity
+5. Analyzing Security Risks
+6. Auditing Third-Party Dependencies
+7. Checking Types
+
+---
+
+## What is Garbage Collector Angular?
+
+Automatic engine runtime memory management clearing unreachable heap references.
+
+---
+
+## Vendor.js
+
+Bundled script containing third-party dependencies and framework libraries (`@angular`, `rxjs`).
+
+---
+
+## Polyfill.js
+
+JavaScript compatibility shims providing modern API features to legacy environments.
+
+---
+
+## Main.js
+
+Entry point script containing application startup logic and root component initialization.
+
+---
+
+## Runtime.js
+
+Webpack/esbuild loader logic managing module execution and chunkloading runtime operations.
+
+---
+
+## What is zone js in angular?
+
+`Zone.js` intercepts asynchronous operations (timer events, XHR requests, DOM actions) to auto-trigger change detection passes.
+
+---
+
+## What is the difference between AOT and JIT?
+
+### JIT (Just-in-Time):
+
+* **Compilation**: Happens at runtime in browser environments during startup.
+* **Development Mode**: Fast incremental build output suited for development debugging.
+* **Performance**: Slows initial rendering due to runtime compilation steps.
+* **Debugging**: Direct sourcemaps matching compiled output with original source code.
+
+### AOT (Ahead-of-Time):
+
+* **Compilation**: Converts templates and code to JavaScript during local build operations.
+* **Production Mode**: Optimized bundle output designed for live releases.
+* **Performance**: Faster startup and smaller footprint.
+* **Security**: Mitigates template injection vulnerabilities by removing template parsers from outputs.
+* **Smaller Bundle Size**: Allows tree-shaking optimizations.
+* **Dynamic Limitations**: Limits runtime dynamic template compilation.
+
+---
+
+## What are annotations in Angular?
+
+Annotations (Decorators) attach structural metadata to class definitions. Common annotations: `@NgModule`, `@Component`, `@Directive`, `@Pipe`, `@Injectable`, `@Input`, `@Output`, `@ViewChild`, `@HostListener`, `@HostBinding`.
+
+- `@NgModule:` Annotates a class to specify that it is an Angular module and provides metadata about its dependencies, components, directives, pipes, and services.
+- `@Component:` Annotates a class to define an Angular component, providing metadata such as its selector, template, and style.
+- `@Directive:` Annotates a class to define an Angular directive, which allows you to add behavior to elements in the DOM.
+- `@Pipe:` Annotates a class to define an Angular pipe, which transforms input data to a desired output format for display.
+- `@Injectable:` Annotates a class to define an injectable service that can be injected into other components or services.
+- `@Input:` Annotates a class property to allow data to be passed into a component from its parent component.
+- `@Output:` Annotates a class property to allow a component to emit custom events to its parent component.
+- `@ViewChild` and `@ViewChildren`: Annotates a class property to query and access child components or elements in the component's template.
+- `@HostListener`: Annotates a class method to listen for events on the host element of a directive or component.
+- `@HostBinding`: Annotates a class property to bind to a host element property or attribute in a directive or component.
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+
+/* the AppModule class with the @NgModule decorator */
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+---
+
+## What is Angular change detection?
+
+Mechanism monitoring model changes to keep the visual DOM synced with underlying state.
+
+---
+
+## Observable in Angular
+
+* RxJS streaming model constructs emitting data across application instances.
+* Stream processing unit managing asynchronous values over time.
+
+---
+
+## Difference between Observables & Subjects?
+
+* **Observables**: Unicast model (each subscriber receives independent execution context flows).
+* **Subjects**: Multicast model (shares single execution paths across multiple subscriber listeners).
+
+---
+
+## Difference between cold observables and hot observables?
+
+* **Cold Observables**: Produces emissions only when active subscriptions are established.
+* **Hot Observables**: Emits values regardless of subscriber presence.
+
+---
+
+## Difference between ng add and npm install?
+
+* `ng add`: Installs NPM packages and runs schematics to configure project setups.
+* `npm install`: Standard package manager command that fetches modules without running Angular schematics.
+
+---
+
+## What is DomSanitizer?
+
+Built-in security service sanitizing unsanitized HTML/CSS/URL references against XSS attacks.
+
+---
+
+## General Angular Build Optimization Strategies
+
+### 1. Enable Production Mode
+
+```bash
+ng build --configuration production
+```
+
+- Runs optimizations like Ahead-of-Time (AOT) compilation, minification, and tree-shaking.
+
+### 2. Use Standalone Components & Lazy Loading
+
+- Standalone components reduce NgModule overhead.
+- Lazy load large feature modules (e.g., `DashboardModule`) so they don’t inflate the initial bundle.
+
+### 3. Optimize CSS & Styles
+
+- Use **SCSS** or **Tailwind** with purge settings to remove unused styles.
+- Enable CSS minification and consider splitting global styles into smaller chunks.
+
+### 4. Remove Unused Polyfills & Scripts
+
+- Check `polyfills.ts` and `angular.json` for legacy scripts, Strip legacy browser polyfills if targeting modern web runtimes.
+
+### 5. Bundle & Asset Optimization
+
+- Compress assets with gzip or Brotli at the server level.
+```json
+{
+  "optimization": true,
+  "outputHashing": "all",
+  "extractLicenses": true,
+  "sourceMap": false
+}
+```
+
+### 6. Code Splitting & Preloading
+
+- Apply explicit preloading strategies (`PreloadAllModules`).
+
+### 7. Third-Party Library Audit
+
+- Swap oversized dependencies with lighter utilities (e.g., replace `moment` with `date-fns`).
+
+---
+
+## Applying to Your Build Output
+
+### Current Build Sizes
+| File              | Size     | Notes |
+|-------------------|----------|-------|
+| styles.css        | 494.61 kB | Very large – likely unused CSS included |
+| main.js           | 304.42 kB | Acceptable, but can be reduced |
+| scripts.js        | 107.73 kB | Check if all scripts are necessary |
+| polyfills.js      | 237 B     | Fine |
+| Lazy chunks       | ~5 kB     | Good – lazy loading is working |
+
+**Total initial size: ~911 kB** → This is on the heavier side for initial load.
+
+### Recommendations for Your Case
+
+1. **Reduce `styles.css` (494 kB)**  
+   - Audit global styles. Use Angular’s `::ng-deep` carefully.  
+   - Consider CSS scoping per component.  
+   - Use PurgeCSS/Tailwind purge to strip unused styles.
+
+2. **Shrink `main.js` (304 kB)**  
+   - Enable `"buildOptimizer": true` in `angular.json`.  
+   - Audit imports—remove unused RxJS operators or large libraries.  
+   - Use ESBuild (Angular 17+ defaults to it) for faster and smaller builds.
+
+3. **Check `scripts.js` (107 kB)**  
+   - Likely external scripts added in `angular.json`.  
+   - Remove or lazy load them if not critical.
+
+4. **Lazy Loading is Good**  
+   - Your `dashboard.module` is only 4.7 kB, which is excellent.  
+   - Keep feature modules lazy loaded.
+---
+
+## Method 1: Angular-Specific Build Optimizations
+
+### Production Build `angular.json` Configuration:
+
+```json
+{
+  "configurations": {
+    "production": {
+      "optimization": true,
+      "outputHashing": "all",
+      "sourceMap": false,
+      "extractLicenses": true,
+      "namedChunks": false,
+      "buildOptimizer": true,
+      "vendorChunk": false
+    }
+  }
+}
+```
+
+* **optimization**: Enables minification and tree-shaking.
+* **buildOptimizer**: Removes Angular decorators and unused code.
+* **vendorChunk**: Setting to `false` merges vendor libraries into main bundle to reduce network roundtrips.
+* **outputHashing**: Handles browser cache invalidation.
+* **sourceMap**: Prevents non-essential debugging maps from loading in production.
+
+---
+
+## Method 2: CSS Optimization
+
+### PurgeCSS Setup:
+
+```bash
+npm install @fullhuman/postcss-purgecss --save-dev
+```
+
+`postcss.config.js` configuration:
+
+```javascript
+const purgecss = require('@fullhuman/postcss-purgecss')({
+  content: [
+    './src/**/*.html',
+    './src/**/*.ts'
+  ],
+  defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+});
+
+module.exports = {
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+    ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
+  ]
+};
+```
+
+---
+
+## Summary of Optimization Actions
+
+* **styles.css (494 kB)**: Apply PurgeCSS or Tailwind purge to strip unused styles.
+* **main.js (304 kB)**: Enable `buildOptimizer` and audit third-party libraries.
+* **scripts.js (107 kB)**: Remove or lazy load non-critical scripts.
+* **polyfills.js (237 B)**: Already minimal.
+* **Lazy chunks (~5 kB)**: Excellent; keep lazy loading pattern active.
