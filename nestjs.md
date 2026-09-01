@@ -3,9 +3,7 @@
 ## 🛠 Step-by-Step Guide to Running NestJS
 
 ### 1. **Install Prerequisites**
-
-- **Node.js & npm**: Node.js v16 or later was recommended for legacy NestJS versions (v8/v9).
-* **Node.js & npm**: NestJS 10+ requires Node.js v18 or v20+ LTS as the modern standard platform.
+- **Node.js & npm**: NestJS 10+ requires Node.js v18 or v20+ LTS as the modern standard platform, while legacy versions (v8/v9) installations required Node.js v16.
 - Verify local installation:
 ```bash
   node -v
@@ -121,6 +119,8 @@ npm run test:cov
 | --- | --- |
 | `nest new <name>` | Create and initialize a new NestJS project framework |
 | `nest generate <schematic>` | Generate code elements (e.g., `co` for controller, `s` for service, `mo` for module) |
+| `npm run start:dev` | Run the application with active watch-mode hot reload enabled |
+| `npm run build` | Compile the TypeScript code into production-ready JavaScript inside the `/dist` directory |
 
 ---
 
@@ -151,7 +151,7 @@ npm i --save-dev @swc/cli @swc/core
 
 ```
 
-* **CLI Execution**: Pass the `--b swc` flag:
+* **CLI Execution**: Pass the `--b swc` flag or configure it within your `nest-cli.json`:
 ```bash
 npm run start:dev -- --b swc
 ```
@@ -298,6 +298,68 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   }
 }
 ```
+
+1. CQRS (Command and Query Responsibility Segregation) Pattern
+
+An architectural pattern that separates the responsibilities of:
+
+`Commands:` actions that change state (create, update, delete).
+`Queries:` actions that read data (fetch data).
+
+**CQRS Benefits:**
+
+* `Separation of concerns.` The model separates the read and write operations into separate models.
+* `Scalability`. The read and write operations can be scaled independently.
+* `Flexibility.` The model allows for the use of different data stores for read and write operations.
+* `Performance.` The model allows for the use of different data stores optimized for read and write operations.
+
+**Use-case:**
+
+- Your app has complex business logic.
+- Read and write operations have different scaling needs.
+- You want to use event sourcing or asynchronous workflows.
+- You’re working in a microservices architecture.
+
+2. NestJS CQRS
+
+Installation 
+
+```bash
+npm install --save @nestjs/cqrs
+```
+Import the CqrsModule.forRoot()
+
+### UUID Generation Comparison (Legacy vs. Modern)
+
+#### Legacy Method (Deprecated)
+
+```javascript
+// Legacy syntax using node-uuid
+var uuid = require('node-uuid');
+
+// Time-based UUID v1
+var idV1 = uuid.v1();
+
+// Random UUID v4
+var idV4 = uuid.v4();
+```
+
+#### Modern Method (ESM/CommonJS)
+
+```javascript
+// CommonJS Syntax
+const { v4: uuidv4 } = require('uuid');
+const data = { id: uuidv4() };
+
+// ES Module Syntax
+import { v4 as uuidv4 } from 'uuid';
+const data = { id: uuidv4() };
+
+// Native Web Crypto API (Node.js 16.7.0+)
+const crypto = require('crypto');
+const nativeId = crypto.randomUUID();
+```
+---
 
 #### Modern Standard Pattern (Prisma v5 / v6 & NestJS 10+)
 
@@ -667,3 +729,233 @@ export class TransformInterceptor implements NestInterceptor {
 }
 
 ```
+
+## NestJS app example
+
+- Bootstrapping with middleware (compression, helmet, session, permissions-policy) 
+- A module with TypeORM integration with SQLite
+- A controller with validation/transform, guards, pipes and Swagger decorators 
+- A service that injects the request object 
+- A DTO with class-transformer & class-validator 
+- A test file using @nestjs/testing 
+
+## 📂 Project Structure 
+```bash
+nestjs-demo/
+  package.json
+  tsconfig.json
+  src/
+    main.ts
+    app.module.ts
+    user.entity.ts
+    user.dto.ts
+    user.service.ts
+    user.controller.ts
+  test/
+    user.controller.spec.ts
+```
+
+## 🚀 Running the App
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the app:
+   ```bash
+   npm run start:dev
+   ```
+3. Open Swagger UI:
+   ```
+   http://localhost:3000/api
+   ```
+4. Production:
+   Use `npm run start:prod` after building with `npm run build`
+
+🚀 Bootstrapping & Modules 
+```ts
+import { NestFactory } from '@nestjs/core'; 
+import { Module, NestModule, MiddlewareConsumer, VersioningType } from '@nestjs/common'; 
+ 
+@Module({ 
+  imports: [], 
+  controllers: [], 
+  providers: [], 
+}) 
+export class AppModule implements NestModule { 
+  configure(consumer: MiddlewareConsumer) { 
+    // Example: apply middleware globally 
+    consumer.apply(compression(), bodyParser.json()).forRoutes('*'); 
+  } 
+} 
+ 
+async function bootstrap() { 
+  const app = await NestFactory.create(AppModule); 
+  app.enableVersioning({ type: VersioningType.URI }); 
+  await app.listen(3000); 
+} 
+bootstrap(); 
+```
+
+🎯 Controllers, Pipes & Guards 
+```ts
+import { 
+  Controller, Get, Param, Query, Headers, 
+  ValidationPipe, UsePipes, UseGuards, Injectable, CanActivate, ExecutionContext 
+} from '@nestjs/common'; 
+ 
+@Injectable() 
+class AuthGuard implements CanActivate { 
+  canActivate(context: ExecutionContext): boolean { 
+    const request = context.switchToHttp().getRequest(); 
+    return request.headers['authorization'] === 'secret-token'; 
+  } 
+} 
+ 
+@Controller('users') 
+@UseGuards(AuthGuard) 
+export class UserController { 
+  @Get(':id') 
+  @UsePipes(new ValidationPipe({ transform: true })) 
+  getUser(@Param('id') id: string, @Query('details') details: string, @Headers() headers: any) { 
+    return { id, details, headers }; 
+  } 
+} 
+```
+
+🗄️ Database (TypeORM) 
+```ts
+import { TypeOrmModule } from '@nestjs/typeorm'; 
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'; 
+ 
+@Entity() 
+export class User { 
+  @PrimaryGeneratedColumn() 
+  id: number; 
+ 
+  @Column() 
+  name: string; 
+} 
+ 
+@Module({ 
+  imports: [ 
+    TypeOrmModule.forRoot({ 
+      type: 'sqlite', 
+      database: 'test.db', 
+      entities: [User], 
+      synchronize: true, 
+    }), 
+    TypeOrmModule.forFeature([User]), 
+  ], 
+}) 
+export class AppModule {} 
+```
+
+🔒 Security Middleware 
+```ts
+import * as session from 'express-session'; 
+import RedisStore from 'connect-redis'; 
+import helmet from 'helmet'; 
+import * as permissionsPolicy from 'permissions-policy'; 
+ 
+app.use(helmet()); 
+app.use(permissionsPolicy({ features: { camera: ['none'], geolocation: ['none'] } })); 
+app.use(session({ 
+  store: new RedisStore({ client: redisClient }), 
+  secret: 'keyboard cat', 
+  resave: false, 
+  saveUninitialized: false, 
+})); 
+```
+
+🧰 Utilities 
+```ts
+import { omitBy, isNil } from 'lodash'; 
+ 
+const cleaned = omitBy({ name: 'Alice', age: null }, isNil); 
+// Result: { name: 'Alice' } 
+```
+
+🧪 Testing 
+```ts
+import { Test, TestingModule } from '@nestjs/testing'; 
+ 
+describe('UserController', () => { 
+  let controller: UserController; 
+ 
+  beforeEach(async () => { 
+    const module: TestingModule = await Test.createTestingModule({ 
+      controllers: [UserController], 
+    }).compile(); 
+ 
+    controller = module.get<UserController>(UserController); 
+  }); 
+ 
+  it('should return user', () => { 
+    expect(controller.getUser('1', 'full', {})).toEqual({ id: '1', details: 'full', headers: {} }); 
+  }); 
+}); 
+```
+
+🏗️ Request Injection 
+```ts
+import { REQUEST } from '@nestjs/core'; 
+import { Request } from 'express'; 
+ 
+@Injectable() 
+class MyService { 
+  constructor(@Inject(REQUEST) private readonly request: Request) {} 
+ 
+  getIp(): string { 
+    return this.request.ip; 
+  } 
+} 
+```
+
+🔄 Class Transformer & Validator 
+```ts
+import { plainToInstance } from 'class-transformer'; 
+import { validate, IsEnum, IsString } from 'class-validator'; 
+ 
+enum Role { ADMIN = 'admin', USER = 'user' } 
+ 
+class UserDto { 
+  @IsString() 
+  name: string; 
+ 
+  @IsEnum(Role) 
+  role: Role; 
+} 
+ 
+const input = { name: 'Bob', role: 'admin' }; 
+const user = plainToInstance(UserDto, input); 
+ 
+validate(user).then(errors => { 
+  if (errors.length > 0) console.log('Validation failed', errors); 
+  else console.log('Validation succeeded', user); 
+}); 
+```
+
+📖 Swagger Decorators 
+```ts
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiHeaders, ApiProperty } from '@nestjs/swagger'; 
+ 
+class UserResponse { 
+  @ApiProperty({ example: 'Alice' }) 
+  name: string; 
+} 
+ 
+@ApiTags('users') 
+@Controller('users') 
+export class UserController { 
+  @Get() 
+  @ApiOperation({ summary: 'Get all users' }) 
+  @ApiResponse({ status: 200, type: [UserResponse] }) 
+  @ApiBearerAuth() 
+  @ApiHeaders([{ name: 'x-custom-header', description: 'Custom header' }]) 
+  getUsers(): UserResponse[] { 
+    return [{ name: 'Alice' }]; 
+  } 
+} 
+```
+
+---
