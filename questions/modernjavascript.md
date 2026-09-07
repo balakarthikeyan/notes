@@ -257,7 +257,7 @@ Alice
 ### Q7: How do Template Literals and Multiline Strings work?
 
 **Definition:**
-Template literals use backtick characters (```) instead of standard quotes. They support expression interpolation using `${expression}`, clean multiline string declaration without concatenation operators, and tagged template formatting.
+Template literals use backtick characters instead of standard quotes. They support expression interpolation using `${expression}`, clean multiline string declaration without concatenation operators, and tagged template formatting.
 
 **Example:**
 
@@ -1719,6 +1719,175 @@ console.log("2: Sync End");
 3: Microtask Promise
 4: Macrotask Timer
 
+```
+
+---
+
+### Q49: What are the possible ways to create objects in JavaScript ?
+There are several mechanisms to instantiate objects in JavaScript, each serving specific paradigms:
+
+* **Object Literal Syntax**: The most direct, declarative approach.
+
+```javascript
+  const obj = { name: "John", age: 30 };
+```
+
+* **Constructor Function**: Uses the `new` operator to initialize instances.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+const person = new Person("John");
+```
+
+* **Object.create()**: Creates a new object with the specified prototype object and properties.
+
+```javascript
+const proto = { greet() { return "Hello"; } };
+const obj = Object.create(proto);
+```
+
+* **ES6 Classes**: Syntactic sugar over prototype-based inheritance.
+
+```javascript
+class Employee {
+  constructor(role) { this.role = role; }
+}
+const emp = new Employee("Engineer");
+```
+
+* **Object Constructor**: Explicitly invoking the native global object constructor.
+
+```javascript
+const obj = new Object();
+```
+
+* **Singleton Pattern using IIFE**: Restricts instantiation to a single shared object context.
+
+```javascript
+const singleton = (function() {
+  const instance = { apiToken: "XYZ123" };
+  return { getInstance: () => instance };
+})();
+```
+
+### Q50: What is a prototype chain ?
+Prototype chaining is the core mechanism used to build inheritance relationships in JavaScript. Every JavaScript object possesses a private property holding a link to another object called its **prototype**. That prototype object has its own prototype, and this continues until an object is reached with `null` as its prototype (`Object.prototype.__proto__` or `Object.getPrototypeOf(Object.prototype)` which evaluates to `null`).
+
+When a property or method is accessed on an object, JavaScript engine checks the object itself first. If missing, it traverses upwards along the internal `[[Prototype]]` link until it encounters the property or reaches `null`.
+
+### Q51: What is the difference between Call, Apply, and Bind ?
+These methods explicitly manipulate the function context execution pointer (`this`).
+
+* **`call`**: Invokes the function immediately, passing arguments individually as a comma-separated list.
+
+```javascript
+function introduce(city, country) {
+  return `${this.name} lives in ${city}, ${country}`;
+}
+introduce.call({ name: "Alice" }, "Paris", "France");
+```
+
+* **`apply`**: Invokes the function immediately, passing arguments as a single unified array or array-like structure.
+
+```javascript
+introduce.apply({ name: "Alice" }, ["Paris", "France"]);
+```
+
+* **`bind`**: Does not invoke the function immediately. Instead, it returns a brand-new bound function wrapper, permanently locking the provided context and optional prepended arguments for future execution.
+
+```javascript
+const bound = introduce.bind({ name: "Alice" }, "Paris");
+bound("France");
+```
+
+### Q52: What is JSON and its common operations ?
+**Technical Correction:** JSON (JavaScript Object Notation) is a string-based data-interchange format text specification. It is *not* a JavaScript object literal, though it mimics its syntax structure.
+
+Common operations utilize the static global `JSON` utility namespace:
+* **`JSON.parse(text)`**: Transforms a valid JSON-compliant string format into an actual JavaScript object/primitive structure.
+* **`JSON.stringify(value)`**: Serializes an operational JavaScript object structure, primitive, or array into a valid JSON string compliant format.
+
+> **CRITICAL SYNTAX NOTE:** Raw JSON strings cannot contain code comments (`//` or `/* */`). Invalid property string keys or values lacking double quotes (`"`) will throw a `SyntaxError`.
+
+### Q53: What is the purpose of the array slice method ?
+The `slice()` method returns a shallow copy of a portion of an array into a new array object selected from `start` to `end` (`end` not included). The original source array remains completely immutable and unaffected.
+
+```javascript
+const source = ['a', 'b', 'c', 'd', 'e'];
+const subset = source.slice(1, 4); // ['b', 'c', 'd']
+```
+
+### Q54: What is the purpose of the array splice method ?
+The `splice()` method is an in-place destructive modifier used to mutate an array by deleting, replacing, or inserting new array index items. It directly modifies the underlying target structure and returns an array containing the removed items.
+
+```javascript
+const mutableArr = ['a', 'b', 'c', 'd'];
+const removed = mutableArr.splice(1, 2, 'x', 'y'); 
+// mutableArr is now: ['a', 'x', 'y', 'd']
+// removed is: ['b', 'c']
+```
+
+### Q55: What is the difference between slice and splice ?
+| Attribute | `slice()` | `splice()` |
+| --- | --- | --- |
+| **Mutation Style** | Completely Immutable (Pure) | Highly Destructive (Mutates original) |
+| **Return Value** | A fresh subsection array array | Array of deleted elements |
+| **Parameters** | `(start, end)` (Non-inclusive end) | `(start, deleteCount, ...itemsToInsert)` |
+| **Primary Use Case** | Isolating subsets safely without mutations | Injecting, removing, or swapping items in place |
+
+### Q56: How do you compare Object and Map ?
+| Feature | Object | Map |
+| --- | --- | --- |
+| **Key Types** | Limited to Strings and Symbols | Any arbitrary type (Objects, Functions, Primitives) |
+| **Key Ordering** | Elements sorted primarily via integer keys, then insertion | Strictly guarantees insertion order traversal |
+| **Size Retrieval** | Manual calculation via `Object.keys(obj).length` | Direct, highly optimized O(1) `.size` property |
+| **Performance** | Optimized for fixed structural shapes | Better performance for frequent additions/removals |
+| **Prototypes** | Inherits properties from `Object.prototype` unless detached | Clear out-of-the-box isolation with no hidden keys |
+
+### Q57: What is the difference between == and === operators ?
+
+* **`==` (Abstract / Loose Equality)**: Resolves comparisons by implicitly coercing different operand types to a common underlying type using the internal `Abstract Equality Comparison Algorithm` before checking equality.
+* **`===` (Strict Equality)**: Directly evaluates values without performing implicit type coercion. If types differ, it immediately evaluates to `false`.
+
+```javascript
+0 == false;   // true (coerced)
+0 === false;  // false (type mismatch: number vs boolean)
+null == undefined;  // true
+null === undefined; // false
+```
+### Q58: What are lambda expressions or arrow functions ?
+
+Introduced in ES6, arrow functions provide a compact syntax formulation while differing from regular functions in key structural ways:
+* **Lexical `this` Binding**: They do not possess their own independent execution context `this`. Instead, they capture `this` from the enclosing outer lexical block.
+* **No `arguments` Object**: They lack their own `arguments` array-like local reference variable.
+* **Non-Constructible**: They cannot be called with the `new` keyword and do not contain an accessible internal prototype reference property (`.prototype` is `undefined`).
+
+### Q59: Sample program for Sorting
+
+```javascript
+function sortByLabelStart(arr, order = 'asc') {
+    return arr.slice().sort((a, b) => {
+        const aStart = parseInt(a.label.split(':')[0], 10);
+        const bStart = parseInt(b.label.split(':')[0], 10);
+        return order === 'asc' ? aStart - bStart : bStart - aStart;
+    });
+}
+
+const data = [
+    { count: 4599, isRefined: false, value: "10:25", label: "10:25", highlighted: "10:25" },
+    { count: 2031, isRefined: false, value: "25:50", label: "25:50", highlighted: "25:50" },
+    { count: 1900, isRefined: false, value: "5:10", label: "5:10", highlighted: "5:10" },
+    { count: 1056, isRefined: false, value: "0:5", label: "0:5", highlighted: "0:5" },
+    { count: 810, isRefined: false, value: "50:100", label: "50:100", highlighted: "50:100" }
+];
+
+const sortedAsc = sortByLabelStart(data, 'asc');
+console.log('Ascending:', sortedAsc);
+
+const sortedDesc = sortByLabelStart(data, 'desc');
+console.log('Descending:', sortedDesc);
 ```
 
 ---

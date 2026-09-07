@@ -1,5 +1,196 @@
 ## JavaScript Core Concepts
 
+JavaScript is a **high-level, dynamically typed, single-threaded programming language** primarily used to add behavior and interactivity to web applications.
+Modern JavaScript (ES6+) introduced features that are heavily used in React, Angular, Next.js, Node.js, etc.
+
+### JavaScript Execution
+
+#### Key Components
+
+1. **Thread of Execution**: Single-threaded environment where JavaScript parses and runs code line by line.
+2. **Global Memory**: Persistent store for globally accessible data/variables.
+3. **Execution Context**: Created whenever a function is called. It contains:
+    * **Local Memory / Variable Environment** (arguments and local variables).
+    * **Thread of Execution** (runs local function statements).
+4. **Call Stack**: A LIFO (Last In, First Out) stack used by the runtime to keep track of execution contexts.
+    * Calling a function pushes its Execution Context onto the stack.
+    * Returning from a function pops its Execution Context off the stack.
+
+---
+
+### First-Class Functions & Higher-Order Functions (HOFs)
+
+#### Definition
+
+* **First-Class Functions**: In JS, functions are treated like regular objects/values. They can be assigned to variables, passed as arguments, and returned from other functions.
+* **Higher-Order Functions (HOF)**: A function that takes one or more functions as arguments, or returns a function.
+* **Callback Function**: A function passed into another function as an argument to be invoked later.
+
+#### Example: Custom Array Mapper
+
+```javascript
+// HOF taking 'instructions' as a callback
+function copyArrayAndManipulate(array, instructions) {
+    const output = [];
+    for (let i = 0; i < array.length; i++) {
+        output.push(instructions(array[i]));
+    }
+    return output;
+}
+
+const multiplyBy2 = input => input * 2;
+
+const result = copyArrayAndManipulate([1, 2, 3], multiplyBy2);
+console.log(result); // [2, 4, 6]
+
+// Inline Arrow / Anonymous Function usage
+const result2 = copyArrayAndManipulate([1, 2, 3], input => input * 3);
+console.log(result2); // [3, 6, 9]
+
+// Introducing arrow functions - a shorthand way to save functions - ES6
+// const mulltiplyBy2 = (input) => { return input * 2 }
+// const mulltiplyBy2 = (input) =>  input * 2
+// const mulltiplyBy2 = input => input * 2
+```
+
+### JavaScript Execution Architecture
+```text
+                 Browser
+                    │
+       ┌────────────┼────────────┐
+       │            │            │
+    DOM/CSS       Web APIs    Network
+       │            │            │
+       └────────────┼────────────┘
+                    │
+                JavaScript
+                    │
+                Call Stack
+                    │
+                Event Loop
+               /           \
+          Microtask       Task
+            Queue         Queue
+              │             │
+              └──────┬──────┘
+                     ↓
+                 Call Stack
+```
+#### Data Types
+
+* **Primitive Types** (`number`, `string`, `boolean`, `null`, `undefined`, `symbol`, `bigint`): Copied by **value**.
+* **Objects/Arrays**: Copied by **reference**.
+
+**Primitive**
+
+```js
+let name = "John";       // string
+let age = 30;            // number
+let active = true;       // boolean
+let value;               // undefined
+let data = null;         // null
+let big = 123n;          // bigint
+```
+
+**Reference types**
+
+Objects, arrays, functions, maps, sets, etc. are reference-type values.
+
+```js
+const user = {
+  name: "John",
+  age: 30
+};
+const numbers = [10, 20, 30];
+```
+
+```javascript
+//Constant value
+const name = "Bala";
+
+//Let Variable
+let age = 30;
+
+//ES6 function
+let sum = (a, b) => {
+    return a + b;
+};
+console.log(sum(10, 40)); // "50"
+
+//Implictly returns directly
+let printName = (name) => `My name is ${name}`;
+console.log(printName("Balakarthikeyan")); // "My name is Balakarthikeyan"
+```
+
+---
+
+#### `==` vs `===`
+
+* `==`
+Performs type coercion.
+```js
+console.log(10 == "10"); // true
+```
+
+* `===`
+Checks value and type.
+```js
+console.log(10 === "10"); // false
+```
+
+*Prefer:* `===` because it avoids unexpected type coercion.
+
+---
+
+#### Template Literals
+
+Before ES6:
+```js
+const name = "John";
+console.log("Hello " + name);
+```
+
+ES6: *Useful for multiline strings and dynamic values.*
+```js
+const name = "John";
+console.log(`Hello ${name}`); // Hello John
+```
+
+---
+
+#### Default Parameters
+```js
+function greet(name = "Guest") {
+  return `Hello ${name}`;
+}
+console.log(greet()); // Hello Guest
+```
+
+---
+
+#### Modules
+ES6 introduced modules. Modules are fundamental to React, Angular, Node.js and Next.js applications.
+
+**Export**
+
+```js
+export const name = "John";
+export function add(a, b) {
+  return a + b;
+}
+```
+
+**Import**
+```js
+import { name, add } from "./utils.js";
+
+// Default export:
+export default User;
+
+// Import:
+import User from "./User.js";
+```
+
 ### 1. Scope
 
 #### Definition
@@ -37,7 +228,6 @@ function outerFunction() {
 }
 
 outerFunction();
-
 ```
 
 #### Explanation
@@ -53,14 +243,17 @@ outerFunction();
 Global Outer I am function-scoped (var) I am block-scoped (let)
 I am function-scoped (var)
 Error caught: blockScoped is not defined
-
 ```
 
 ---
 
-### 2. `var`, `let`, `const`
+### 2. Variable Scope & Declarations: `var`, `let`, `const`
 
 #### Definition
+
+* **`var`**: Function-scoped or globally scoped. Variables declared with `var` are hoisted and initialized to `undefined`. They can be re-declared and updated.
+* **`let`**: Block-scoped (`{ ... }`). Variables are hoisted to the top of their block, but **not initialized**, placing them in a **Temporal Dead Zone (TDZ)** until the declaration is reached.
+* **`const`**: Block-scoped, just like `let`. They must be initialized at declaration and cannot be reassigned. Note: Objects and arrays declared with `const` can still have their contents mutated.
 
 Keywords used to declare variables in JavaScript, differing across **Scope**, **Re-declaration**, **Re-assignment**, and **Hoisting/TDZ behavior**:
 
@@ -91,7 +284,6 @@ try {
 } catch (err) {
   console.log("Re-assignment error:", err.message);
 }
-
 ```
 
 #### Explanation
@@ -105,7 +297,6 @@ try {
 ```text
 Config theme: light
 Re-assignment error: Assignment to constant variable.
-
 ```
 
 ---
@@ -124,11 +315,12 @@ Hoisting is the JS engine's behavior during the compilation phase where variable
 #### Code Example
 
 ```javascript
-console.log("Hoisted var:", hoistedVar);
+// Variable Hoisting with `var`
+console.log("Hoisted var:", hoistedVar); // Output: undefined (declaration is hoisted, initialization is not)
 
 var hoistedVar = "Now assigned!";
 
-// Function Declaration
+// Function Declaration Hoisting
 hoistedFunction();
 
 function hoistedFunction() {
@@ -145,7 +337,6 @@ try {
 var funcExpression = function () {
   console.log("Inside expression");
 };
-
 ```
 
 #### Explanation
@@ -160,8 +351,9 @@ var funcExpression = function () {
 Hoisted var: undefined
 Function declaration called before definition line!
 Function expression error: funcExpression is not a function
-
 ```
+
+> **Note:** Function expressions (including arrow functions) assigned to `var`/`let`/`const` are **not** hoisted as functions; they behave like variable declarations.
 
 ---
 
@@ -188,7 +380,6 @@ The Temporal Dead Zone (TDZ) is the period between the entering of a scope where
 
   test(); // Called AFTER initialization line
 }
-
 ```
 
 #### Explanation
@@ -200,7 +391,6 @@ The Temporal Dead Zone (TDZ) is the period between the entering of a scope where
 
 ```text
 Value inside test function: 42
-
 ```
 
 ---
@@ -209,13 +399,14 @@ Value inside test function: 42
 
 #### Definition
 
-A closure is a function bundled together with references to its surrounding state (lexical environment). In JavaScript, every inner function retains access to the scope in which it was created, even after the outer function has returned and its execution context has been popped off the call stack.
+A closure is a function bundled together with references to its surrounding state (lexical environment). In JavaScript, it *occurs when a function retains access to variables from its outer lexical scope even after the outer function has finished execution.*
 
 Key use cases:
 
 * Data privacy and encapsulation (emulating private variables).
 * Function carrying and partial application.
 * Maintaining state in asynchronous callbacks and event handlers.
+* Performance optimizations (Memoization) & function factories
 
 #### Code Example
 
@@ -263,7 +454,25 @@ Deposit 50: 150
 Withdraw 30: 120
 Current Balance: 120
 Direct property access: undefined
+```
 
+#### Function factory
+A function factory is an outer function that creates and returns a new inner function, usually leveraging closures to remember the arguments passed to the outer function.
+
+```javascript
+// The Function Factory
+function createMultiplier(multiplier) {
+  return function(number) {
+    return number * multiplier; // Remembers 'multiplier' via closure
+  };
+}
+
+// Generating customized functions from the factory
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5)); // Output: 10
+console.log(triple(5)); // Output: 15
 ```
 
 ---
@@ -272,7 +481,7 @@ Direct property access: undefined
 
 #### Definition
 
-In JavaScript, `this` is a keyword whose value is determined dynamically at runtime based on **how a function is invoked** (execution context), rather than where it is declared.
+In JavaScript, `this` is a keyword whose value is determined dynamically at runtime based on **how a function is invoked/called** (execution context), rather than where it is declared.
 
 `this` binding follows five precedence rules (from highest to lowest priority):
 
@@ -312,7 +521,6 @@ const boundGreet = standaloneGreet.bind({ name: "Bob" });
 boundGreet();
 
 user.delayedGreet();
-
 ```
 
 #### Explanation
@@ -327,7 +535,6 @@ user.delayedGreet();
 Implicit binding: Hello, Alice
 Implicit binding: Hello, Bob
 Strict mode error in callback: Cannot read properties of undefined (reading 'name')
-
 ```
 
 ---
@@ -372,7 +579,6 @@ try {
 } catch (err) {
   console.log("Constructor error:", err.message);
 }
-
 ```
 
 #### Explanation
@@ -387,7 +593,6 @@ try {
 Regular callback output: [ 0, 0, 0 ]
 Arrow callback output: [ 2, 4, 6 ]
 Constructor error: ArrowConstruct is not a constructor
-
 ```
 
 ---
@@ -431,7 +636,6 @@ console.log(
   "Is Person.prototype.[[Prototype]] === Object.prototype?",
   Object.getPrototypeOf(Person.prototype) === Object.prototype
 );
-
 ```
 
 #### Explanation
@@ -448,7 +652,84 @@ Prototype property: false
 Inherited call: Hi, I'm Sarah
 Is developer.[[Prototype]] === Person.prototype? true
 Is Person.prototype.[[Prototype]] === Object.prototype? true
+```
 
+#### Pattern 1: Factory Function (High Memory Overhead)
+
+```javascript
+function makePerson(name, age) {
+    return {
+        name,
+        age,
+        print() {
+            console.log(`${this.name} age is ${this.age}`);
+        }
+    };
+}
+
+const vicky = makePerson("Vicky", 24);
+console.log(vicky.name);
+console.log(vicky.age);
+vicky.print();
+```
+
+#### Pattern 2: Shared Prototype Object (`Object.create`)
+
+```javascript
+
+const personGreeting = {
+    greet: function (name) {
+        console.log(`Hello ${name}`);
+    },
+};
+personGreeting.greet("Bala");
+
+const personStore = {
+    greet() {
+        console.log(`Hello ${this.name}`);
+    }
+};
+
+function personFromPersonStore(name) {
+    let person = Object.create(personStore); // Prototype linkage
+    person.name = name;
+    return person;
+}
+
+const sandra = personFromPersonStore("Sandra");
+sandra.greet(sandra.name);
+```
+
+#### Pattern 3: Constructor Function with `new`
+
+```javascript
+function PersonConstructor(name) {
+    this.name = name;
+}
+
+PersonConstructor.prototype.greet = function () {
+    console.log(`Hello ${this.name}`);
+};
+
+const simon = new PersonConstructor("Simon");
+simon.greet();
+```
+
+#### Pattern 4: ES6 Class Syntax
+
+```javascript
+class PersonClass {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    greet() {
+        console.log(`Hello ${this.name}`);
+    }
+}
+
+const george = new PersonClass("George");
+george.greet();
 ```
 
 ---
@@ -457,7 +738,7 @@ Is Person.prototype.[[Prototype]] === Object.prototype? true
 
 #### Definition
 
-Introduced in ES6, `class` syntax is **syntactic sugar** built over JavaScript's existing prototype-based inheritance model. Classes make object creation and inheritance cleaner without changing how JS works under the hood.
+Introduced in ES6, `class` syntax is built over JavaScript's existing prototype-based inheritance model. Classes make object creation and inheritance cleaner without changing how JS works under the hood.
 
 Modern class features (ES2022+) include:
 
@@ -468,6 +749,20 @@ Modern class features (ES2022+) include:
 #### Code Example
 
 ```javascript
+// Example 1
+class Person {
+  #name = "Alice"; // Private property
+
+  getName() {
+    return this.#name; // Allowed inside the class
+  }
+}
+
+const user = new Person();
+console.log(user.getName()); // Works: "Alice"
+console.log(user.#name);     // Syntax Error!
+
+// Example 2
 class Vehicle {
   #vin; // Private property
 
@@ -505,7 +800,6 @@ try {
 } catch (err) {
   console.log("Private field error:", err.message);
 }
-
 ```
 
 #### Explanation
@@ -520,7 +814,6 @@ try {
 Tesla Model 3 (VIN: 5YJ3E1EA)
 Static check: true
 Private field error: Private field '#vin' must be declared in an enclosing class
-
 ```
 
 ---
@@ -570,7 +863,6 @@ function renderHeader({ id, username }) {
 }
 
 console.log(renderHeader(userProfile));
-
 ```
 
 #### Explanation
@@ -585,12 +877,7 @@ console.log(renderHeader(userProfile));
 Handle: alex99, Email: alex@example.com, Status: active
 Primary Role: admin, Other Roles: [ 'editor' ]
 User ID 101: alex99
-
 ```
-
----
-
-Here is **Part 3: JavaScript (Topics 11–15)**.
 
 ---
 
@@ -615,17 +902,22 @@ function calculateSum(multiplier, ...numbers) {
 const user = { id: 101, name: "Maria", role: "Admin", country: "US" };
 const { id, ...profileData } = user; // Rest in Object destructuring
 
-// 2. Spread Operator in Objects & Arrays
+// 2. Spread Operator in Objects
 const baseConfig = { theme: "light", debug: false };
 const userConfig = { theme: "dark", lang: "en" };
 
 // Merging objects (Rightmost property wins on conflict)
 const mergedConfig = { ...baseConfig, ...userConfig, debug: true };
 
+// Array example:
+const a = [1, 2];
+const b = [3, 4];
+const result = [...a, ...b];
+
 console.log("Rest Sum:", calculateSum(2, 10, 20, 30));
 console.log("Rest Destructuring:", profileData);
 console.log("Spread Merged Object:", mergedConfig);
-
+console.log("Spread Merged Array:", result);
 ```
 
 #### Explanation
@@ -640,7 +932,7 @@ console.log("Spread Merged Object:", mergedConfig);
 Rest Sum: 120
 Rest Destructuring: { name: 'Maria', role: 'Admin', country: 'US' }
 Spread Merged Object: { theme: 'dark', debug: true, lang: 'en' }
-
+Spread Merged Array: [1, 2, 3, 4]
 ```
 
 ---
@@ -653,6 +945,82 @@ Modern JavaScript array operations are split into two paradigms:
 
 * **Mutating Methods (In-Place Modifications):** Alter the original array reference in memory (`push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`).
 * **Non-Mutating / Immutable Methods:** Return a brand-new array or scalar value without modifying the target array (`map`, `filter`, `reduce`, `slice`, `concat`, `flatMap`).
+
+#### `map()`
+
+Transforms each element.
+
+```js
+const numbers = [1, 2, 3];
+const result = numbers.map(n => n * 2);
+console.log(result); // [2, 4, 6]
+```
+
+---
+
+#### `filter()`
+
+Returns elements satisfying a condition.
+
+```js
+const numbers = [1, 2, 3, 4];
+const result = numbers.filter(n => n % 2 === 0);
+console.log(result); // [2, 4]
+```
+
+---
+
+#### `find()`
+
+Returns the first matching element.
+
+```js
+const users = [
+  { id: 1, name: "John" },
+  { id: 2, name: "David" }
+];
+const user = users.find(user => user.id === 2);
+console.log(user); // { id: 2, name: "David" }
+```
+
+---
+
+#### `some()`
+
+Checks whether at least one element matches.
+
+```js
+const numbers = [1, 3, 4];
+console.log(numbers.some(n => n % 2 === 0)); // true
+```
+
+---
+
+#### `every()`
+
+Checks whether all elements match.
+
+```js
+const numbers = [2, 4, 6];
+console.log(numbers.every(n => n % 2 === 0)); // true
+```
+
+---
+
+#### `reduce()`
+
+Reduces an array into a single value.
+
+```js
+const prices = [100, 200, 300];
+const total = prices.reduce(
+  (sum, price) => sum + price,
+  0
+);
+console.log(total); // 600
+```
+
+---
 
 ES2023 introduced explicit immutable array utilities (`toSorted`, `toReversed`, `toSpliced`, `with`) to support functional and state-driven programming patterns (such as React state).
 
@@ -678,7 +1046,6 @@ console.log("Tally count (reduce):", tally);
 // Modern Immutable replacement (ES2023 .with)
 const updatedArray = numbers.with(2, 99); // Replaces index 2 with 99
 console.log("Replaced index 2:", updatedArray);
-
 ```
 
 #### Explanation
@@ -694,7 +1061,6 @@ Original array unchanged: [ 3, 1, 4, 1, 5 ]
 Sorted array copy: [ 1, 1, 3, 4, 5 ]
 Tally count (reduce): { '1': 2, '3': 1, '4': 1, '5': 1 }
 Replaced index 2: [ 3, 1, 99, 1, 5 ]
-
 ```
 
 ---
@@ -706,13 +1072,9 @@ Replaced index 2: [ 3, 1, 99, 1, 5 ]
 When copying complex data structures (Objects and Arrays):
 
 * **Shallow Copy:** Creates a new top-level object, but **shares references** to nested child objects/arrays. Modifying a nested property on the copy mutates the original object.
-* Methods: `{ ...obj }`, `Object.assign({}, obj)`, `Array.prototype.slice()`.
-
-
+  * Methods: `{ ...obj }`, `Object.assign({}, obj)`, `Array.prototype.slice()`.
 * **Deep Copy:** Recursively duplicates all levels, creating entirely independent memory references for every nested structure.
-* Methods: `structuredClone(obj)` (Native Web API/Node.js standard), `JSON.parse(JSON.stringify(obj))` (Legacy hack with edge-case flaws), or `lodash.cloneDeep`.
-
-
+  * Methods: `structuredClone(obj)` (Native Web API/Node.js standard), `JSON.parse(JSON.stringify(obj))` (Legacy hack with edge-case flaws), or `lodash.cloneDeep`.
 
 #### Comparison Matrix (`structuredClone` vs `JSON.parse/stringify`)
 
@@ -734,7 +1096,7 @@ const original = {
   unsupportedField: undefined
 };
 
-// 1. Shallow Copy
+// 1. Shallow Copy using Spread Operator (`...`)
 const shallowCopy = { ...original };
 shallowCopy.tags.push("cloud"); // Modifies original's nested array!
 
@@ -750,6 +1112,12 @@ console.log("Deep copy tags:", deepCopy.tags);
 console.log("JSON copy createdAt type:", typeof jsonCopy.createdAt);
 console.log("JSON copy has undefined field?", "unsupportedField" in jsonCopy);
 
+// Array reference
+let array1 = [1, 2, 3];
+let array2 = [...array1];
+array2.push(4);
+console.log(array1); // "123" (Unchanged)
+console.log(array2); // "1234"
 ```
 
 #### Explanation
@@ -765,7 +1133,6 @@ Original tags: [ 'software', 'ai', 'cloud' ]
 Deep copy tags: [ 'software', 'ai', 'cloud', 'mobile' ]
 JSON copy createdAt type: string
 JSON copy has undefined field? false
-
 ```
 
 ---
@@ -774,14 +1141,46 @@ JSON copy has undefined field? false
 
 #### Definition
 
-JavaScript is a single-threaded execution language, meaning it has one **Call Stack** and can process only one line of code at a time. The **Event Loop** is the engine mechanism that enables non-blocking asynchronous concurrency.
+JavaScript is a single-threaded execution language, meaning it has one **Call Stack** and can process only one line of code at a time. The **Event Loop** is the engine mechanism that enables non-blocking asynchronous tasks (like timeouts, HTTP requests, or DOM events).
 
 The Event Loop continuously runs a process:
 
 1. Executes synchronous code on the **Call Stack** until empty.
 2. Hands off asynchronous tasks (timers, fetch requests, DOM events) to **Web APIs** (or C++ APIs in Node).
 3. Once Web APIs finish, callbacks are pushed to either the **Microtask Queue** or **Macrotask Queue**.
-4. When Call Stack is clear, flushes the **Microtask Queue** completely before executing the next **Macrotask**.
+4. When Call Stack is clear, flushes the **Microtask Queue** completely before executing the next **Macrotask Queue**.
+
+#### Key Components
+
+| Component | Responsibility |
+| --- | --- |
+| **Call Stack** | Single LIFO (Last In, First Out) stack executing standard synchronous code. |
+| **Web / Node APIs** | Browser/Environment threads that manage timers (`setTimeout`), network requests (`fetch`), and I/O tasks outside the main JS thread. |
+| **Microtask Queue** | High-priority queue holding callbacks from **Promises**, `queueMicrotask`, and `mutationObserver`. |
+| **Macrotask Queue** *(Task Queue)* | Lower-priority queue holding callbacks from `setTimeout`, `setInterval`, `setImmediate`, and I/O. |
+| **Event Loop** | The orchestrator. Continuously checks if the Call Stack is empty. If empty, it pushes tasks from the queues into the Call Stack to run. |
+
+---
+
+#### Queue Priority Rule
+
+> **Critical Rule**: The Event Loop will **completely drain the Microtask Queue** before it allows a **single task** from the Macrotask Queue to enter the Call Stack.
+
+```
+          +-------------------+
+          |    Call Stack     |
+          +---------+---------+
+                    |
+                    v
+    +---------------+---------------+
+    | Microtask Queue (Promises)    |  <-- HIGHER PRIORITY
+    +---------------+---------------+
+                    |
+                    v
+    +---------------+---------------+
+    | Macrotask Queue (setTimeout)  |  <-- LOWER PRIORITY
+    +-------------------------------+
+```
 
 #### Code Example
 
@@ -793,7 +1192,6 @@ setTimeout(() => {
 }, 0);
 
 console.log("3: Synchronous End");
-
 ```
 
 #### Explanation
@@ -809,8 +1207,9 @@ console.log("3: Synchronous End");
 1: Synchronous Start
 3: Synchronous End
 2: Timeout Callback (Web API Task)
-
 ```
+
+> JavaScript execution is single-threaded on the main JavaScript thread, but asynchronous operations are handled by browser APIs and coordinated through the event loop.
 
 ---
 
@@ -821,76 +1220,89 @@ console.log("3: Synchronous End");
 Asynchronous callbacks inside the Event Loop are segregated into two queues with strict execution priorities:
 
 * **Microtask Queue (Higher Priority):**
-* Examples: `Promise` callbacks (`.then`, `.catch`, `.finally`), `queueMicrotask()`, `MutationObserver`, `process.nextTick` (Node.js).
-* Priority rule: **The Microtask Queue is cleared completely** until empty before the browser yields to layout/paint renders or runs the next Macrotask.
-
-
+  * Examples: `Promise` callbacks (`.then`, `.catch`, `.finally`), `queueMicrotask()`, `MutationObserver`, `process.nextTick` (Node.js).
+  * Priority rule: **The Microtask Queue is cleared completely** until empty before the browser yields to layout/paint renders or runs the next Macrotask.
 * **Macrotask Queue / Task Queue (Lower Priority):**
-* Examples: `setTimeout`, `setInterval`, `setImmediate`, I/O operations, UI event listeners.
-* Priority rule: **Only ONE Macrotask** is processed per iteration of the Event Loop, followed by a complete drain of any newly scheduled microtasks.
+  * Examples: `setTimeout`, `setInterval`, `setImmediate`, I/O operations, UI event listeners.
+  * Priority rule: **Only ONE Macrotask** is processed per iteration of the Event Loop, followed by a complete drain of any newly scheduled microtasks.
 
+#### Microtasks Examples:
 
+```text
+Promise.then()
+Promise.catch()
+Promise.finally()
+queueMicrotask()
+```
+
+#### Macrotasks Examples:
+
+```text
+setTimeout()
+setInterval()
+Browser Events
+```
 
 #### Code Example
 
 ```javascript
-console.log("1: Sync Main Thread");
+console.log("1: Synchronous Main Thread");
 
+// Macrotask (setTimeout)
 setTimeout(() => {
   console.log("2: Macrotask (setTimeout)");
 }, 0);
 
+// Microtask (Promise)
 Promise.resolve().then(() => {
-  console.log("3: Microtask 1 (Promise)");
+    console.log("3. Microtask 1 (Promise)");
+}).then(() => {
+    console.log("4. Microtask 2 (Chained Promise)");
 });
 
 queueMicrotask(() => {
-  console.log("4: Microtask 2 (queueMicrotask)");
+  console.log("5: Microtask 3 (queueMicrotask)");
 });
 
-console.log("5: Sync Main Thread End");
-
+console.log("6: Synchronous Main Thread End");
 ```
 
 #### Execution Order Mechanics
 
 ```text
 [Call Stack Execution]
-├── 1: Sync Main Thread
-└── 5: Sync Main Thread End
+├── 1: Synchronous Main Thread
+└── 6: Synchronous Main Thread End
         │
         ▼ (Call stack empties -> Flush Microtask Queue)
 [Microtask Queue]
 ├── 3: Microtask 1 (Promise)
-└── 4: Microtask 2 (queueMicrotask)
+└── 5: Microtask 2 (queueMicrotask)
         │
-        ▼ (Microtasks empty -> Pick 1 Macrotask)
+        ▼ 4: (Microtasks empty -> Pick 1 Macrotask)
 [Macrotask Queue]
 └── 2: Macrotask (setTimeout)
-
 ```
 
 #### Explanation
 
-1. Lines 1 and 5 execute synchronously on the main thread.
+1. Lines 1 and 6 execute synchronously on the main thread.
 2. `setTimeout` schedules callback `2` into the Macrotask Queue.
-3. `Promise.resolve().then()` and `queueMicrotask()` schedule callbacks `3` and `4` into the Microtask Queue.
-4. When the call stack finishes, the Event Loop drains **all** tasks in the Microtask Queue (`3` then `4`) before touching the Macrotask Queue (`2`).
+3. `Promise.resolve().then()` and `queueMicrotask()` schedule callbacks `3` and `5` into the Microtask Queue `4`.
+4. When the call stack finishes, the Event Loop drains **all** tasks in the Microtask Queue (`3` then `5`) before touching the Macrotask Queue (`2`).
 
 #### Output
 
 ```text
-1: Sync Main Thread
-5: Sync Main Thread End
-3: Microtask 1 (Promise)
-4: Microtask 2 (queueMicrotask)
-2: Macrotask (setTimeout)
-
+1. Synchronous Main Thread
+6. Synchronous Main Thread End
+3. Microtask 1 (Promise)
+5. Microtask 3 (queueMicrotask)
+4. Microtask 2 (Chained Promise)
+2. Macrotask (setTimeout)
 ```
 
----
-
-Here is **Part 4: JavaScript (Topics 16–20)**, completing the JavaScript module.
+> After the current call stack completes, the event loop processes microtasks before moving to the next task/macrotask.
 
 ---
 
@@ -902,18 +1314,18 @@ A `Promise` is an object representing the ultimate completion or failure of an a
 
 A Promise exists in one of three mutually exclusive states:
 
-* **`pending`**: Initial state; neither fulfilled nor rejected.
-* **`fulfilled`**: The operation completed successfully (triggers `.then()`).
-* **`rejected`**: The operation failed (triggers `.catch()`).
+* **`Pending`**: Initial state; neither fulfilled nor rejected.
+* **`Fulfilled`**: The operation completed successfully (triggers `.then()`).
+* **`Rejected`**: The operation failed (triggers `.catch()`).
 
 States:
 
 ```text
-Pending
-   ↓
-Fulfilled
-   OR
-Rejected
+   Pending
+      ↓ 
+  ┌───────┐
+  ↓       ↓ 
+Fulfilled Rejected
 ```
 
 Example:
@@ -934,6 +1346,24 @@ Output after 1 second:
 
 ```text
 Data received
+```
+
+Error:
+
+```js
+const promise = Promise.reject(
+  new Error("Something went wrong")
+);
+
+promise.catch(error => {
+  console.log(error.message);
+});
+```
+
+Output:
+
+```text
+Something went wrong
 ```
 
 Modern JS provides four static combinators to manage concurrent promises:
@@ -962,7 +1392,6 @@ Promise.allSettled([fetchUserData(), fetchUserPosts()])
       }
     });
   });
-
 ```
 
 #### Explanation
@@ -976,7 +1405,6 @@ Promise.allSettled([fetchUserData(), fetchUserPosts()])
 ```text
 Task 1 Success: { id: 1, name: 'Taylor' }
 Task 2 Failed: Database timeout
-
 ```
 
 ---
@@ -1052,6 +1480,8 @@ async function getUsers() {
 }
 ```
 
+> `await` pauses the execution of that async function, not the entire JavaScript thread.
+
 Error handling:
 
 ```js
@@ -1069,6 +1499,8 @@ async function getUsers() {
     console.error(error);
   }
 }
+
+// `fetch()` does **not automatically reject for HTTP 4xx/5xx responses**.
 ```
 
 Important:
@@ -1077,7 +1509,123 @@ Important:
 
 ---
 
-### 18. Error Handling
+
+### 18. Callback Examples
+
+#### Example 1: Math with Callbacks
+
+> **Note on `console.log` Return Value**: `console.log(addition(10, 40, callback))` prints `undefined` at the outer layer because `addition` does not return a value; it simply executes `callback(a + b)`.
+
+```javascript
+const addition = (a, b, callback) => {
+    callback(a + b);
+};
+
+const printSum = (c) => console.log(`Sum ${c}`);
+
+// Executes callback(50) -> logs "Sum 50"
+addition(10, 40, printSum); 
+
+```
+
+---
+
+#### Example 2: Synchronous Sequential Execution
+
+Using callbacks to ensure actions happen in a specific sequence.
+
+```javascript
+const orderPizza = (flavor, callback) => {
+    console.log(`I want a ${flavor} pizza`);
+    callback();
+};
+
+const layTheTable = () => console.log("Laying the table");
+
+orderPizza("Hawaiian", layTheTable);
+// Output:
+// "I want a Hawaiian pizza"
+// "Laying the table"
+```
+
+---
+
+#### Example 3: Functional Array Callback (`Array.prototype.filter`)
+
+Higher-order array methods rely heavily on predicate callback functions to determine inclusion.
+
+```javascript
+const numbers = [3, 4, 10, 20];
+
+// The arrow function (num => num < 5) is passed as a callback to .filter()
+const lesserThanFive = numbers.filter((num) => num < 5);
+
+console.log(lesserThanFive); // Output: [3, 4]
+
+```
+
+---
+
+#### Example 4: Asynchronous Callback with `setTimeout`
+
+```javascript
+function a(b) {
+    setTimeout(function () {
+        console.log("from a");
+        b();
+    }, 3000);
+}
+
+function b() {
+    console.log("from b");
+}
+
+// Invoking function `a` and passing an anonymous callback that calls `b()`
+a(() => {
+    console.log("from a()");
+    b();
+});
+
+// Output (after 3 seconds):
+// "from a"
+// "from a()"
+// "from b"
+
+```
+
+---
+
+#### Callbacks vs. Promises vs. Async/Await
+
+To see how JavaScript handles asynchronous operations over time, compare the same async operation across three patterns:
+
+```javascript
+// 1. Callback Approach (Prone to Callback Hell when nested)
+function fetchDataCallback(cb) {
+    setTimeout(() => cb("Data loaded via Callback"), 1000);
+}
+fetchDataCallback(data => console.log(data));
+
+// 2. Promise Approach (Flattened using .then chain)
+function fetchDataPromise() {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve("Data loaded via Promise"), 1000);
+    });
+}
+fetchDataPromise().then(data => console.log(data));
+
+// 3. Async/Await Approach (Syntactic sugar over Promises for linear readability)
+async function getData() {
+    const data = await fetchDataPromise();
+    console.log(data);
+}
+getData();
+
+```
+
+---
+
+### 19. Error Handling
 
 #### Definition
 
@@ -1093,6 +1641,16 @@ Key Principles:
 #### Code Example
 
 ```javascript
+
+// Synchronous:
+try {
+  throw new Error("Something failed");
+} catch (error) {
+  console.log(error.message);
+}
+
+// Output: Something failed
+
 class NetworkError extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -1101,6 +1659,7 @@ class NetworkError extends Error {
   }
 }
 
+// With async:
 async function processOrder(orderId) {
   try {
     if (!orderId) {
@@ -1119,7 +1678,6 @@ async function processOrder(orderId) {
 }
 
 processOrder(null);
-
 ```
 
 #### Explanation
@@ -1134,12 +1692,11 @@ processOrder(null);
 ```text
 Caught NetworkError (400): Missing Order ID
 Cleanup: Closing payment gateway connection.
-
 ```
 
 ---
 
-### 19. Event Bubbling & Capturing
+### 20. Event Bubbling & Capturing
 
 #### Definition
 
@@ -1222,12 +1779,11 @@ child.dispatch("click");
 [CAPTURE] Listener on DIV (Parent)
 [BUBBLE] Listener on BUTTON (Child)
 [BUBBLE] Listener on DIV (Parent)
-
 ```
 
 ---
 
-### 20. Debouncing & Throttling
+### 21. Debouncing & Throttling
 
 #### Definition
 
@@ -1235,7 +1791,6 @@ Debouncing and Throttling are performance optimization techniques used to rate-l
 
 * **Debounce:** Delays function execution until a specified delay period has passed **since the last time the event was triggered**. Resetting the timer on every event ensures the function fires only once after activity stops.
 * *Use Case:* Auto-saving forms, live search query input fields.
-
 
 * **Throttle:** Guarantees function execution occurs at most **once per specified time interval**, regardless of how many times the event fires.
 * *Use Case:* Scroll position tracking, window resizing handlers, infinite scrolling triggers.
@@ -1275,13 +1830,34 @@ let searchCount = 0;
 const performSearch = debounce((query) => {
   searchCount++;
   console.log(`[Debounce API Call ${searchCount}]: Searching for "${query}"`);
-}, 50);
+}, 500);
 
 // Fast rapid keypresses
 performSearch("r");
 performSearch("rea");
 performSearch("react"); // Only this final call fires after 50ms pause
+```
 
+Debounce Conceptually:
+
+```text
+Typing
+r ─┐
+e  │
+a  │
+c  │
+t  │
+   └── wait 500ms → API
+```
+
+Throttle Conceptually:
+
+```text
+Scroll events:
+████████████████████████
+
+Throttled:
+█    █    █    █    █
 ```
 
 #### Explanation
@@ -1293,7 +1869,6 @@ performSearch("react"); // Only this final call fires after 50ms pause
 
 ```text
 [Debounce API Call 1]: Searching for "react"
-
 ```
 
 ---

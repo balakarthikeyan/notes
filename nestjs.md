@@ -730,7 +730,7 @@ export class TransformInterceptor implements NestInterceptor {
 
 ```
 
-## NestJS app example
+# NestJS app example
 
 - Bootstrapping with middleware (compression, helmet, session, permissions-policy) 
 - A module with TypeORM integration with SQLite
@@ -739,7 +739,7 @@ export class TransformInterceptor implements NestInterceptor {
 - A DTO with class-transformer & class-validator 
 - A test file using @nestjs/testing 
 
-## 📂 Project Structure 
+### 📂 Project Structure 
 ```bash
 nestjs-demo/
   package.json
@@ -755,7 +755,7 @@ nestjs-demo/
     user.controller.spec.ts
 ```
 
-## 🚀 Running the App
+### 🚀 Running the App
 1. Install dependencies:
    ```bash
    npm install

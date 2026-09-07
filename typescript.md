@@ -438,6 +438,57 @@ type Shape =
 type SqaureAndCircleShape = Extract<Shape, { type: 'square' | 'circle' }> // {type: 'square'; size: number;} | { type: 'circle' }
 ```
 
+## JavaScript Strict Mode Closure
+
+```javascript
+// Non-strict code...
+
+(function(){
+  "use strict";
+
+  // Define your library strictly...
+})();
+
+```
+
+## Generic Queue Class
+
+```typescript
+/** A class definition with a generic parameter */
+class Queue<T> {
+  private data: T[] = [];
+  push = (item: T) => this.data.push(item);
+  pop = (): T | undefined => this.data.shift();
+}
+
+const queue = new Queue<number>();
+queue.push(0);
+// queue.push("1"); // ERROR: Argument of type 'string' is not assignable to parameter of type 'number'.
+
+```
+
+## Getters and Setters
+
+```typescript
+class Foo {
+  private _bar: boolean = false;
+
+  get bar(): boolean {
+    return this._bar;
+  }
+  set bar(theBar: boolean) {
+    this._bar = theBar;
+  }
+}
+
+const myFoo = new Foo();
+var myBar = myFoo.bar;  // correct (get)
+myFoo.bar = true;       // correct (set)
+
+```
+
+---
+
 # What are solid principles in javascript?
 
 SOLID principles are a set of guidelines that promote good software design and modular programming.The SOLID principles help in achieving code that is easier to maintain, test, and extend. 

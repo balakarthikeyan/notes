@@ -16,6 +16,13 @@ Modern semantic elements define structural landmarks:
 * `<aside>`: Tangentially related content (e.g., sidebar, callout).
 * `<footer>`: Footer information for its nearest sectioning root or page.
 
+Benefits:
+
+- Accessibility
+- SEO
+- Maintainability
+- Better document structure
+
 #### Code Example
 
 ```html
@@ -92,6 +99,26 @@ Key DOM Concepts:
 * **Node Types:** `ELEMENT_NODE` (1), `TEXT_NODE` (3), `COMMENT_NODE` (8), `DOCUMENT_NODE` (9).
 * **Live vs. Static Collections:** `getElementsByClassName` returns a **live HTMLCollection** (automatically updates when DOM changes). `querySelectorAll` returns a **static NodeList** (snapshot in time).
 * **DOM Mutations & Performance:** Inserting or modifying nodes repeatedly triggers expensive **Reflows (Layout)** and **Paints**. High-performance code batches changes using `DocumentFragment` or `requestAnimationFrame`.
+
+```html
+<body>
+  <h1>Hello</h1>
+  <p>Welcome</p>
+</body>
+```
+
+Conceptually:
+
+```text
+Document
+   │
+   └── body
+       ├── h1
+       │    └── Hello
+       │
+       └── p
+           └── Welcome
+```
 
 #### Code Example
 
@@ -620,6 +647,21 @@ After removal: null
 
 HTML5 and modern Web API specifications introduced powerful JavaScript interfaces that grant web applications direct hardware and engine-level capabilities offloaded from the main CPU thread.
 
+Important APIs:
+
+```text
+Fetch API
+Geolocation API
+Web Storage API
+History API
+Canvas API
+Web Workers API
+Service Worker API
+WebSocket API
+Drag and Drop API
+Notification API
+```
+
 Key Modern APIs:
 
 * **`IntersectionObserver`:** Asynchronously monitors when a target element intersects with a parent element or viewport root. Replaces expensive scroll event listeners for lazy loading, infinite scroll, and impression tracking.
@@ -656,6 +698,17 @@ const resizeObserver = new ResizeObserver((entries) => {
 // Mock simulation of observer call
 console.log("Observers initialized successfully.");
 
+// Local Storage
+localStorage.setItem("name", "John");
+const localStorageName = localStorage.getItem("name");
+
+// Session Storage
+sessionStorage.setItem("token", "123");
+
+// Geolocation
+navigator.geolocation.getCurrentPosition(position => {
+  console.log(position.coords.latitude);
+});
 ```
 
 #### Explanation

@@ -8,15 +8,12 @@ HTTP is a stateless protocol, so PHP sessions maintain state on the server and s
 * **Defaults**: The default session name is `"PHPSESSID"`. The default session lifetime is 1440 seconds (24 minutes), and default session files are stored in the temporary `/tmp` directory on the server (which is inaccessible from the outside world).
 
 ```php
-<?php
 // Example: Setting custom session lifetime
 // Server should keep session data for AT LEAST 1 hour
 ini_set('session.gc_maxlifetime', 3600);
 
 // Each client should remember their session id for EXACTLY 1 hour
 session_set_cookie_params(3600);
-?>
-
 ```
 
 ---
@@ -29,7 +26,7 @@ PHP supports 9 primitive types:
 * **3 Compound Types**: `array`, `object`, `callable`
 * **2 Special Types**: `resource`, `NULL`
 
-**`echo` vs. `print**`
+**`echo` vs. `print`**
 
 * **`echo`**: Has a `void` return type, can take multiple parameters separated by commas, and is slightly faster.
 * **`print`**: Has a return value of `1` (allowing it to be used in expressions), cannot take multiple parameters, and is slightly slower.
@@ -40,8 +37,8 @@ PHP supports 9 primitive types:
 
 * **Namespaces**: Provide a way of grouping related classes, interfaces, functions, and constants.
 * **Overriding vs. Overloading**:
-* **Overriding**: A child/derived class defines a method with the exact same name and parameters as a parent class (inherent to inheritance).
-* **Overloading**: Creating multiple methods with the same name but different parameter signatures within the same class (handled via dynamic magic methods in PHP).
+    * **Overriding**: A child/derived class defines a method with the exact same name and parameters as a parent class (inherent to inheritance).
+    * **Overloading**: Creating multiple methods with the same name but different parameter signatures within the same class (handled via dynamic magic methods in PHP).
 * **Magical Methods**: Functions residing inside a PHP class with definitions supplied by the programmer:
 `__construct()`, `__destruct()`, `__call()`, `__callStatic()`, `__get()`, `__set()`, `__isset()`, `__unset()`, `__sleep()`, `__wakeup()`, `__toString()`, `__invoke()`, `__set_state()`, `__clone()`, and `__debugInfo()`.
 
@@ -64,7 +61,6 @@ PHP supports 9 primitive types:
 * **Argument Handling**: `func_get_args()` retrieves an array of arguments passed to a function.
 * **Exit Function**: `exit(message)` terminates script execution. Passing an integer status sets an exit code (valid range: 0–254; 255 is reserved) rather than printing a string. Can be called without parentheses if no status is passed.
 * **MD5 vs. SHA256**: Cryptographic hash functions generating fixed-size outputs (MD5 = 128-bit, SHA256 = 256-bit).
-> *Correction Note on Original Notes*: Your notes state SHA256 is less secure than MD5. Strictly speaking, MD5 is cryptographically broken and prone to collision attacks; SHA256 is modern and significantly more secure.
 * **Mbstring Extension**: Multibyte string extension used to manage non-ASCII character encodings (like UTF-8 or UCS-2) where characters exceed 256 byte-wise slots. Provides specific multibyte string functions like `mb_strlen()` and `mb_split()`.
 * **GD Library**: An open-source library requiring an ANSI C compiler used by PHP to dynamically create and manipulate images (PNG, JPEG, GIF, charts, and graphics).
 * **MIME**: (Multipurpose Internet Mail Extensions) Extension of the email protocol supporting exchange of diverse media types (audio, video, application programs, ASCII text) via SMTP.
@@ -135,7 +131,6 @@ if (function_exists('curl_version')) {
 ```php
 echo "print Floyd's triangle";
 echo "<pre>";
-
 $key = 1; 
 for ($i = 1; $i <= 4; $i++) { 
     for ($j = 1; $j <= $i; $j++) { 
@@ -146,7 +141,7 @@ for ($i = 1; $i <= 4; $i++) {
         } 
     } 
 } 
-
+echo "</pre>";
 ```
 
 #### 5. Check if an Array is Associative
@@ -228,54 +223,6 @@ $mail->Send();
 
 ```
 
-#### 9. JavaScript Strict Mode Closure
-
-```javascript
-// Non-strict code...
-
-(function(){
-  "use strict";
-
-  // Define your library strictly...
-})();
-
-```
-
-#### 10. TypeScript Generic Queue Class
-
-```typescript
-/** A class definition with a generic parameter */
-class Queue<T> {
-  private data: T[] = [];
-  push = (item: T) => this.data.push(item);
-  pop = (): T | undefined => this.data.shift();
-}
-
-const queue = new Queue<number>();
-queue.push(0);
-// queue.push("1"); // ERROR: Argument of type 'string' is not assignable to parameter of type 'number'.
-
-```
-
-#### 11. TypeScript Getters and Setters
-
-```typescript
-class Foo {
-  private _bar: boolean = false;
-
-  get bar(): boolean {
-    return this._bar;
-  }
-  set bar(theBar: boolean) {
-    this._bar = theBar;
-  }
-}
-
-const myFoo = new Foo();
-var myBar = myFoo.bar;  // correct (get)
-myFoo.bar = true;       // correct (set)
-
-```
 
 ---
 
@@ -321,56 +268,56 @@ $memberName = 'FirstMember';
 
 echo MyClass::{$constantName};
 echo MyEnum::{$memberName}->value;
-```[cite: 6, 8]
+```
 
 ##### 4. Typed Class Constants
-Applies type declarations to constants across classes, interfaces, traits, and enums[cite: 6, 8]:
+Applies type declarations to constants across classes, interfaces, traits, and enums:
 ```php
 interface ConstTest {
     const string VERSION = "PHP 8.3";
 }
-```[cite: 6, 8]
+```
 
 ##### 5. `json_validate()` Function
-Validates JSON syntax without allocating memory to parse an object or array[cite: 6, 8]:
+Validates JSON syntax without allocating memory to parse an object or array:
 ```php
 if (json_validate($maybeJSON)) {
     // Valid JSON string
 }
-```[cite: 6, 8]
+```
 
 ##### 6. Random Extension Additions
-* `Randomizer::getBytesFromString($string, $length)`: Selects random characters from a provided string[cite: 6, 8].
-* `Randomizer::getFloat($min, $max)` & `nextFloat()`: Generates random floating-point numbers[cite: 6, 8].
+* `Randomizer::getBytesFromString($string, $length)`: Selects random characters from a provided string.
+* `Randomizer::getFloat($min, $max)` & `nextFloat()`: Generates random floating-point numbers.
 
 ##### 7. INI Environment Variable Fallback Syntax
 ```ini
 session.name = ${SESSION_NAME:-Foo}
 sendmail_from = "${MAIL_FROM_USER:-info}@${MAIL_FROM_DOMAIN:-example.com}"
-```[cite: 6, 8]
+```
 
 ##### 8. `class_alias()` with Built-in Classes
 ```php
 class_alias(\DateTime::class, 'MyDateTime');
 $customDateTime = new MyDateTime();
-```[cite: 6, 8]
+```
 
 ##### 9. CLI Multi-File Syntax Linting
 ```bash
 php -l file1.php file2.php file3.php
-```[cite: 6, 8]
+```
 
 ##### 10. Granular Exception & Error Updates
-* **SQLite3**: Throws `SQLite3Exception`[cite: 6, 8].
-* **Date/Time**: Introduces specific errors like `DateRangeError` and `DateException`[cite: 6, 8].
-* **`unserialize()`**: Elevates syntax and handler notices (`E_NOTICE`) to warnings (`E_WARNING`)[cite: 6, 8].
+* **SQLite3**: Throws `SQLite3Exception`.
+* **Date/Time**: Introduces specific errors like `DateRangeError` and `DateException`.
+* **`unserialize()`**: Elevates syntax and handler notices (`E_NOTICE`) to warnings (`E_WARNING`).
 
 ##### 11. PHP 8.3 Deprecations & Breaking Changes
-* **Argument-less `get_class()` / `get_parent_class()`**: Deprecated[cite: 6, 8].
-* **`highlight_file()` / `highlight_string()` Output**: Wrapped in `<pre><code></code></pre>`, without converting spaces to HTML entities or line breaks to `<br/>`[cite: 6, 8].
-* **Non-Numeric Increment/Decrement**: Using `++` or `--` on non-numeric strings is deprecated[cite: 6, 8].
-* **Array Negative Keys**: Appending items (`$array[]`) to an array containing a negative key no longer defaults to index `0`[cite: 6, 8].
-* **`proc_get_status()`**: Requires the process resource argument explicitly (`proc_get_status($process)`)[cite: 6, 8].
+* **Argument-less `get_class()` / `get_parent_class()`**: Deprecated.
+* **`highlight_file()` / `highlight_string()` Output**: Wrapped in `<pre><code></code></pre>`, without converting spaces to HTML entities or line breaks to `<br/>`.
+* **Non-Numeric Increment/Decrement**: Using `++` or `--` on non-numeric strings is deprecated.
+* **Array Negative Keys**: Appending items (`$array[]`) to an array containing a negative key no longer defaults to index `0`.
+* **`proc_get_status()`**: Requires the process resource argument explicitly (`proc_get_status($process)`).
 
 ---
 

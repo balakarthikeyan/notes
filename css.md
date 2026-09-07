@@ -1,10 +1,41 @@
 ## CSS3 Core Concepts
 
+CSS controls the **presentation and layout** of HTML.
+
+Three important concepts:
+
+* **Selector**
+* **Property**
+* **Value**
+
+#### Example:
+```css
+button {
+  color: white;
+  background: blue;
+}
+```
+
 ### 1. Box Model
 
 #### Definition
 
 Every element in CSS is represented as a rectangular layout structure called the **CSS Box Model**. The engine calculates element dimensions from the inside out using four nested areas:
+
+```text
+┌─────────────────────────────┐
+│           Margin            │
+│  ┌───────────────────────┐  │
+│  │        Border         │  │
+│  │ ┌───────────────────┐ │  │
+│  │ │      Padding      │ │  │
+│  │ │ ┌───────────────┐ │ │  │
+│  │ │ │    Content    │ │ │  │
+│  │ │ └───────────────┘ │ │  │
+│  │ └───────────────────┘ │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘
+```
 
 1. **Content:** The core area where text, images, or child elements render.
 2. **Padding:** Transparent space surrounding content, contained *inside* the background/border.
@@ -17,7 +48,7 @@ The sizing behavior depends directly on the `box-sizing` property:
 
     **Rendered Width = width + padding-left + padding-right + border-left + border-right**
 
-* **`border-box` (Modern Standard):** `width` and `height` define the **total outer boundary** including padding and borders. The content area shrinks automatically to absorb padding and border thickness.
+* **`border-box` (Modern Standard):** `width` and `height` define the **total outer boundary** including padding and borders. The content area shrinks automatically to absorb padding and border thickness. (content + padding + border)
 
     **Content Width = width - padding-left + padding-right + border-left + border-right**
 
@@ -72,18 +103,16 @@ The sizing behavior depends directly on the `box-sizing` property:
 The **Cascade** is the algorithm CSS uses to resolve conflicting style declarations targeting the same element property. When multiple declarations compete, the browser evaluates them using a strict priority pipeline:
 
 1. **Importance & Origin (Highest Priority):**
-1. Transition declarations
-2. User Agent `!important`
-3. User `!important`
-4. Author `!important`
-5. Animation declarations
-6. Author normal styles
-7. User normal styles
-8. User Agent normal styles (Browser defaults)
-
-
+  * Transition declarations
+  * User Agent `!important`
+  * User `!important`
+  * Author `!important`
+  * Animation declarations
+  * Author normal styles
+  * User normal styles
+  * User Agent normal styles (Browser defaults)
 2. **Cascade Layers (`@layer`):** Unlayered author styles override styles inside `@layer` blocks.
-3. **Specificity:** The selector with higher weight wins (see Topic 3).
+3. **Specificity:** The selector with higher weight wins **(see Topic 3)**.
 4. **Order of Appearance (Lowest Priority):** If all above factors are equal, the declaration declared **last** in the stylesheet or source order wins.
 
 #### Code Example
@@ -410,6 +439,24 @@ Core Terminology & Features:
 #### Code Example
 
 ```css
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+```
+
+Conceptually:
+
+```text
+┌───────┬───────┬───────┐
+│ Item  │ Item  │ Item  │
+├───────┼───────┼───────┤
+│ Item  │ Item  │ Item  │
+└───────┴───────┴───────┘
+```
+
+```css
 /* Responsive Grid without Media Queries */
 .grid-container {
   display: grid;
@@ -458,7 +505,7 @@ At 450px Container Width:
 
 ---
 
-## Flexbox vs. CSS Grid
+#### Flexbox vs. CSS Grid
 
 | Feature | Flexbox (1D System) | CSS Grid (2D System) |
 | --- | --- | --- |
@@ -469,14 +516,14 @@ At 450px Container Width:
 
 ---
 
-## Alignment Mechanics Matrix
+#### Alignment Mechanics Matrix
 
 Alignment in both layout modes is governed by the **CSS Box Alignment Module**. The target axis depends on whether you are using Flexbox or Grid.
 
 * **Main / Inline Axis (X-axis by default):** Left-to-Right reading direction.
 * **Cross / Block Axis (Y-axis by default):** Top-to-Bottom structural direction.
 
-### Master Alignment Reference
+#### Master Alignment Reference
 
 | Axis / Focus | Flexbox Target Axis | Grid Target Axis | CSS Property | Common Values |
 | --- | --- | --- | --- | --- |
@@ -618,13 +665,10 @@ System Dark Mode ON   -> Background: #121212, Text: #ffffff
 Although both target elements outside normal DOM tree selectors, they serve fundamental differences in syntax and scope:
 
 * **Pseudo-classes (`:` single colon):** Target existing DOM elements based on dynamic state, position, or user interaction without requiring extra classes.
-* Examples: `:hover`, `:focus-visible`, `:nth-child()`, `:nth-of-type()`, `:not()`, `:has()`.
-
+* Examples: `:hover`, `:focus`, `:active`, `:first-child`, `:last-child`,`:focus-visible`, `:nth-child()`, `:nth-of-type()`, `:not()`, `:has()`.
 
 * **Pseudo-elements (`::` double colon):** Create or target **virtual sub-parts** of an element that do not exist as explicit HTML DOM nodes.
-* Examples: `::before`, `::after`, `::first-letter`, `::placeholder`, `::selection`.
-
-
+* Examples: `::before`, `::after`, `::first-letter`, `::first-line`, `::placeholder`, `::selection`.
 
 #### `:nth-child()` vs `:nth-of-type()` Distinctions
 
